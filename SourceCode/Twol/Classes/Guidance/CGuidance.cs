@@ -58,17 +58,38 @@ namespace Twol
             if (Uturn) 
                 isLoop = false;
 
+            bool hasValidToolXte = false;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
 
             if (Settings.Tool.setToolSteer.isPassiveSteering || Settings.Tool.setToolSteer.isFollowCurrent)
             {
-                if (FindClosestSegment(curList, isLoop, mf.pnTool.fix, out A, out B))
+                // With dual tool GPS, use the configured implement reference point rather than the antenna.
+                // For a single tool position, heading is unavailable for fore/aft geometry correction.
+                bool hasToolHeading = mf.pnTool.isDualGPSConnected
+                    && mf.pnTool.headingTrueDual != float.MaxValue
+                    && !double.IsNaN(mf.pnTool.headingTrueDual)
+                    && !double.IsInfinity(mf.pnTool.headingTrueDual);
+                vec2 toolGuidancePoint = hasToolHeading
+                    ? new vec2(mf.toolPos)
+                    : new vec2(mf.pnTool.fix);
+
+                if (FindClosestSegment(curList, isLoop, toolGuidancePoint, out A, out B))
                 {
-                    distanceFromCurrentLineTool = FindDistanceToSegment(mf.pnTool.fix, curList[A], curList[B], out _, out _, true, false, false);
+                    distanceFromCurrentLineTool = FindDistanceToSegment(toolGuidancePoint, curList[A], curList[B], out _, out _, true, false, false);
 
                     if (!Uturn && !mf.trks.isHeadingSameWay)
                         distanceFromCurrentLineTool *= -1.0;
+
+                    hasValidToolXte = mf.pnTool.fixQuality != 0
+                        && mf.pnTool.fixQuality != byte.MaxValue
+                        && (!mf.pnTool.isDualGPSConnected || hasToolHeading)
+                        && !double.IsNaN(toolGuidancePoint.easting)
+                        && !double.IsInfinity(toolGuidancePoint.easting)
+                        && !double.IsNaN(toolGuidancePoint.northing)
+                        && !double.IsInfinity(toolGuidancePoint.northing)
+                        && !double.IsNaN(distanceFromCurrentLineTool)
+                        && !double.IsInfinity(distanceFromCurrentLineTool);
                 }
                 else
                     distanceFromCurrentLineTool = 0;
@@ -298,11 +319,25 @@ namespace Twol
                             isPassiveTriggered = true;
                             isPassiveSteeringFlag = false;
                             segAvg = 0;
+                            passiveDistance = 0;
+                            passiveCounter = 0;
+                            toolDistance = 0;
+                        }
+                        else if (!hasValidToolXte)
+                        {
+                            // A missing/invalid tool position must not arm passive steering or retain its correction.
+                            isPassiveSteeringFlag = false;
+                            segAvg = 0;
+                            passiveDistance = 0;
+                            passiveCounter = 0;
+                            toolDistance = 0;
                         }
                         else
                         {
-                            if (isPassiveSteeringFlag && distanceFromCurrentLineTool != 0)
+                            if (isPassiveSteeringFlag)
                             {
+                                // Zero is a valid on-line measurement. Keep the accumulated correction when the
+                                // implement crosses the line instead of treating zero as missing data.
                                 toolDistance = distanceFromCurrentLineTool;
 
                                 if (!mf.trks.isHeadingSameWay)
@@ -336,7 +371,13 @@ namespace Twol
                             if (theta > glm.PIBy2) theta -= Math.PI;
                             else if (theta < -glm.PIBy2) theta += Math.PI;
 
-                            double segCurv = ((2 * Math.Sin(theta / 2)) / -d) * Settings.Tool.setToolSteer.curvatureGain;
+                            double segCurv = 0;
+                            if (d > 0 && !double.IsNaN(d) && !double.IsInfinity(d))
+                                segCurv = ((2 * Math.Sin(theta / 2)) / -d) * Settings.Tool.setToolSteer.curvatureGain;
+
+                            if (double.IsNaN(segCurv) || double.IsInfinity(segCurv))
+                                segCurv = 0;
+
                             if (segCurv > 2.0) segCurv = 2.0;
                             if (segCurv < -2.0) segCurv = -2.0;
 
@@ -346,7 +387,6 @@ namespace Twol
                             if (gain > 0.6) gain = 0.6;
                             if (gain < 0.2) gain = 0.2;
 
-                            //passiveDistance = segAvg;
                             if (passiveCounter++ > Settings.Tool.setToolSteer.passiveIntegralGain * 10)
                             {
                                 errorProp = toolDistance * -gain;
@@ -359,7 +399,7 @@ namespace Twol
 
                             if (mf.pn.avgSpeed < 2) passiveDistance = 0;
 
-                            double passiveDist = segCurv + passiveDistance;
+                            double passiveDist = segAvg + passiveDistance;
                             goalPoint.easting += (Math.Sin(curList[B].heading + 1.57) * passiveDist);
                             goalPoint.northing += (Math.Cos(curList[B].heading + 1.57) * passiveDist);
                         }
@@ -395,7 +435,7 @@ namespace Twol
 
                     if (Settings.Tool.setToolSteer.isPassiveSteering && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
-                        if (Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
+                        if (hasValidToolXte && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
                             && Math.Abs(distanceFromCurrentLine) < 0.10 && Math.Abs(distanceFromCurrentLineTool) < 0.20)
                             isPassiveSteeringFlag = true;
                     }
@@ -428,6 +468,9 @@ namespace Twol
                     mf.guidanceToolXTE = double.NaN;
 
                 distanceFromCurrentLineTool = 0;
+                isPassiveSteeringFlag = false;
+                passiveDistance = 0;
+                passiveCounter = 0;
                 completeUturn = true;
             }
             if (Uturn && completeUturn)
