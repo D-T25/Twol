@@ -727,17 +727,36 @@ namespace Twol
                 double.TryParse(words[11], NumberStyles.Float, CultureInfo.InvariantCulture, out vtgSpeed);
                 vtgSpeed *= 1.852f;
 
-                //imu heading
-                double.TryParse(words[12], NumberStyles.Float, CultureInfo.InvariantCulture, out imuHeading);
+                // PANDA IMU measurements are transmitted in degrees and degrees per second.
+                // Reset each value so an omitted field cannot leave a stale heading active.
+                imuHeading = ushort.MaxValue;
+                imuRoll = short.MaxValue;
+                imuPitch = short.MaxValue;
+                imuYawRate = short.MaxValue;
 
-                //dualRoll
-                double.TryParse(words[13], NumberStyles.Float, CultureInfo.InvariantCulture, out imuRoll);
+                if (words.Length > 12
+                    && double.TryParse(words[12], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedImuHeading)
+                    && !double.IsNaN(parsedImuHeading) && !double.IsInfinity(parsedImuHeading)
+                    && parsedImuHeading >= 0 && parsedImuHeading <= 360)
+                    imuHeading = parsedImuHeading;
 
-                //Pitch
-                double.TryParse(words[14], NumberStyles.Float, CultureInfo.InvariantCulture, out imuPitch);
+                if (words.Length > 13
+                    && double.TryParse(words[13], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedImuRoll)
+                    && !double.IsNaN(parsedImuRoll) && !double.IsInfinity(parsedImuRoll)
+                    && Math.Abs(parsedImuRoll) <= 180)
+                    imuRoll = parsedImuRoll;
 
-                //YawRate
-                double.TryParse(words[15], NumberStyles.Float, CultureInfo.InvariantCulture, out imuYawRate);
+                if (words.Length > 14
+                    && double.TryParse(words[14], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedImuPitch)
+                    && !double.IsNaN(parsedImuPitch) && !double.IsInfinity(parsedImuPitch)
+                    && Math.Abs(parsedImuPitch) <= 90)
+                    imuPitch = parsedImuPitch;
+
+                if (words.Length > 15
+                    && double.TryParse(words[15], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedImuYawRate)
+                    && !double.IsNaN(parsedImuYawRate) && !double.IsInfinity(parsedImuYawRate)
+                    && Math.Abs(parsedImuYawRate) <= 720)
+                    imuYawRate = parsedImuYawRate;
 
                 isDualGPSConnected = false;
 

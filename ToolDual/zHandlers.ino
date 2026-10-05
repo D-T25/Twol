@@ -1,9 +1,10 @@
 #include <Arduino.h>
+#include <math.h>
 // Conversion to Hexidecimal
 const char *asciiHex = "0123456789ABCDEF";
 
 // the new PANDA sentence buffer
-char nmea[100];
+char nmea[180];
 
 // GGA
 char fixTime[12];
@@ -22,10 +23,10 @@ char vtgHeading[12] = {};
 char speedKnots[10] = {};
 
 // IMU
-char imuHeading[6];
-char imuRoll[6];
-char imuPitch[6];
-char imuYawRate[6];
+char imuHeading[12];
+char imuRoll[12];
+char imuPitch[12];
+char imuYawRate[12];
 
 // HPR
 char solQuality[2];
@@ -82,6 +83,73 @@ void GGA_Handler() // Rec'd GGA
   gpsReadyTime = systick_millis_count; // Used for GGA timeout (LED's ETC)
 }
 
+void setToolImuReports()
+{
+  toolImu.enableReport(SH2_ROTATION_VECTOR, REPORT_INTERVAL * 1000);
+  toolImu.enableReport(SH2_GYROSCOPE_CALIBRATED, REPORT_INTERVAL * 1000);
+}
+
+void quaternionToToolEuler(float qr, float qi, float qj, float qk)
+{
+  float sqr = qr * qr;
+  float sqi = qi * qi;
+  float sqj = qj * qj;
+  float sqk = qk * qk;
+
+  double yaw = atan2(2.0 * (qi * qj + qk * qr), (sqi - sqj - sqk + sqr));
+  double sinPitch = -2.0 * (qi * qk - qj * qr) / (sqi + sqj + sqk + sqr);
+  if (sinPitch > 1.0) sinPitch = 1.0;
+  if (sinPitch < -1.0) sinPitch = -1.0;
+  double pitch = asin(sinPitch);
+  double roll = atan2(2.0 * (qj * qk + qi * qr), (-sqi - sqj + sqk + sqr));
+
+  // BNO yaw is positive counter-clockwise around its upward Z axis. Twol's
+  // heading is degrees clockwise from north, so invert yaw and wrap to [0,360).
+  toolImuHeading = fmod(360.0 - yaw * 57.29577951308232, 360.0);
+  if (toolImuHeading < 0) toolImuHeading += 360.0;
+  toolImuPitch = pitch * 57.29577951308232;
+  toolImuRoll = roll * 57.29577951308232;
+}
+
+void updateToolImu()
+{
+  if (!toolImuConnected) return;
+
+  if (toolImu.wasReset())
+  {
+    toolImuHeadingValid = false;
+    setToolImuReports();
+  }
+
+  while (toolImu.getSensorEvent(&toolImuSensorValue))
+  {
+    if (toolImuSensorValue.sensorId == SH2_ROTATION_VECTOR)
+    {
+      // Avoid using the absolute heading until the BNO reports at least
+      // medium calibration accuracy (status 1 of 0..3).
+      if (toolImuSensorValue.status >= 1)
+      {
+        quaternionToToolEuler(
+          toolImuSensorValue.un.rotationVector.real,
+          toolImuSensorValue.un.rotationVector.i,
+          toolImuSensorValue.un.rotationVector.j,
+          toolImuSensorValue.un.rotationVector.k);
+        toolImuHeadingValid = true;
+        toolImuLastUpdate = millis();
+      }
+    }
+    else if (toolImuSensorValue.sensorId == SH2_GYROSCOPE_CALIBRATED)
+    {
+      // The IMU should be mounted with its Z axis vertical. Convert clockwise
+      // yaw rate to degrees/second for the PANDA sentence.
+      toolImuYawRate = -toolImuSensorValue.un.gyroscope.z * 57.29577951308232;
+    }
+  }
+
+  if (toolImuHeadingValid && (uint32_t)(millis() - toolImuLastUpdate) > 500)
+    toolImuHeadingValid = false;
+}
+
 void imuHandler()
 {
   if (useDual) // in UM982 case
@@ -103,7 +171,21 @@ void imuHandler()
 
     int16_t yawRatex10 = (int16_t)(headingRate * 10);
     itoa(yawRatex10, imuYawRate, 10);
-
+  }
+  else if (toolImuConnected && toolImuHeadingValid
+           && (uint32_t)(millis() - toolImuLastUpdate) <= 500)
+  {
+    dtostrf(toolImuHeading, 6, 2, imuHeading);
+    dtostrf(toolImuRoll, 6, 2, imuRoll);
+    dtostrf(toolImuPitch, 6, 2, imuPitch);
+    dtostrf(toolImuYawRate, 6, 2, imuYawRate);
+  }
+  else
+  {
+    imuHeading[0] = '\0';
+    imuRoll[0] = '\0';
+    imuPitch[0] = '\0';
+    imuYawRate[0] = '\0';
   }
 }
 

@@ -93,6 +93,14 @@ int relposnedByteCount = 0;
 
 #include "zNMEAParser.h"
 #include <Wire.h>
+#include <Adafruit_BNO08x.h>
+
+Adafruit_BNO08x toolImu(-1);
+sh2_SensorValue_t toolImuSensorValue;
+bool toolImuConnected = false;
+bool toolImuHeadingValid = false;
+double toolImuHeading = 0, toolImuRoll = 0, toolImuPitch = 0, toolImuYawRate = 0;
+uint32_t toolImuLastUpdate = 0;
 
 bool useDual = false;
 bool dualReadyGGA = false;
@@ -191,11 +199,23 @@ void setup()
     EthernetStart();
 
     Serial.println("\r\nStarting IMU...");
+    toolImuConnected = toolImu.begin_I2C();
+    if (toolImuConnected)
+    {
+        Serial.println("Tool BNO08x IMU connected");
+        setToolImuReports();
+    }
+    else
+    {
+        Serial.println("Tool BNO08x IMU not found; single-GNSS mode will use course over ground");
+    }
     Serial.println("\r\nEnd setup, waiting for GPS...\r\n");
 }
 
 void loop()
 {
+    updateToolImu();
+
     // Read incoming nmea from GPS
     if (SerialGPS.available())
     {
@@ -225,10 +245,11 @@ void loop()
         }
     }
 
-    // If both dual messages are ready, send to AgOpen
-    // Serial.println("Dual GGA Ready: " + String(dualReadyGGA) + " RelPos Ready: " + String(dualReadyRelPos));
-    if (dualReadyGGA == true && dualReadyRelPos == true)
+    // Dual mode waits for matching GGA and heading data. Single-antenna mode
+    // sends one PANDA sentence per position fix, including implement IMU data.
+    if (dualReadyGGA && (dualReadyRelPos || !useDual))
     {
+        if (!useDual) imuHandler();
         BuildNmea();
         dualReadyGGA = false;
         dualReadyRelPos = false;

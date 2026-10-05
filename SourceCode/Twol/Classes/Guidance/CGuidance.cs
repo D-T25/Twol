@@ -73,6 +73,13 @@ namespace Twol
                     && mf.pnTool.headingTrueDual != float.MaxValue
                     && !double.IsNaN(mf.pnTool.headingTrueDual)
                     && !double.IsInfinity(mf.pnTool.headingTrueDual);
+                DateTime toolNow = DateTime.UtcNow;
+                bool hasToolImuHeading = !mf.pnTool.isDualGPSConnected
+                    && mf.ahrsTool.imuHeadingLastUpdateUtc != DateTime.MinValue
+                    && (toolNow - mf.ahrsTool.imuHeadingLastUpdateUtc).TotalMilliseconds <= 500
+                    && mf.ahrsTool.imuHeading >= 0 && mf.ahrsTool.imuHeading < 360
+                    && !double.IsNaN(mf.ahrsTool.imuHeading)
+                    && !double.IsInfinity(mf.ahrsTool.imuHeading);
                 bool hasToolCourse = !mf.pnTool.isDualGPSConnected
                     && mf.pnTool.headingTrue != float.MaxValue
                     && !double.IsNaN(mf.pnTool.headingTrue)
@@ -82,9 +89,12 @@ namespace Twol
                 {
                     toolGuidancePoint = new vec2(mf.toolPos);
                 }
-                else if (hasToolCourse)
+                else if (hasToolImuHeading || hasToolCourse)
                 {
-                    double toolHeading = glm.toRadians(mf.pnTool.headingTrue);
+                    // Prefer implement orientation over course over ground: the tool can crab sideways
+                    // while its row units still point along its body heading.
+                    double headingDegrees = hasToolImuHeading ? mf.ahrsTool.imuHeading : mf.pnTool.headingTrue;
+                    double toolHeading = glm.toRadians(headingDegrees);
                     double foreAftOffset = Settings.Tool.setToolSteer.pivotToAntennaDistance
                         + Settings.Tool.setToolSteer.PivotToToolDistance;
                     toolGuidancePoint = new vec2(

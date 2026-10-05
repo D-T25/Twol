@@ -769,27 +769,38 @@ namespace Twol
                     }
                     else
                     {
-
-                        if (pnTool.imuHeading != ushort.MaxValue)
+                        if (pnTool.imuHeading != ushort.MaxValue
+                            && !double.IsNaN(pnTool.imuHeading) && !double.IsInfinity(pnTool.imuHeading)
+                            && pnTool.imuHeading >= 0 && pnTool.imuHeading <= 360)
                         {
-                            ahrsTool.imuHeading = pnTool.imuHeading;
-                            ahrsTool.imuHeading *= 0.1;
+                            double toolHeading = pnTool.imuHeading + Settings.Tool.setToolSteer.dualHeadingOffset;
+                            toolHeading %= 360.0;
+                            if (toolHeading < 0) toolHeading += 360.0;
+                            ahrsTool.imuHeading = toolHeading;
+                            ahrsTool.imuHeadingLastUpdateUtc = DateTime.UtcNow;
+                        }
+                        else
+                        {
+                            ahrsTool.imuHeading = 99999;
+                            ahrsTool.imuHeadingLastUpdateUtc = DateTime.MinValue;
                         }
 
-                        if (pnTool.imuRoll != short.MaxValue)
+                        if (pnTool.imuRoll != short.MaxValue
+                            && !double.IsNaN(pnTool.imuRoll) && !double.IsInfinity(pnTool.imuRoll))
                         {
                             double rollK = pnTool.imuRoll;
-                            if (Settings.Tool.setToolSteer.invertRoll) rollK *= -0.1;
-                            else rollK *= 0.1;
+                            if (Settings.Tool.setToolSteer.invertRoll) rollK *= -1;
                             rollK -= Settings.Tool.setToolSteer.rollZero;
                             ahrsTool.imuRoll = rollK;
-
-                            ahrsTool.imuPitch = pnTool.imuPitch;
-                            ahrsTool.imuYawRate = pnTool.imuYawRate;
-
-                            pnTool.imuHeading = ushort.MaxValue;
-                            pnTool.imuRoll = short.MaxValue;
                         }
+
+                        if (pnTool.imuPitch != short.MaxValue
+                            && !double.IsNaN(pnTool.imuPitch) && !double.IsInfinity(pnTool.imuPitch))
+                            ahrsTool.imuPitch = pnTool.imuPitch;
+
+                        if (pnTool.imuYawRate != short.MaxValue
+                            && !double.IsNaN(pnTool.imuYawRate) && !double.IsInfinity(pnTool.imuYawRate))
+                            ahrsTool.imuYawRate = pnTool.imuYawRate;
                     }
 
                     //new tool start
