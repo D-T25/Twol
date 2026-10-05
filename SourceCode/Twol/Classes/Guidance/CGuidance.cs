@@ -94,6 +94,12 @@ namespace Twol
                     // Prefer implement orientation over course over ground: the tool can crab sideways
                     // while its row units still point along its body heading.
                     double headingDegrees = hasToolImuHeading ? mf.ahrsTool.imuHeading : mf.pnTool.headingTrue;
+                    // Course over ground points in the direction of travel. When the tractor is backing,
+                    // that is opposite the tool's forward axis; IMU and dual-GNSS headings are body headings.
+                    if (!hasToolImuHeading && hasToolCourse && mf.isReverse)
+                        headingDegrees += 180.0;
+                    headingDegrees %= 360.0;
+                    if (headingDegrees < 0) headingDegrees += 360.0;
                     double toolHeading = glm.toRadians(headingDegrees);
                     double foreAftOffset = Settings.Tool.setToolSteer.pivotToAntennaDistance
                         + Settings.Tool.setToolSteer.PivotToToolDistance;
@@ -349,7 +355,8 @@ namespace Twol
                     //Passive Tool Steering
                     if (Settings.Tool.setToolSteer.isPassiveSteering)
                     {
-                        if (Uturn || mf.sectionOnCounter == 0)
+                        bool allowReversePassive = mf.isReverse && Settings.Vehicle.setAS_isSteerInReverse;
+                        if (Uturn || (mf.sectionOnCounter == 0 && !allowReversePassive))
                         {
                             isPassiveTriggered = true;
                             isPassiveSteeringFlag = false;
@@ -455,7 +462,8 @@ namespace Twol
                                 double correctionSeconds = (now - passiveCorrectionLastTime).TotalSeconds;
                                 if (correctionSeconds < 0) correctionSeconds = 0;
                                 if (correctionSeconds > 0.5) correctionSeconds = 0.5;
-                                double maxCorrectionStep = 0.20 * correctionSeconds;
+                                double maxCorrectionRate = allowReversePassive ? 0.10 : 0.20;
+                                double maxCorrectionStep = maxCorrectionRate * correctionSeconds;
                                 if (errorProp > maxCorrectionStep) errorProp = maxCorrectionStep;
                                 if (errorProp < -maxCorrectionStep) errorProp = -maxCorrectionStep;
                                 passiveDistance += errorProp;
@@ -466,7 +474,11 @@ namespace Twol
                             if (passiveDistance > 1.0) passiveDistance = 1.0;
                             if (passiveDistance < -1.0) passiveDistance = -1.0;
 
-                            if (mf.pn.avgSpeed < 2) passiveDistance = 0;
+                            // Keep correction available at corner-backing speeds, but clear it when
+                            // nearly stopped so GPS drift cannot build a steering offset. Forward
+                            // passive guidance retains its existing 2 km/h reset behavior.
+                            double passiveSpeedReset = allowReversePassive ? 0.3 : 2.0;
+                            if (mf.pn.avgSpeed < passiveSpeedReset) passiveDistance = 0;
 
                             double passiveDist = segAvg + passiveDistance;
                             goalPoint.easting += (Math.Sin(curList[B].heading + 1.57) * passiveDist);
