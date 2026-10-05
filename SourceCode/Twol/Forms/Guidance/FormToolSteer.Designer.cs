@@ -1,1735 +1,1 @@
-ï»¿namespace Twol
-{
-    partial class FormToolSteer
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormToolSteer));
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabGain = new System.Windows.Forms.TabPage();
-            this.hsbarMinPWM_Tool = new System.Windows.Forms.HScrollBar();
-            this.hsbarHighPWM_Tool = new System.Windows.Forms.HScrollBar();
-            this.lblMinPWM_Tool = new System.Windows.Forms.Label();
-            this.lblHighPWM_Tool = new System.Windows.Forms.Label();
-            this.lblPGain_Tool = new System.Windows.Forms.Label();
-            this.lblIntegral_Tool = new System.Windows.Forms.Label();
-            this.hsbarPGain_Tool = new System.Windows.Forms.HScrollBar();
-            this.label89 = new System.Windows.Forms.Label();
-            this.label88 = new System.Windows.Forms.Label();
-            this.label87 = new System.Windows.Forms.Label();
-            this.hsbarIntegral_Tool = new System.Windows.Forms.HScrollBar();
-            this.label27 = new System.Windows.Forms.Label();
-            this.tabSteer = new System.Windows.Forms.TabPage();
-            this.lblAV_Set = new System.Windows.Forms.Label();
-            this.lblAV_Act = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.lblActualSteerAngleUpper = new System.Windows.Forms.Label();
-            this.label96 = new System.Windows.Forms.Label();
-            this.hsbarZeroWAS_Tool = new System.Windows.Forms.HScrollBar();
-            this.lblActuatorLimitsPercent = new System.Windows.Forms.Label();
-            this.label101 = new System.Windows.Forms.Label();
-            this.hsbarLowHighDistance = new System.Windows.Forms.HScrollBar();
-            this.lblLowHighDistance = new System.Windows.Forms.Label();
-            this.lblZeroWAS_Tool = new System.Windows.Forms.Label();
-            this.hsbarActuatorLimitsPercent = new System.Windows.Forms.HScrollBar();
-            this.label99 = new System.Windows.Forms.Label();
-            this.nudDeadzoneWidth = new Twol.NudlessNumericUpDown();
-            this.btnZeroWAS_Tool = new System.Windows.Forms.Button();
-            this.tabDeadzone = new System.Windows.Forms.TabPage();
-            this.hsbarPassiveIntegralGain = new System.Windows.Forms.HScrollBar();
-            this.hsbarPassiveCurvature = new System.Windows.Forms.HScrollBar();
-            this.lblManualPWM_Percent = new System.Windows.Forms.Label();
-            this.hsbarManualPWM_Percent = new System.Windows.Forms.HScrollBar();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.lblCurvatureGain = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.hsbarManualSecondsOn = new System.Windows.Forms.HScrollBar();
-            this.lblPassiveIntegralGain = new System.Windows.Forms.Label();
-            this.lblManualSecondsOn = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lblPWMDisplay = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnExpand = new Twol.RepeatButton();
-            this.tabToolSetup = new System.Windows.Forms.TabControl();
-            this.tabModes = new System.Windows.Forms.TabPage();
-            this.cboxIsRecordToolLine = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cboxIsPassiveSteering = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cboxRecordSourceTool = new System.Windows.Forms.CheckBox();
-            this.cboxIsFollowCurrent = new System.Windows.Forms.CheckBox();
-            this.cboxIsFollowPivot = new System.Windows.Forms.CheckBox();
-            this.tabActive = new System.Windows.Forms.TabPage();
-            this.label22 = new System.Windows.Forms.Label();
-            this.btnDeleteTracks = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.btnBuildToolTracks = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
-            this.btnDeleteRecordedTracks = new System.Windows.Forms.Button();
-            this.cboxPassesPerReference = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nudToolGuidanceSpacing = new Twol.NudlessNumericUpDown();
-            this.nudNudge = new Twol.NudlessNumericUpDown();
-            this.tabSetup = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.cboxDirectionalValveEnable = new System.Windows.Forms.CheckBox();
-            this.nudDirectionalValveOnTime = new Twol.NudlessNumericUpDown();
-            this.nudDirectionalValveOffTime = new Twol.NudlessNumericUpDown();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label83 = new System.Windows.Forms.Label();
-            this.cboxInvertAPOS = new System.Windows.Forms.CheckBox();
-            this.cboxInvertActuator = new System.Windows.Forms.CheckBox();
-            this.tabAntenna = new System.Windows.Forms.TabPage();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.lblInvertRoll = new System.Windows.Forms.Label();
-            this.lblRollZeroOffset = new System.Windows.Forms.Label();
-            this.lblZeroRoll = new System.Windows.Forms.Label();
-            this.lblHeadingOffset = new System.Windows.Forms.Label();
-            this.lblRemoveOffset = new System.Windows.Forms.Label();
-            this.cboxDataInvertRoll = new System.Windows.Forms.CheckBox();
-            this.btnZeroRoll = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnRemoveZeroOffset = new System.Windows.Forms.Button();
-            this.nudPivotToTool = new Twol.NudlessNumericUpDown();
-            this.nudPivotToAntenna = new Twol.NudlessNumericUpDown();
-            this.btnRollOffsetUp = new Twol.RepeatButton();
-            this.btnRollOffsetDown = new Twol.RepeatButton();
-            this.nudDualHeadingOffset = new Twol.NudlessNumericUpDown();
-            this.nudAntennaHeight_Tool = new Twol.NudlessNumericUpDown();
-            this.nudAntennaOffset_Tool = new Twol.NudlessNumericUpDown();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.tabControl1.SuspendLayout();
-            this.tabGain.SuspendLayout();
-            this.tabSteer.SuspendLayout();
-            this.tabDeadzone.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.tabToolSetup.SuspendLayout();
-            this.tabModes.SuspendLayout();
-            this.tabActive.SuspendLayout();
-            this.tabSetup.SuspendLayout();
-            this.tabAntenna.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 250;
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tabControl1.Controls.Add(this.tabGain);
-            this.tabControl1.Controls.Add(this.tabSteer);
-            this.tabControl1.Controls.Add(this.tabDeadzone);
-            this.tabControl1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.ImageList = this.imageList1;
-            this.tabControl1.ItemSize = new System.Drawing.Size(120, 48);
-            this.tabControl1.Location = new System.Drawing.Point(2, 5);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControl1.Multiline = true;
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(373, 449);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControl1.TabIndex = 347;
-            // 
-            // tabGain
-            // 
-            this.tabGain.AutoScroll = true;
-            this.tabGain.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.tabGain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tabGain.Controls.Add(this.hsbarMinPWM_Tool);
-            this.tabGain.Controls.Add(this.hsbarHighPWM_Tool);
-            this.tabGain.Controls.Add(this.lblMinPWM_Tool);
-            this.tabGain.Controls.Add(this.lblHighPWM_Tool);
-            this.tabGain.Controls.Add(this.lblPGain_Tool);
-            this.tabGain.Controls.Add(this.lblIntegral_Tool);
-            this.tabGain.Controls.Add(this.hsbarPGain_Tool);
-            this.tabGain.Controls.Add(this.label89);
-            this.tabGain.Controls.Add(this.label88);
-            this.tabGain.Controls.Add(this.label87);
-            this.tabGain.Controls.Add(this.hsbarIntegral_Tool);
-            this.tabGain.Controls.Add(this.label27);
-            this.tabGain.ImageIndex = 1;
-            this.tabGain.Location = new System.Drawing.Point(4, 52);
-            this.tabGain.Name = "tabGain";
-            this.tabGain.Size = new System.Drawing.Size(365, 393);
-            this.tabGain.TabIndex = 13;
-            // 
-            // hsbarMinPWM_Tool
-            // 
-            this.hsbarMinPWM_Tool.LargeChange = 1;
-            this.hsbarMinPWM_Tool.Location = new System.Drawing.Point(57, 338);
-            this.hsbarMinPWM_Tool.Maximum = 200;
-            this.hsbarMinPWM_Tool.Name = "hsbarMinPWM_Tool";
-            this.hsbarMinPWM_Tool.Size = new System.Drawing.Size(302, 40);
-            this.hsbarMinPWM_Tool.TabIndex = 557;
-            this.hsbarMinPWM_Tool.Value = 10;
-            this.hsbarMinPWM_Tool.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarMinPWM_Tool_Scroll);
-            // 
-            // hsbarHighPWM_Tool
-            // 
-            this.hsbarHighPWM_Tool.LargeChange = 2;
-            this.hsbarHighPWM_Tool.Location = new System.Drawing.Point(57, 238);
-            this.hsbarHighPWM_Tool.Maximum = 255;
-            this.hsbarHighPWM_Tool.Name = "hsbarHighPWM_Tool";
-            this.hsbarHighPWM_Tool.Size = new System.Drawing.Size(302, 40);
-            this.hsbarHighPWM_Tool.TabIndex = 555;
-            this.hsbarHighPWM_Tool.Value = 50;
-            this.hsbarHighPWM_Tool.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarHighPWM_Tool_Scroll);
-            // 
-            // lblMinPWM_Tool
-            // 
-            this.lblMinPWM_Tool.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinPWM_Tool.ForeColor = System.Drawing.Color.Black;
-            this.lblMinPWM_Tool.Location = new System.Drawing.Point(4, 340);
-            this.lblMinPWM_Tool.Name = "lblMinPWM_Tool";
-            this.lblMinPWM_Tool.Size = new System.Drawing.Size(56, 35);
-            this.lblMinPWM_Tool.TabIndex = 558;
-            this.lblMinPWM_Tool.Text = "888";
-            this.lblMinPWM_Tool.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblHighPWM_Tool
-            // 
-            this.lblHighPWM_Tool.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHighPWM_Tool.ForeColor = System.Drawing.Color.Black;
-            this.lblHighPWM_Tool.Location = new System.Drawing.Point(4, 239);
-            this.lblHighPWM_Tool.Name = "lblHighPWM_Tool";
-            this.lblHighPWM_Tool.Size = new System.Drawing.Size(56, 35);
-            this.lblHighPWM_Tool.TabIndex = 556;
-            this.lblHighPWM_Tool.Text = "888";
-            this.lblHighPWM_Tool.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblPGain_Tool
-            // 
-            this.lblPGain_Tool.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPGain_Tool.ForeColor = System.Drawing.Color.Black;
-            this.lblPGain_Tool.Location = new System.Drawing.Point(4, 37);
-            this.lblPGain_Tool.Name = "lblPGain_Tool";
-            this.lblPGain_Tool.Size = new System.Drawing.Size(56, 35);
-            this.lblPGain_Tool.TabIndex = 554;
-            this.lblPGain_Tool.Text = "888";
-            this.lblPGain_Tool.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblIntegral_Tool
-            // 
-            this.lblIntegral_Tool.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIntegral_Tool.ForeColor = System.Drawing.Color.Black;
-            this.lblIntegral_Tool.Location = new System.Drawing.Point(4, 138);
-            this.lblIntegral_Tool.Name = "lblIntegral_Tool";
-            this.lblIntegral_Tool.Size = new System.Drawing.Size(56, 35);
-            this.lblIntegral_Tool.TabIndex = 352;
-            this.lblIntegral_Tool.Text = "888";
-            this.lblIntegral_Tool.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // hsbarPGain_Tool
-            // 
-            this.hsbarPGain_Tool.LargeChange = 1;
-            this.hsbarPGain_Tool.Location = new System.Drawing.Point(57, 36);
-            this.hsbarPGain_Tool.Maximum = 255;
-            this.hsbarPGain_Tool.Minimum = 1;
-            this.hsbarPGain_Tool.Name = "hsbarPGain_Tool";
-            this.hsbarPGain_Tool.Size = new System.Drawing.Size(302, 40);
-            this.hsbarPGain_Tool.TabIndex = 553;
-            this.hsbarPGain_Tool.Value = 4;
-            this.hsbarPGain_Tool.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarPGain_Tool_Scroll);
-            // 
-            // label89
-            // 
-            this.label89.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label89.ForeColor = System.Drawing.Color.Black;
-            this.label89.Location = new System.Drawing.Point(82, 8);
-            this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(262, 24);
-            this.label89.TabIndex = 559;
-            this.label89.Text = "Proportional Gain";
-            this.label89.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label88
-            // 
-            this.label88.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label88.ForeColor = System.Drawing.Color.Black;
-            this.label88.Location = new System.Drawing.Point(82, 210);
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(262, 24);
-            this.label88.TabIndex = 560;
-            this.label88.Text = "Maximum PWM";
-            this.label88.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label87
-            // 
-            this.label87.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label87.ForeColor = System.Drawing.Color.Black;
-            this.label87.Location = new System.Drawing.Point(82, 310);
-            this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(262, 24);
-            this.label87.TabIndex = 561;
-            this.label87.Text = "Minimum PWM to Move";
-            this.label87.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // hsbarIntegral_Tool
-            // 
-            this.hsbarIntegral_Tool.LargeChange = 1;
-            this.hsbarIntegral_Tool.Location = new System.Drawing.Point(57, 135);
-            this.hsbarIntegral_Tool.Maximum = 255;
-            this.hsbarIntegral_Tool.Name = "hsbarIntegral_Tool";
-            this.hsbarIntegral_Tool.Size = new System.Drawing.Size(302, 40);
-            this.hsbarIntegral_Tool.TabIndex = 351;
-            this.hsbarIntegral_Tool.Value = 5;
-            this.hsbarIntegral_Tool.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarIntegral_Tool_Scroll);
-            // 
-            // label27
-            // 
-            this.label27.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.Black;
-            this.label27.Location = new System.Drawing.Point(77, 105);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(273, 26);
-            this.label27.TabIndex = 350;
-            this.label27.Text = "Deriative Gain";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label27.UseCompatibleTextRendering = true;
-            // 
-            // tabSteer
-            // 
-            this.tabSteer.AutoScroll = true;
-            this.tabSteer.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.tabSteer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tabSteer.Controls.Add(this.lblAV_Set);
-            this.tabSteer.Controls.Add(this.lblAV_Act);
-            this.tabSteer.Controls.Add(this.label36);
-            this.tabSteer.Controls.Add(this.label51);
-            this.tabSteer.Controls.Add(this.label38);
-            this.tabSteer.Controls.Add(this.lblActualSteerAngleUpper);
-            this.tabSteer.Controls.Add(this.label96);
-            this.tabSteer.Controls.Add(this.hsbarZeroWAS_Tool);
-            this.tabSteer.Controls.Add(this.lblActuatorLimitsPercent);
-            this.tabSteer.Controls.Add(this.label101);
-            this.tabSteer.Controls.Add(this.hsbarLowHighDistance);
-            this.tabSteer.Controls.Add(this.lblLowHighDistance);
-            this.tabSteer.Controls.Add(this.lblZeroWAS_Tool);
-            this.tabSteer.Controls.Add(this.hsbarActuatorLimitsPercent);
-            this.tabSteer.Controls.Add(this.label99);
-            this.tabSteer.Controls.Add(this.nudDeadzoneWidth);
-            this.tabSteer.Controls.Add(this.btnZeroWAS_Tool);
-            this.tabSteer.ImageIndex = 4;
-            this.tabSteer.Location = new System.Drawing.Point(4, 52);
-            this.tabSteer.Name = "tabSteer";
-            this.tabSteer.Size = new System.Drawing.Size(365, 393);
-            this.tabSteer.TabIndex = 5;
-            // 
-            // lblAV_Set
-            // 
-            this.lblAV_Set.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblAV_Set.AutoSize = true;
-            this.lblAV_Set.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAV_Set.Location = new System.Drawing.Point(-418, 18);
-            this.lblAV_Set.Name = "lblAV_Set";
-            this.lblAV_Set.Size = new System.Drawing.Size(51, 19);
-            this.lblAV_Set.TabIndex = 529;
-            this.lblAV_Set.Text = "-55.8";
-            this.lblAV_Set.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblAV_Act
-            // 
-            this.lblAV_Act.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblAV_Act.AutoSize = true;
-            this.lblAV_Act.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAV_Act.Location = new System.Drawing.Point(-418, 42);
-            this.lblAV_Act.Name = "lblAV_Act";
-            this.lblAV_Act.Size = new System.Drawing.Size(54, 19);
-            this.lblAV_Act.TabIndex = 528;
-            this.lblAV_Act.Text = "66.89";
-            this.lblAV_Act.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label36
-            // 
-            this.label36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(-462, 44);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(50, 16);
-            this.label36.TabIndex = 530;
-            this.label36.Text = "AV Act:";
-            this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label51
-            // 
-            this.label51.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label51.ForeColor = System.Drawing.Color.Black;
-            this.label51.Location = new System.Drawing.Point(56, 22);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(130, 25);
-            this.label51.TabIndex = 541;
-            this.label51.Text = "Dead Zone";
-            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label38
-            // 
-            this.label38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.Location = new System.Drawing.Point(-463, 20);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(51, 16);
-            this.label38.TabIndex = 531;
-            this.label38.Text = "AV Set:";
-            this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblActualSteerAngleUpper
-            // 
-            this.lblActualSteerAngleUpper.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblActualSteerAngleUpper.AutoSize = true;
-            this.lblActualSteerAngleUpper.BackColor = System.Drawing.Color.Transparent;
-            this.lblActualSteerAngleUpper.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblActualSteerAngleUpper.ForeColor = System.Drawing.Color.Black;
-            this.lblActualSteerAngleUpper.Location = new System.Drawing.Point(-657, 16);
-            this.lblActualSteerAngleUpper.Name = "lblActualSteerAngleUpper";
-            this.lblActualSteerAngleUpper.Size = new System.Drawing.Size(39, 19);
-            this.lblActualSteerAngleUpper.TabIndex = 324;
-            this.lblActualSteerAngleUpper.Text = "255";
-            this.lblActualSteerAngleUpper.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label96
-            // 
-            this.label96.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label96.ForeColor = System.Drawing.Color.Black;
-            this.label96.Location = new System.Drawing.Point(116, 309);
-            this.label96.Name = "label96";
-            this.label96.Size = new System.Drawing.Size(200, 24);
-            this.label96.TabIndex = 577;
-            this.label96.Text = "Actuator Limits %";
-            this.label96.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // hsbarZeroWAS_Tool
-            // 
-            this.hsbarZeroWAS_Tool.LargeChange = 20;
-            this.hsbarZeroWAS_Tool.Location = new System.Drawing.Point(76, 126);
-            this.hsbarZeroWAS_Tool.Maximum = 4000;
-            this.hsbarZeroWAS_Tool.Minimum = -4000;
-            this.hsbarZeroWAS_Tool.Name = "hsbarZeroWAS_Tool";
-            this.hsbarZeroWAS_Tool.Size = new System.Drawing.Size(281, 40);
-            this.hsbarZeroWAS_Tool.SmallChange = 2;
-            this.hsbarZeroWAS_Tool.TabIndex = 565;
-            this.hsbarZeroWAS_Tool.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarZeroWAS_Tool_Scroll);
-            // 
-            // lblActuatorLimitsPercent
-            // 
-            this.lblActuatorLimitsPercent.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblActuatorLimitsPercent.ForeColor = System.Drawing.Color.Black;
-            this.lblActuatorLimitsPercent.Location = new System.Drawing.Point(19, 333);
-            this.lblActuatorLimitsPercent.Name = "lblActuatorLimitsPercent";
-            this.lblActuatorLimitsPercent.Size = new System.Drawing.Size(52, 35);
-            this.lblActuatorLimitsPercent.TabIndex = 569;
-            this.lblActuatorLimitsPercent.Text = "888";
-            this.lblActuatorLimitsPercent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label101
-            // 
-            this.label101.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label101.ForeColor = System.Drawing.Color.Black;
-            this.label101.Location = new System.Drawing.Point(170, 88);
-            this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(166, 24);
-            this.label101.TabIndex = 566;
-            this.label101.Text = "Actuator Center";
-            this.label101.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // hsbarLowHighDistance
-            // 
-            this.hsbarLowHighDistance.LargeChange = 1;
-            this.hsbarLowHighDistance.Location = new System.Drawing.Point(76, 235);
-            this.hsbarLowHighDistance.Maximum = 200;
-            this.hsbarLowHighDistance.Minimum = 1;
-            this.hsbarLowHighDistance.Name = "hsbarLowHighDistance";
-            this.hsbarLowHighDistance.Size = new System.Drawing.Size(281, 40);
-            this.hsbarLowHighDistance.TabIndex = 570;
-            this.hsbarLowHighDistance.Value = 20;
-            this.hsbarLowHighDistance.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarLowHighDistance_Scroll);
-            // 
-            // lblLowHighDistance
-            // 
-            this.lblLowHighDistance.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLowHighDistance.ForeColor = System.Drawing.Color.Black;
-            this.lblLowHighDistance.Location = new System.Drawing.Point(19, 232);
-            this.lblLowHighDistance.Name = "lblLowHighDistance";
-            this.lblLowHighDistance.Size = new System.Drawing.Size(52, 35);
-            this.lblLowHighDistance.TabIndex = 571;
-            this.lblLowHighDistance.Text = "888";
-            this.lblLowHighDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblZeroWAS_Tool
-            // 
-            this.lblZeroWAS_Tool.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblZeroWAS_Tool.ForeColor = System.Drawing.Color.Black;
-            this.lblZeroWAS_Tool.Location = new System.Drawing.Point(6, 126);
-            this.lblZeroWAS_Tool.Name = "lblZeroWAS_Tool";
-            this.lblZeroWAS_Tool.Size = new System.Drawing.Size(70, 35);
-            this.lblZeroWAS_Tool.TabIndex = 567;
-            this.lblZeroWAS_Tool.Text = "-55.88";
-            this.lblZeroWAS_Tool.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // hsbarActuatorLimitsPercent
-            // 
-            this.hsbarActuatorLimitsPercent.LargeChange = 1;
-            this.hsbarActuatorLimitsPercent.Location = new System.Drawing.Point(76, 336);
-            this.hsbarActuatorLimitsPercent.Minimum = 2;
-            this.hsbarActuatorLimitsPercent.Name = "hsbarActuatorLimitsPercent";
-            this.hsbarActuatorLimitsPercent.Size = new System.Drawing.Size(281, 40);
-            this.hsbarActuatorLimitsPercent.TabIndex = 568;
-            this.hsbarActuatorLimitsPercent.Value = 20;
-            this.hsbarActuatorLimitsPercent.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarActuatorLimitsPercent_Scroll);
-            // 
-            // label99
-            // 
-            this.label99.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label99.ForeColor = System.Drawing.Color.Black;
-            this.label99.Location = new System.Drawing.Point(76, 207);
-            this.label99.Name = "label99";
-            this.label99.Size = new System.Drawing.Size(281, 24);
-            this.label99.TabIndex = 575;
-            this.label99.Text = "Low High Distance (cm)";
-            this.label99.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // nudDeadzoneWidth
-            // 
-            this.nudDeadzoneWidth.Location = new System.Drawing.Point(195, 17);
-            this.nudDeadzoneWidth.Mode = Twol.UnitMode.Small;
-            this.nudDeadzoneWidth.Name = "nudDeadzoneWidth";
-            this.nudDeadzoneWidth.Size = new System.Drawing.Size(107, 36);
-            this.nudDeadzoneWidth.TabIndex = 538;
-            this.nudDeadzoneWidth.ValueChanged += new System.EventHandler(this.nudDeadzoneWidth_ValueChanged);
-            // 
-            // btnZeroWAS_Tool
-            // 
-            this.btnZeroWAS_Tool.BackColor = System.Drawing.Color.MintCream;
-            this.btnZeroWAS_Tool.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnZeroWAS_Tool.FlatAppearance.BorderSize = 0;
-            this.btnZeroWAS_Tool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZeroWAS_Tool.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnZeroWAS_Tool.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnZeroWAS_Tool.Image = global::Twol.Properties.Resources.SteerZero;
-            this.btnZeroWAS_Tool.Location = new System.Drawing.Point(56, 85);
-            this.btnZeroWAS_Tool.Name = "btnZeroWAS_Tool";
-            this.btnZeroWAS_Tool.Size = new System.Drawing.Size(98, 30);
-            this.btnZeroWAS_Tool.TabIndex = 572;
-            this.btnZeroWAS_Tool.UseVisualStyleBackColor = false;
-            this.btnZeroWAS_Tool.Click += new System.EventHandler(this.btnZeroWAS_Tool_Click);
-            // 
-            // tabDeadzone
-            // 
-            this.tabDeadzone.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.tabDeadzone.Controls.Add(this.hsbarPassiveIntegralGain);
-            this.tabDeadzone.Controls.Add(this.hsbarPassiveCurvature);
-            this.tabDeadzone.Controls.Add(this.lblManualPWM_Percent);
-            this.tabDeadzone.Controls.Add(this.hsbarManualPWM_Percent);
-            this.tabDeadzone.Controls.Add(this.label6);
-            this.tabDeadzone.Controls.Add(this.label13);
-            this.tabDeadzone.Controls.Add(this.lblCurvatureGain);
-            this.tabDeadzone.Controls.Add(this.label11);
-            this.tabDeadzone.Controls.Add(this.hsbarManualSecondsOn);
-            this.tabDeadzone.Controls.Add(this.lblPassiveIntegralGain);
-            this.tabDeadzone.Controls.Add(this.lblManualSecondsOn);
-            this.tabDeadzone.Controls.Add(this.label7);
-            this.tabDeadzone.ImageIndex = 2;
-            this.tabDeadzone.Location = new System.Drawing.Point(4, 52);
-            this.tabDeadzone.Name = "tabDeadzone";
-            this.tabDeadzone.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeadzone.Size = new System.Drawing.Size(365, 393);
-            this.tabDeadzone.TabIndex = 17;
-            // 
-            // hsbarPassiveIntegralGain
-            // 
-            this.hsbarPassiveIntegralGain.LargeChange = 1;
-            this.hsbarPassiveIntegralGain.Location = new System.Drawing.Point(78, 144);
-            this.hsbarPassiveIntegralGain.Maximum = 25;
-            this.hsbarPassiveIntegralGain.Name = "hsbarPassiveIntegralGain";
-            this.hsbarPassiveIntegralGain.Size = new System.Drawing.Size(281, 40);
-            this.hsbarPassiveIntegralGain.TabIndex = 563;
-            this.hsbarPassiveIntegralGain.Value = 4;
-            this.hsbarPassiveIntegralGain.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarPassiveIntegralGain_Scroll);
-            // 
-            // hsbarPassiveCurvature
-            // 
-            this.hsbarPassiveCurvature.LargeChange = 1;
-            this.hsbarPassiveCurvature.Location = new System.Drawing.Point(81, 53);
-            this.hsbarPassiveCurvature.Maximum = 500;
-            this.hsbarPassiveCurvature.Name = "hsbarPassiveCurvature";
-            this.hsbarPassiveCurvature.Size = new System.Drawing.Size(281, 40);
-            this.hsbarPassiveCurvature.TabIndex = 560;
-            this.hsbarPassiveCurvature.Value = 4;
-            this.hsbarPassiveCurvature.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarPassiveCurvature_Scroll);
-            // 
-            // lblManualPWM_Percent
-            // 
-            this.lblManualPWM_Percent.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblManualPWM_Percent.ForeColor = System.Drawing.Color.Black;
-            this.lblManualPWM_Percent.Location = new System.Drawing.Point(3, 340);
-            this.lblManualPWM_Percent.Name = "lblManualPWM_Percent";
-            this.lblManualPWM_Percent.Size = new System.Drawing.Size(60, 35);
-            this.lblManualPWM_Percent.TabIndex = 586;
-            this.lblManualPWM_Percent.Text = "888";
-            this.lblManualPWM_Percent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // hsbarManualPWM_Percent
-            // 
-            this.hsbarManualPWM_Percent.LargeChange = 1;
-            this.hsbarManualPWM_Percent.Location = new System.Drawing.Point(67, 338);
-            this.hsbarManualPWM_Percent.Minimum = 10;
-            this.hsbarManualPWM_Percent.Name = "hsbarManualPWM_Percent";
-            this.hsbarManualPWM_Percent.Size = new System.Drawing.Size(292, 40);
-            this.hsbarManualPWM_Percent.TabIndex = 585;
-            this.hsbarManualPWM_Percent.Value = 50;
-            this.hsbarManualPWM_Percent.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarManualPWM_Percent_Scroll);
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(77, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(262, 24);
-            this.label6.TabIndex = 562;
-            this.label6.Text = "Passive Curve Gain";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label13
-            // 
-            this.label13.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(97, 309);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(273, 26);
-            this.label13.TabIndex = 584;
-            this.label13.Text = "Manual Steer PWM %";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label13.UseCompatibleTextRendering = true;
-            // 
-            // lblCurvatureGain
-            // 
-            this.lblCurvatureGain.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurvatureGain.ForeColor = System.Drawing.Color.Black;
-            this.lblCurvatureGain.Location = new System.Drawing.Point(11, 55);
-            this.lblCurvatureGain.Name = "lblCurvatureGain";
-            this.lblCurvatureGain.Size = new System.Drawing.Size(67, 35);
-            this.lblCurvatureGain.TabIndex = 561;
-            this.lblCurvatureGain.Text = "28.8";
-            this.lblCurvatureGain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label11
-            // 
-            this.label11.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(97, 223);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(273, 26);
-            this.label11.TabIndex = 581;
-            this.label11.Text = "Manual Steer Seconds On";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label11.UseCompatibleTextRendering = true;
-            // 
-            // hsbarManualSecondsOn
-            // 
-            this.hsbarManualSecondsOn.LargeChange = 1;
-            this.hsbarManualSecondsOn.Location = new System.Drawing.Point(67, 252);
-            this.hsbarManualSecondsOn.Maximum = 10;
-            this.hsbarManualSecondsOn.Minimum = 1;
-            this.hsbarManualSecondsOn.Name = "hsbarManualSecondsOn";
-            this.hsbarManualSecondsOn.Size = new System.Drawing.Size(292, 40);
-            this.hsbarManualSecondsOn.TabIndex = 582;
-            this.hsbarManualSecondsOn.Value = 2;
-            this.hsbarManualSecondsOn.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarManualSecondsOn_Scroll);
-            // 
-            // lblPassiveIntegralGain
-            // 
-            this.lblPassiveIntegralGain.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPassiveIntegralGain.ForeColor = System.Drawing.Color.Black;
-            this.lblPassiveIntegralGain.Location = new System.Drawing.Point(8, 146);
-            this.lblPassiveIntegralGain.Name = "lblPassiveIntegralGain";
-            this.lblPassiveIntegralGain.Size = new System.Drawing.Size(67, 35);
-            this.lblPassiveIntegralGain.TabIndex = 564;
-            this.lblPassiveIntegralGain.Text = "2.5";
-            this.lblPassiveIntegralGain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblManualSecondsOn
-            // 
-            this.lblManualSecondsOn.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblManualSecondsOn.ForeColor = System.Drawing.Color.Black;
-            this.lblManualSecondsOn.Location = new System.Drawing.Point(4, 254);
-            this.lblManualSecondsOn.Name = "lblManualSecondsOn";
-            this.lblManualSecondsOn.Size = new System.Drawing.Size(60, 35);
-            this.lblManualSecondsOn.TabIndex = 583;
-            this.lblManualSecondsOn.Text = "888";
-            this.lblManualSecondsOn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(74, 116);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(262, 24);
-            this.label7.TabIndex = 565;
-            this.label7.Text = "Passive Adj (seconds)";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Sf_PPTab.png");
-            this.imageList1.Images.SetKeyName(1, "ST_GainTab.png");
-            this.imageList1.Images.SetKeyName(2, "ConS_ImplementHitch.png");
-            this.imageList1.Images.SetKeyName(3, "ST_StanleyTab.png");
-            this.imageList1.Images.SetKeyName(4, "ST_SteerTab.png");
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.lblPWMDisplay);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.btnExpand);
-            this.panel2.Location = new System.Drawing.Point(4, 454);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(366, 55);
-            this.panel2.TabIndex = 324;
-            // 
-            // lblPWMDisplay
-            // 
-            this.lblPWMDisplay.BackColor = System.Drawing.Color.Transparent;
-            this.lblPWMDisplay.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPWMDisplay.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblPWMDisplay.Location = new System.Drawing.Point(64, 11);
-            this.lblPWMDisplay.Name = "lblPWMDisplay";
-            this.lblPWMDisplay.Size = new System.Drawing.Size(92, 37);
-            this.lblPWMDisplay.TabIndex = 330;
-            this.lblPWMDisplay.Text = "255";
-            this.lblPWMDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label9
-            // 
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(9, 17);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 23);
-            this.label9.TabIndex = 331;
-            this.label9.Text = "PWM:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // btnExpand
-            // 
-            this.btnExpand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnExpand.FlatAppearance.BorderColor = System.Drawing.SystemColors.AppWorkspace;
-            this.btnExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExpand.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExpand.Image = global::Twol.Properties.Resources.ArrowLeft;
-            this.btnExpand.Location = new System.Drawing.Point(251, 10);
-            this.btnExpand.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnExpand.Name = "btnExpand";
-            this.btnExpand.Size = new System.Drawing.Size(110, 37);
-            this.btnExpand.TabIndex = 329;
-            this.btnExpand.UseVisualStyleBackColor = true;
-            this.btnExpand.Click += new System.EventHandler(this.expandWindow_Click);
-            // 
-            // tabToolSetup
-            // 
-            this.tabToolSetup.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tabToolSetup.Controls.Add(this.tabModes);
-            this.tabToolSetup.Controls.Add(this.tabActive);
-            this.tabToolSetup.Controls.Add(this.tabSetup);
-            this.tabToolSetup.Controls.Add(this.tabAntenna);
-            this.tabToolSetup.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabToolSetup.ImageList = this.imageList2;
-            this.tabToolSetup.ItemSize = new System.Drawing.Size(141, 48);
-            this.tabToolSetup.Location = new System.Drawing.Point(373, 5);
-            this.tabToolSetup.Name = "tabToolSetup";
-            this.tabToolSetup.SelectedIndex = 0;
-            this.tabToolSetup.Size = new System.Drawing.Size(579, 504);
-            this.tabToolSetup.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabToolSetup.TabIndex = 528;
-            // 
-            // tabModes
-            // 
-            this.tabModes.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabModes.Controls.Add(this.cboxIsRecordToolLine);
-            this.tabModes.Controls.Add(this.label4);
-            this.tabModes.Controls.Add(this.label8);
-            this.tabModes.Controls.Add(this.cboxIsPassiveSteering);
-            this.tabModes.Controls.Add(this.label1);
-            this.tabModes.Controls.Add(this.cboxRecordSourceTool);
-            this.tabModes.Controls.Add(this.cboxIsFollowCurrent);
-            this.tabModes.Controls.Add(this.cboxIsFollowPivot);
-            this.tabModes.Location = new System.Drawing.Point(4, 52);
-            this.tabModes.Name = "tabModes";
-            this.tabModes.Size = new System.Drawing.Size(571, 448);
-            this.tabModes.TabIndex = 5;
-            this.tabModes.Text = "Modes";
-            // 
-            // cboxIsRecordToolLine
-            // 
-            this.cboxIsRecordToolLine.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxIsRecordToolLine.BackColor = System.Drawing.Color.AliceBlue;
-            this.cboxIsRecordToolLine.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxIsRecordToolLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxIsRecordToolLine.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxIsRecordToolLine.ForeColor = System.Drawing.Color.Black;
-            this.cboxIsRecordToolLine.Location = new System.Drawing.Point(332, 173);
-            this.cboxIsRecordToolLine.Name = "cboxIsRecordToolLine";
-            this.cboxIsRecordToolLine.Size = new System.Drawing.Size(217, 70);
-            this.cboxIsRecordToolLine.TabIndex = 592;
-            this.cboxIsRecordToolLine.Text = "Record Tool Lines";
-            this.cboxIsRecordToolLine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxIsRecordToolLine.UseVisualStyleBackColor = false;
-            this.cboxIsRecordToolLine.Click += new System.EventHandler(this.cboxIsRecordToolLine_Click);
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(28, 302);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(262, 30);
-            this.label4.TabIndex = 591;
-            this.label4.Text = "Passive Mode";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(308, 45);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(262, 24);
-            this.label8.TabIndex = 596;
-            this.label8.Text = "Record Source";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cboxIsPassiveSteering
-            // 
-            this.cboxIsPassiveSteering.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxIsPassiveSteering.BackColor = System.Drawing.Color.AliceBlue;
-            this.cboxIsPassiveSteering.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxIsPassiveSteering.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxIsPassiveSteering.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxIsPassiveSteering.ForeColor = System.Drawing.Color.Black;
-            this.cboxIsPassiveSteering.Location = new System.Drawing.Point(51, 342);
-            this.cboxIsPassiveSteering.Name = "cboxIsPassiveSteering";
-            this.cboxIsPassiveSteering.Size = new System.Drawing.Size(217, 70);
-            this.cboxIsPassiveSteering.TabIndex = 587;
-            this.cboxIsPassiveSteering.Text = "Curvature PID";
-            this.cboxIsPassiveSteering.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxIsPassiveSteering.UseVisualStyleBackColor = false;
-            this.cboxIsPassiveSteering.Click += new System.EventHandler(this.cboxIsPassiveSteering_Click);
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(28, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(262, 30);
-            this.label1.TabIndex = 590;
-            this.label1.Text = "Active Modes";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cboxRecordSourceTool
-            // 
-            this.cboxRecordSourceTool.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxRecordSourceTool.BackColor = System.Drawing.Color.AliceBlue;
-            this.cboxRecordSourceTool.Checked = true;
-            this.cboxRecordSourceTool.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cboxRecordSourceTool.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxRecordSourceTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxRecordSourceTool.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxRecordSourceTool.ForeColor = System.Drawing.Color.Black;
-            this.cboxRecordSourceTool.Location = new System.Drawing.Point(332, 72);
-            this.cboxRecordSourceTool.Name = "cboxRecordSourceTool";
-            this.cboxRecordSourceTool.Size = new System.Drawing.Size(217, 70);
-            this.cboxRecordSourceTool.TabIndex = 595;
-            this.cboxRecordSourceTool.Text = "Tool GPS";
-            this.cboxRecordSourceTool.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxRecordSourceTool.UseVisualStyleBackColor = false;
-            this.cboxRecordSourceTool.Click += new System.EventHandler(this.cboxRecordSourceTool_Click);
-            // 
-            // cboxIsFollowCurrent
-            // 
-            this.cboxIsFollowCurrent.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxIsFollowCurrent.BackColor = System.Drawing.Color.AliceBlue;
-            this.cboxIsFollowCurrent.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxIsFollowCurrent.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxIsFollowCurrent.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxIsFollowCurrent.ForeColor = System.Drawing.Color.Black;
-            this.cboxIsFollowCurrent.Location = new System.Drawing.Point(51, 72);
-            this.cboxIsFollowCurrent.Name = "cboxIsFollowCurrent";
-            this.cboxIsFollowCurrent.Size = new System.Drawing.Size(217, 70);
-            this.cboxIsFollowCurrent.TabIndex = 585;
-            this.cboxIsFollowCurrent.Text = "Guidance Line";
-            this.cboxIsFollowCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxIsFollowCurrent.UseVisualStyleBackColor = false;
-            this.cboxIsFollowCurrent.Click += new System.EventHandler(this.cboxIsFollowCurrent_Click);
-            // 
-            // cboxIsFollowPivot
-            // 
-            this.cboxIsFollowPivot.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxIsFollowPivot.BackColor = System.Drawing.Color.AliceBlue;
-            this.cboxIsFollowPivot.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxIsFollowPivot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxIsFollowPivot.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxIsFollowPivot.ForeColor = System.Drawing.Color.Black;
-            this.cboxIsFollowPivot.Location = new System.Drawing.Point(51, 173);
-            this.cboxIsFollowPivot.Name = "cboxIsFollowPivot";
-            this.cboxIsFollowPivot.Size = new System.Drawing.Size(217, 70);
-            this.cboxIsFollowPivot.TabIndex = 587;
-            this.cboxIsFollowPivot.Text = "Vehicle Pivot";
-            this.cboxIsFollowPivot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxIsFollowPivot.UseVisualStyleBackColor = false;
-            this.cboxIsFollowPivot.Click += new System.EventHandler(this.cboxIsFollowPivot_Click);
-            // 
-            // tabActive
-            // 
-            this.tabActive.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabActive.Controls.Add(this.label22);
-            this.tabActive.Controls.Add(this.btnDeleteTracks);
-            this.tabActive.Controls.Add(this.label21);
-            this.tabActive.Controls.Add(this.btnBuildToolTracks);
-            this.tabActive.Controls.Add(this.label20);
-            this.tabActive.Controls.Add(this.btnDeleteRecordedTracks);
-            this.tabActive.Controls.Add(this.cboxPassesPerReference);
-            this.tabActive.Controls.Add(this.label12);
-            this.tabActive.Controls.Add(this.label14);
-            this.tabActive.Controls.Add(this.label10);
-            this.tabActive.Controls.Add(this.label5);
-            this.tabActive.Controls.Add(this.nudToolGuidanceSpacing);
-            this.tabActive.Controls.Add(this.nudNudge);
-            this.tabActive.Location = new System.Drawing.Point(4, 52);
-            this.tabActive.Name = "tabActive";
-            this.tabActive.Size = new System.Drawing.Size(571, 448);
-            this.tabActive.TabIndex = 7;
-            this.tabActive.Text = "Active";
-            // 
-            // label22
-            // 
-            this.label22.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.Black;
-            this.label22.Location = new System.Drawing.Point(342, 13);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(201, 27);
-            this.label22.TabIndex = 608;
-            this.label22.Text = "Delete Tracks";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // btnDeleteTracks
-            // 
-            this.btnDeleteTracks.BackColor = System.Drawing.Color.White;
-            this.btnDeleteTracks.BackgroundImage = global::Twol.Properties.Resources.Trash;
-            this.btnDeleteTracks.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnDeleteTracks.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnDeleteTracks.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.btnDeleteTracks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteTracks.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteTracks.ForeColor = System.Drawing.Color.Black;
-            this.btnDeleteTracks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDeleteTracks.Location = new System.Drawing.Point(380, 45);
-            this.btnDeleteTracks.Name = "btnDeleteTracks";
-            this.btnDeleteTracks.Size = new System.Drawing.Size(126, 64);
-            this.btnDeleteTracks.TabIndex = 607;
-            this.btnDeleteTracks.UseVisualStyleBackColor = false;
-            this.btnDeleteTracks.Click += new System.EventHandler(this.btnDeleteAllTracks_Click);
-            // 
-            // label21
-            // 
-            this.label21.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.Black;
-            this.label21.Location = new System.Drawing.Point(342, 291);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(201, 60);
-            this.label21.TabIndex = 606;
-            this.label21.Text = "Build Tool Tracks";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // btnBuildToolTracks
-            // 
-            this.btnBuildToolTracks.BackColor = System.Drawing.Color.White;
-            this.btnBuildToolTracks.BackgroundImage = global::Twol.Properties.Resources.FileExportToolTracks;
-            this.btnBuildToolTracks.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnBuildToolTracks.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnBuildToolTracks.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.btnBuildToolTracks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuildToolTracks.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuildToolTracks.ForeColor = System.Drawing.Color.Black;
-            this.btnBuildToolTracks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBuildToolTracks.Location = new System.Drawing.Point(380, 358);
-            this.btnBuildToolTracks.Name = "btnBuildToolTracks";
-            this.btnBuildToolTracks.Size = new System.Drawing.Size(126, 75);
-            this.btnBuildToolTracks.TabIndex = 605;
-            this.btnBuildToolTracks.UseVisualStyleBackColor = false;
-            this.btnBuildToolTracks.Click += new System.EventHandler(this.btnBuildToolTracks_Click);
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Black;
-            this.label20.Location = new System.Drawing.Point(342, 139);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(201, 59);
-            this.label20.TabIndex = 604;
-            this.label20.Text = "Delete Recorded Tool Tracks";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // btnDeleteRecordedTracks
-            // 
-            this.btnDeleteRecordedTracks.BackColor = System.Drawing.Color.White;
-            this.btnDeleteRecordedTracks.BackgroundImage = global::Twol.Properties.Resources.ConSt_Mandatory;
-            this.btnDeleteRecordedTracks.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnDeleteRecordedTracks.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnDeleteRecordedTracks.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.btnDeleteRecordedTracks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteRecordedTracks.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteRecordedTracks.ForeColor = System.Drawing.Color.Black;
-            this.btnDeleteRecordedTracks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDeleteRecordedTracks.Location = new System.Drawing.Point(380, 201);
-            this.btnDeleteRecordedTracks.Name = "btnDeleteRecordedTracks";
-            this.btnDeleteRecordedTracks.Size = new System.Drawing.Size(126, 64);
-            this.btnDeleteRecordedTracks.TabIndex = 603;
-            this.btnDeleteRecordedTracks.UseVisualStyleBackColor = false;
-            this.btnDeleteRecordedTracks.Click += new System.EventHandler(this.btnDeleteRecordedTracks_Click);
-            // 
-            // cboxPassesPerReference
-            // 
-            this.cboxPassesPerReference.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.cboxPassesPerReference.BackColor = System.Drawing.Color.Lavender;
-            this.cboxPassesPerReference.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPassesPerReference.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxPassesPerReference.FormattingEnabled = true;
-            this.cboxPassesPerReference.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4"});
-            this.cboxPassesPerReference.Location = new System.Drawing.Point(87, 94);
-            this.cboxPassesPerReference.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.cboxPassesPerReference.MaxDropDownItems = 5;
-            this.cboxPassesPerReference.Name = "cboxPassesPerReference";
-            this.cboxPassesPerReference.Size = new System.Drawing.Size(99, 53);
-            this.cboxPassesPerReference.TabIndex = 602;
-            this.cboxPassesPerReference.SelectedIndexChanged += new System.EventHandler(this.cboxPassesPerReference_SelectedIndexChanged);
-            // 
-            // label12
-            // 
-            this.label12.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.Firebrick;
-            this.label12.Location = new System.Drawing.Point(65, 150);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(143, 23);
-            this.label12.TabIndex = 601;
-            this.label12.Text = "0 = Off";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label14
-            // 
-            this.label14.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(36, 28);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(201, 59);
-            this.label14.TabIndex = 600;
-            this.label14.Text = "Passes Per Recorded Track";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(36, 184);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(201, 41);
-            this.label10.TabIndex = 590;
-            this.label10.Text = "Tool Width";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(57, 322);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(158, 45);
-            this.label5.TabIndex = 588;
-            this.label5.Text = "Global Nudge";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // nudToolGuidanceSpacing
-            // 
-            this.nudToolGuidanceSpacing.DecimalPlaces = 1;
-            this.nudToolGuidanceSpacing.Location = new System.Drawing.Point(29, 228);
-            this.nudToolGuidanceSpacing.Maximum = 2000D;
-            this.nudToolGuidanceSpacing.Mode = Twol.UnitMode.Small;
-            this.nudToolGuidanceSpacing.Name = "nudToolGuidanceSpacing";
-            this.nudToolGuidanceSpacing.Size = new System.Drawing.Size(215, 64);
-            this.nudToolGuidanceSpacing.TabIndex = 589;
-            this.nudToolGuidanceSpacing.ValueChanged += new System.EventHandler(this.nudToolGuidanceSpacing_ValueChanged);
-            // 
-            // nudNudge
-            // 
-            this.nudNudge.Location = new System.Drawing.Point(65, 370);
-            this.nudNudge.Maximum = 500D;
-            this.nudNudge.Minimum = -500D;
-            this.nudNudge.Mode = Twol.UnitMode.Small;
-            this.nudNudge.Name = "nudNudge";
-            this.nudNudge.Size = new System.Drawing.Size(143, 56);
-            this.nudNudge.TabIndex = 587;
-            this.nudNudge.ValueChanged += new System.EventHandler(this.nudNudge_ValueChanged);
-            // 
-            // tabSetup
-            // 
-            this.tabSetup.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabSetup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tabSetup.Controls.Add(this.label19);
-            this.tabSetup.Controls.Add(this.label18);
-            this.tabSetup.Controls.Add(this.label15);
-            this.tabSetup.Controls.Add(this.cboxDirectionalValveEnable);
-            this.tabSetup.Controls.Add(this.nudDirectionalValveOnTime);
-            this.tabSetup.Controls.Add(this.nudDirectionalValveOffTime);
-            this.tabSetup.Controls.Add(this.label31);
-            this.tabSetup.Controls.Add(this.label83);
-            this.tabSetup.Controls.Add(this.cboxInvertAPOS);
-            this.tabSetup.Controls.Add(this.cboxInvertActuator);
-            this.tabSetup.ImageIndex = 0;
-            this.tabSetup.Location = new System.Drawing.Point(4, 52);
-            this.tabSetup.Name = "tabSetup";
-            this.tabSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSetup.Size = new System.Drawing.Size(571, 448);
-            this.tabSetup.TabIndex = 4;
-            // 
-            // label19
-            // 
-            this.label19.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(404, 318);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(158, 36);
-            this.label19.TabIndex = 546;
-            this.label19.Text = "Off Time";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label18
-            // 
-            this.label18.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(207, 318);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(158, 36);
-            this.label18.TabIndex = 545;
-            this.label18.Text = "On Time";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(14, 289);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(195, 54);
-            this.label15.TabIndex = 544;
-            this.label15.Text = "Directional Valve Type (Bang Bang)";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // cboxDirectionalValveEnable
-            // 
-            this.cboxDirectionalValveEnable.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxDirectionalValveEnable.BackColor = System.Drawing.Color.White;
-            this.cboxDirectionalValveEnable.BackgroundImage = global::Twol.Properties.Resources.ConS_Pins;
-            this.cboxDirectionalValveEnable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.cboxDirectionalValveEnable.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.cboxDirectionalValveEnable.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine;
-            this.cboxDirectionalValveEnable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxDirectionalValveEnable.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxDirectionalValveEnable.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboxDirectionalValveEnable.Location = new System.Drawing.Point(62, 346);
-            this.cboxDirectionalValveEnable.Name = "cboxDirectionalValveEnable";
-            this.cboxDirectionalValveEnable.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cboxDirectionalValveEnable.Size = new System.Drawing.Size(99, 69);
-            this.cboxDirectionalValveEnable.TabIndex = 543;
-            this.cboxDirectionalValveEnable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxDirectionalValveEnable.UseVisualStyleBackColor = false;
-            this.cboxDirectionalValveEnable.Click += new System.EventHandler(this.cboxDirectionalValveEnable_Click);
-            // 
-            // nudDirectionalValveOnTime
-            // 
-            this.nudDirectionalValveOnTime.DecimalPlaces = 1;
-            this.nudDirectionalValveOnTime.Location = new System.Drawing.Point(211, 359);
-            this.nudDirectionalValveOnTime.Maximum = 5D;
-            this.nudDirectionalValveOnTime.Minimum = 0.1D;
-            this.nudDirectionalValveOnTime.Name = "nudDirectionalValveOnTime";
-            this.nudDirectionalValveOnTime.Size = new System.Drawing.Size(148, 56);
-            this.nudDirectionalValveOnTime.TabIndex = 542;
-            this.nudDirectionalValveOnTime.ValueChanged += new System.EventHandler(this.nudDirectionalValveOnTime_ValueChanged);
-            // 
-            // nudDirectionalValveOffTime
-            // 
-            this.nudDirectionalValveOffTime.DecimalPlaces = 1;
-            this.nudDirectionalValveOffTime.Location = new System.Drawing.Point(414, 359);
-            this.nudDirectionalValveOffTime.Maximum = 20D;
-            this.nudDirectionalValveOffTime.Minimum = 0.1D;
-            this.nudDirectionalValveOffTime.Name = "nudDirectionalValveOffTime";
-            this.nudDirectionalValveOffTime.Size = new System.Drawing.Size(148, 56);
-            this.nudDirectionalValveOffTime.TabIndex = 541;
-            this.nudDirectionalValveOffTime.ValueChanged += new System.EventHandler(this.nudDirectionalValveOffTime_ValueChanged);
-            // 
-            // label31
-            // 
-            this.label31.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.ForeColor = System.Drawing.Color.Black;
-            this.label31.Location = new System.Drawing.Point(329, 57);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(158, 36);
-            this.label31.TabIndex = 519;
-            this.label31.Text = "Invert APOS";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label83
-            // 
-            this.label83.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label83.ForeColor = System.Drawing.Color.Black;
-            this.label83.Location = new System.Drawing.Point(106, 43);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(178, 50);
-            this.label83.TabIndex = 518;
-            this.label83.Text = "Invert Actuator Direction";
-            this.label83.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // cboxInvertAPOS
-            // 
-            this.cboxInvertAPOS.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxInvertAPOS.BackColor = System.Drawing.Color.White;
-            this.cboxInvertAPOS.BackgroundImage = global::Twol.Properties.Resources.ConSt_InvertWAS;
-            this.cboxInvertAPOS.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.cboxInvertAPOS.Checked = true;
-            this.cboxInvertAPOS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cboxInvertAPOS.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.cboxInvertAPOS.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine;
-            this.cboxInvertAPOS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxInvertAPOS.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxInvertAPOS.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboxInvertAPOS.Location = new System.Drawing.Point(359, 95);
-            this.cboxInvertAPOS.Name = "cboxInvertAPOS";
-            this.cboxInvertAPOS.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cboxInvertAPOS.Size = new System.Drawing.Size(99, 69);
-            this.cboxInvertAPOS.TabIndex = 516;
-            this.cboxInvertAPOS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxInvertAPOS.UseVisualStyleBackColor = false;
-            this.cboxInvertAPOS.Click += new System.EventHandler(this.cboxInvertAPOS_Click);
-            // 
-            // cboxInvertActuator
-            // 
-            this.cboxInvertActuator.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxInvertActuator.BackColor = System.Drawing.Color.White;
-            this.cboxInvertActuator.BackgroundImage = global::Twol.Properties.Resources.ConSt_InvertDirection;
-            this.cboxInvertActuator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.cboxInvertActuator.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.cboxInvertActuator.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine;
-            this.cboxInvertActuator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxInvertActuator.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxInvertActuator.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboxInvertActuator.Location = new System.Drawing.Point(146, 95);
-            this.cboxInvertActuator.Name = "cboxInvertActuator";
-            this.cboxInvertActuator.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cboxInvertActuator.Size = new System.Drawing.Size(99, 69);
-            this.cboxInvertActuator.TabIndex = 517;
-            this.cboxInvertActuator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxInvertActuator.UseVisualStyleBackColor = false;
-            this.cboxInvertActuator.Click += new System.EventHandler(this.cboxInvertActuator_Click);
-            // 
-            // tabAntenna
-            // 
-            this.tabAntenna.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabAntenna.Controls.Add(this.pictureBox2);
-            this.tabAntenna.Controls.Add(this.pictureBox1);
-            this.tabAntenna.Controls.Add(this.label17);
-            this.tabAntenna.Controls.Add(this.label16);
-            this.tabAntenna.Controls.Add(this.lblInvertRoll);
-            this.tabAntenna.Controls.Add(this.lblRollZeroOffset);
-            this.tabAntenna.Controls.Add(this.lblZeroRoll);
-            this.tabAntenna.Controls.Add(this.lblHeadingOffset);
-            this.tabAntenna.Controls.Add(this.lblRemoveOffset);
-            this.tabAntenna.Controls.Add(this.cboxDataInvertRoll);
-            this.tabAntenna.Controls.Add(this.btnZeroRoll);
-            this.tabAntenna.Controls.Add(this.label3);
-            this.tabAntenna.Controls.Add(this.label2);
-            this.tabAntenna.Controls.Add(this.btnRemoveZeroOffset);
-            this.tabAntenna.Controls.Add(this.nudPivotToTool);
-            this.tabAntenna.Controls.Add(this.nudPivotToAntenna);
-            this.tabAntenna.Controls.Add(this.btnRollOffsetUp);
-            this.tabAntenna.Controls.Add(this.btnRollOffsetDown);
-            this.tabAntenna.Controls.Add(this.nudDualHeadingOffset);
-            this.tabAntenna.Controls.Add(this.nudAntennaHeight_Tool);
-            this.tabAntenna.Controls.Add(this.nudAntennaOffset_Tool);
-            this.tabAntenna.ImageIndex = 1;
-            this.tabAntenna.Location = new System.Drawing.Point(4, 52);
-            this.tabAntenna.Name = "tabAntenna";
-            this.tabAntenna.Size = new System.Drawing.Size(571, 448);
-            this.tabAntenna.TabIndex = 9;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImage = global::Twol.Properties.Resources.ToolAntenna_Fore_Aft;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(209, 314);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(143, 128);
-            this.pictureBox2.TabIndex = 589;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::Twol.Properties.Resources.Tool_Fore_Aft;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(406, 314);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(144, 128);
-            this.pictureBox1.TabIndex = 588;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label17
-            // 
-            this.label17.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(406, 230);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(144, 23);
-            this.label17.TabIndex = 587;
-            this.label17.Text = "Pivot To Tool";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label16
-            // 
-            this.label16.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(204, 230);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(152, 23);
-            this.label16.TabIndex = 585;
-            this.label16.Text = "Pivot To Antenna";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lblInvertRoll
-            // 
-            this.lblInvertRoll.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInvertRoll.ForeColor = System.Drawing.Color.Black;
-            this.lblInvertRoll.Location = new System.Drawing.Point(26, 2);
-            this.lblInvertRoll.Name = "lblInvertRoll";
-            this.lblInvertRoll.Size = new System.Drawing.Size(115, 23);
-            this.lblInvertRoll.TabIndex = 538;
-            this.lblInvertRoll.Text = "Invert Roll";
-            this.lblInvertRoll.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lblRollZeroOffset
-            // 
-            this.lblRollZeroOffset.Font = new System.Drawing.Font("Tahoma", 20.25F);
-            this.lblRollZeroOffset.ForeColor = System.Drawing.Color.Black;
-            this.lblRollZeroOffset.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblRollZeroOffset.Location = new System.Drawing.Point(33, 344);
-            this.lblRollZeroOffset.Name = "lblRollZeroOffset";
-            this.lblRollZeroOffset.Size = new System.Drawing.Size(100, 33);
-            this.lblRollZeroOffset.TabIndex = 529;
-            this.lblRollZeroOffset.Text = "label11";
-            this.lblRollZeroOffset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblZeroRoll
-            // 
-            this.lblZeroRoll.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblZeroRoll.ForeColor = System.Drawing.Color.Black;
-            this.lblZeroRoll.Location = new System.Drawing.Point(9, 252);
-            this.lblZeroRoll.Name = "lblZeroRoll";
-            this.lblZeroRoll.Size = new System.Drawing.Size(148, 23);
-            this.lblZeroRoll.TabIndex = 537;
-            this.lblZeroRoll.Text = "Zero Roll";
-            this.lblZeroRoll.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lblHeadingOffset
-            // 
-            this.lblHeadingOffset.BackColor = System.Drawing.Color.Transparent;
-            this.lblHeadingOffset.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadingOffset.ForeColor = System.Drawing.Color.Black;
-            this.lblHeadingOffset.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblHeadingOffset.Location = new System.Drawing.Point(296, 113);
-            this.lblHeadingOffset.Name = "lblHeadingOffset";
-            this.lblHeadingOffset.Size = new System.Drawing.Size(161, 27);
-            this.lblHeadingOffset.TabIndex = 539;
-            this.lblHeadingOffset.Text = "Heading Offset";
-            this.lblHeadingOffset.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // lblRemoveOffset
-            // 
-            this.lblRemoveOffset.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRemoveOffset.ForeColor = System.Drawing.Color.Black;
-            this.lblRemoveOffset.Location = new System.Drawing.Point(4, 126);
-            this.lblRemoveOffset.Name = "lblRemoveOffset";
-            this.lblRemoveOffset.Size = new System.Drawing.Size(158, 25);
-            this.lblRemoveOffset.TabIndex = 536;
-            this.lblRemoveOffset.Text = "Remove Offset";
-            this.lblRemoveOffset.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // cboxDataInvertRoll
-            // 
-            this.cboxDataInvertRoll.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cboxDataInvertRoll.BackColor = System.Drawing.Color.White;
-            this.cboxDataInvertRoll.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.cboxDataInvertRoll.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightGreen;
-            this.cboxDataInvertRoll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboxDataInvertRoll.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxDataInvertRoll.ForeColor = System.Drawing.Color.Black;
-            this.cboxDataInvertRoll.Image = global::Twol.Properties.Resources.ConDa_InvertRoll;
-            this.cboxDataInvertRoll.Location = new System.Drawing.Point(20, 29);
-            this.cboxDataInvertRoll.Name = "cboxDataInvertRoll";
-            this.cboxDataInvertRoll.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cboxDataInvertRoll.Size = new System.Drawing.Size(126, 64);
-            this.cboxDataInvertRoll.TabIndex = 532;
-            this.cboxDataInvertRoll.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cboxDataInvertRoll.UseVisualStyleBackColor = false;
-            // 
-            // btnZeroRoll
-            // 
-            this.btnZeroRoll.BackColor = System.Drawing.Color.White;
-            this.btnZeroRoll.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnZeroRoll.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.btnZeroRoll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZeroRoll.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnZeroRoll.ForeColor = System.Drawing.Color.Black;
-            this.btnZeroRoll.Image = global::Twol.Properties.Resources.ConDa_RollSetZero;
-            this.btnZeroRoll.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnZeroRoll.Location = new System.Drawing.Point(20, 279);
-            this.btnZeroRoll.Name = "btnZeroRoll";
-            this.btnZeroRoll.Size = new System.Drawing.Size(126, 64);
-            this.btnZeroRoll.TabIndex = 530;
-            this.btnZeroRoll.UseVisualStyleBackColor = false;
-            this.btnZeroRoll.Click += new System.EventHandler(this.btnZeroRoll_Click);
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(392, 6);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 23);
-            this.label3.TabIndex = 583;
-            this.label3.Text = "Antenna Offset";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(194, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(172, 23);
-            this.label2.TabIndex = 581;
-            this.label2.Text = "Antenna Height";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
-            // btnRemoveZeroOffset
-            // 
-            this.btnRemoveZeroOffset.BackColor = System.Drawing.Color.White;
-            this.btnRemoveZeroOffset.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnRemoveZeroOffset.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.btnRemoveZeroOffset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveZeroOffset.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoveZeroOffset.ForeColor = System.Drawing.Color.Black;
-            this.btnRemoveZeroOffset.Image = global::Twol.Properties.Resources.ConDa_RemoveOffset;
-            this.btnRemoveZeroOffset.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRemoveZeroOffset.Location = new System.Drawing.Point(20, 154);
-            this.btnRemoveZeroOffset.Name = "btnRemoveZeroOffset";
-            this.btnRemoveZeroOffset.Size = new System.Drawing.Size(126, 64);
-            this.btnRemoveZeroOffset.TabIndex = 531;
-            this.btnRemoveZeroOffset.UseVisualStyleBackColor = false;
-            this.btnRemoveZeroOffset.Click += new System.EventHandler(this.btnRemoveZeroOffset_Click);
-            // 
-            // nudPivotToTool
-            // 
-            this.nudPivotToTool.Location = new System.Drawing.Point(406, 256);
-            this.nudPivotToTool.Maximum = 10D;
-            this.nudPivotToTool.Minimum = -10D;
-            this.nudPivotToTool.Mode = Twol.UnitMode.Small;
-            this.nudPivotToTool.Name = "nudPivotToTool";
-            this.nudPivotToTool.Size = new System.Drawing.Size(144, 52);
-            this.nudPivotToTool.TabIndex = 586;
-            this.nudPivotToTool.ValueChanged += new System.EventHandler(this.nudPivotToTool_ValueChanged);
-            // 
-            // nudPivotToAntenna
-            // 
-            this.nudPivotToAntenna.Location = new System.Drawing.Point(208, 255);
-            this.nudPivotToAntenna.Maximum = 10D;
-            this.nudPivotToAntenna.Minimum = -10D;
-            this.nudPivotToAntenna.Mode = Twol.UnitMode.Small;
-            this.nudPivotToAntenna.Name = "nudPivotToAntenna";
-            this.nudPivotToAntenna.Size = new System.Drawing.Size(144, 52);
-            this.nudPivotToAntenna.TabIndex = 584;
-            this.nudPivotToAntenna.ValueChanged += new System.EventHandler(this.nudPivotToAntenna_ValueChanged);
-            // 
-            // btnRollOffsetUp
-            // 
-            this.btnRollOffsetUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRollOffsetUp.FlatAppearance.BorderSize = 0;
-            this.btnRollOffsetUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRollOffsetUp.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRollOffsetUp.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRollOffsetUp.Image = global::Twol.Properties.Resources.UpArrow64;
-            this.btnRollOffsetUp.Location = new System.Drawing.Point(98, 375);
-            this.btnRollOffsetUp.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnRollOffsetUp.Name = "btnRollOffsetUp";
-            this.btnRollOffsetUp.Size = new System.Drawing.Size(59, 69);
-            this.btnRollOffsetUp.TabIndex = 534;
-            this.btnRollOffsetUp.UseVisualStyleBackColor = true;
-            this.btnRollOffsetUp.Click += new System.EventHandler(this.btnRollOffsetUp_Click);
-            // 
-            // btnRollOffsetDown
-            // 
-            this.btnRollOffsetDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRollOffsetDown.FlatAppearance.BorderSize = 0;
-            this.btnRollOffsetDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRollOffsetDown.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRollOffsetDown.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRollOffsetDown.Image = global::Twol.Properties.Resources.DnArrow64;
-            this.btnRollOffsetDown.Location = new System.Drawing.Point(13, 375);
-            this.btnRollOffsetDown.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnRollOffsetDown.Name = "btnRollOffsetDown";
-            this.btnRollOffsetDown.Size = new System.Drawing.Size(59, 69);
-            this.btnRollOffsetDown.TabIndex = 533;
-            this.btnRollOffsetDown.UseVisualStyleBackColor = true;
-            this.btnRollOffsetDown.Click += new System.EventHandler(this.btnRollOffsetDown_Click);
-            // 
-            // nudDualHeadingOffset
-            // 
-            this.nudDualHeadingOffset.DecimalPlaces = 1;
-            this.nudDualHeadingOffset.Location = new System.Drawing.Point(302, 144);
-            this.nudDualHeadingOffset.Minimum = -100D;
-            this.nudDualHeadingOffset.Name = "nudDualHeadingOffset";
-            this.nudDualHeadingOffset.Size = new System.Drawing.Size(148, 56);
-            this.nudDualHeadingOffset.TabIndex = 540;
-            this.nudDualHeadingOffset.ValueChanged += new System.EventHandler(this.nudDualHeadingOffset_ValueChanged);
-            // 
-            // nudAntennaHeight_Tool
-            // 
-            this.nudAntennaHeight_Tool.Location = new System.Drawing.Point(209, 33);
-            this.nudAntennaHeight_Tool.Maximum = 5D;
-            this.nudAntennaHeight_Tool.Mode = Twol.UnitMode.Small;
-            this.nudAntennaHeight_Tool.Name = "nudAntennaHeight_Tool";
-            this.nudAntennaHeight_Tool.Size = new System.Drawing.Size(143, 56);
-            this.nudAntennaHeight_Tool.TabIndex = 580;
-            this.nudAntennaHeight_Tool.ValueChanged += new System.EventHandler(this.nudAntennaHeight_Tool_ValueChanged);
-            // 
-            // nudAntennaOffset_Tool
-            // 
-            this.nudAntennaOffset_Tool.Location = new System.Drawing.Point(407, 33);
-            this.nudAntennaOffset_Tool.Maximum = 5D;
-            this.nudAntennaOffset_Tool.Minimum = -5D;
-            this.nudAntennaOffset_Tool.Mode = Twol.UnitMode.Small;
-            this.nudAntennaOffset_Tool.Name = "nudAntennaOffset_Tool";
-            this.nudAntennaOffset_Tool.Size = new System.Drawing.Size(143, 56);
-            this.nudAntennaOffset_Tool.TabIndex = 582;
-            this.nudAntennaOffset_Tool.ValueChanged += new System.EventHandler(this.nudAntennaOffset_Tool_ValueChanged);
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "ConS_ImplementConfig.png");
-            this.imageList2.Images.SetKeyName(1, "ConS_ImplementAntenna.png");
-            this.imageList2.Images.SetKeyName(2, "ModeActive.png");
-            this.imageList2.Images.SetKeyName(3, "ModePassive.png");
-            // 
-            // FormToolSteer
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(951, 512);
-            this.Controls.Add(this.tabToolSetup);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.tabControl1);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FormToolSteer";
-            this.Padding = new System.Windows.Forms.Padding(2);
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Tool Steer Configuration";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormToolSteer_FormClosing);
-            this.Load += new System.EventHandler(this.FormToolSteer_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabGain.ResumeLayout(false);
-            this.tabSteer.ResumeLayout(false);
-            this.tabSteer.PerformLayout();
-            this.tabDeadzone.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.tabToolSetup.ResumeLayout(false);
-            this.tabModes.ResumeLayout(false);
-            this.tabActive.ResumeLayout(false);
-            this.tabSetup.ResumeLayout(false);
-            this.tabAntenna.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
-
-        }
-
-        #endregion
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabGain;
-        private System.Windows.Forms.TabPage tabSteer;
-        private System.Windows.Forms.Label lblActualSteerAngleUpper;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.HScrollBar hsbarIntegral_Tool;
-        private System.Windows.Forms.Label lblIntegral_Tool;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label lblAV_Set;
-        private System.Windows.Forms.Label lblAV_Act;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label38;
-        private RepeatButton btnExpand;
-        private System.Windows.Forms.TabControl tabToolSetup;
-        private NudlessNumericUpDown nudDeadzoneWidth;
-        private System.Windows.Forms.TabPage tabSetup;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.TabPage tabDeadzone;
-        private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ImageList imageList2;
-        private System.Windows.Forms.Label label87;
-        private System.Windows.Forms.Label label88;
-        private System.Windows.Forms.Label label89;
-        private System.Windows.Forms.HScrollBar hsbarMinPWM_Tool;
-        private System.Windows.Forms.HScrollBar hsbarPGain_Tool;
-        private System.Windows.Forms.Label lblPGain_Tool;
-        private System.Windows.Forms.Label lblHighPWM_Tool;
-        private System.Windows.Forms.Label lblMinPWM_Tool;
-        private System.Windows.Forms.HScrollBar hsbarHighPWM_Tool;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label83;
-        private System.Windows.Forms.CheckBox cboxInvertAPOS;
-        private System.Windows.Forms.CheckBox cboxInvertActuator;
-        private System.Windows.Forms.Label label96;
-        private System.Windows.Forms.Label lblActuatorLimitsPercent;
-        private System.Windows.Forms.Label label99;
-        private System.Windows.Forms.HScrollBar hsbarActuatorLimitsPercent;
-        private System.Windows.Forms.Button btnZeroWAS_Tool;
-        private System.Windows.Forms.HScrollBar hsbarLowHighDistance;
-        private System.Windows.Forms.Label label101;
-        private System.Windows.Forms.Label lblLowHighDistance;
-        private System.Windows.Forms.HScrollBar hsbarZeroWAS_Tool;
-        private System.Windows.Forms.Label lblZeroWAS_Tool;
-        private System.Windows.Forms.Label label2;
-        private NudlessNumericUpDown nudAntennaHeight_Tool;
-        private System.Windows.Forms.Label label3;
-        private NudlessNumericUpDown nudAntennaOffset_Tool;
-        private System.Windows.Forms.Label lblPWMDisplay;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox cboxIsFollowCurrent;
-        private System.Windows.Forms.TabPage tabModes;
-        private System.Windows.Forms.Label lblCurvatureGain;
-        private System.Windows.Forms.HScrollBar hsbarPassiveCurvature;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblPassiveIntegralGain;
-        private System.Windows.Forms.HScrollBar hsbarPassiveIntegralGain;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox cboxIsPassiveSteering;
-        private System.Windows.Forms.CheckBox cboxIsFollowPivot;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage tabActive;
-        private System.Windows.Forms.CheckBox cboxIsRecordToolLine;
-        private System.Windows.Forms.Label lblManualPWM_Percent;
-        private System.Windows.Forms.HScrollBar hsbarManualPWM_Percent;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label lblManualSecondsOn;
-        private System.Windows.Forms.HScrollBar hsbarManualSecondsOn;
-        private System.Windows.Forms.Label label11;
-        private NudlessNumericUpDown nudNudge;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox cboxRecordSourceTool;
-        private NudlessNumericUpDown nudToolGuidanceSpacing;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cboxPassesPerReference;
-        private RepeatButton btnRollOffsetUp;
-        private RepeatButton btnRollOffsetDown;
-        private System.Windows.Forms.Label lblRollZeroOffset;
-        private System.Windows.Forms.Button btnZeroRoll;
-        private System.Windows.Forms.Button btnRemoveZeroOffset;
-        private System.Windows.Forms.CheckBox cboxDataInvertRoll;
-        private System.Windows.Forms.Label lblInvertRoll;
-        private System.Windows.Forms.Label lblZeroRoll;
-        private System.Windows.Forms.Label lblRemoveOffset;
-        private System.Windows.Forms.TabPage tabAntenna;
-        private NudlessNumericUpDown nudDualHeadingOffset;
-        private System.Windows.Forms.Label lblHeadingOffset;
-        private System.Windows.Forms.Label label17;
-        private NudlessNumericUpDown nudPivotToTool;
-        private System.Windows.Forms.Label label16;
-        private NudlessNumericUpDown nudPivotToAntenna;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.CheckBox cboxDirectionalValveEnable;
-        private NudlessNumericUpDown nudDirectionalValveOnTime;
-        private NudlessNumericUpDown nudDirectionalValveOffTime;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Button btnDeleteRecordedTracks;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Button btnBuildToolTracks;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Button btnDeleteTracks;
-    }
-}
+YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíßžúÕ:-jZ.¶›­–)Þ³^û»öæÖW76RGvöÀ§°¢'F–Â6Æ72f÷&ÕFööÅ7FVW ¢°¢òòòÇ7VÖÖ'“à¢òòò&WV—&VBFW6–væW"f&–&ÆRà¢òòòÂ÷7VÖÖ'“à¢&—fFR7—7FVÒä6ö×öæVçDÖöFVÂä”6öçF–æW"6ö×öæVçG2ÒçVÆÃ° ¢òòòÇ7VÖÖ'“à¢òòò6ÆVâWç’&W6÷W&6W2&V–ærW6VBà¢òòòÂ÷7VÖÖ'“à¢òòòÇ&ÒæÖSÒ&F—7÷6–ær#çG'VR–bÖævVB&W6÷W&6W26†÷VÆB&RF—7÷6VC²÷F†W'v—6RÂfÇ6RãÂ÷&Óà¢&÷FV7FVB÷fW'&–FRfö–BF—7÷6R†&ööÂF—7÷6–ær¢°¢–b†F—7÷6–ærbb†6ö×öæVçG2ÒçVÆÂ’¢°¢6ö×öæVçG2äF—7÷6R‚“°¢Ð¢&6RäF—7÷6R†F—7÷6–ær“°¢Ð ¢7&Vv–öâv–æF÷w2f÷&ÒFW6–væW"vVæW&FVB6öFP ¢òòòÇ7VÖÖ'“à¢òòò&WV—&VBÖWF†öBf÷"FW6–væW"7W÷'BÒFòæ÷BÖöF–g¢òòòF†R6öçFVçG2öbF†—2ÖWF†öBv—F‚F†R6öFRVF—F÷"à¢òòòÂ÷7VÖÖ'“à¢&—fFRfö–B–æ—F–Æ—¦T6ö×öæVçB‚¢°¢F†—2æ6ö×öæVçG2ÒæWr7—7FVÒä6ö×öæVçDÖöFVÂä6öçF–æW"‚“°¢7—7FVÒä6ö×öæVçDÖöFVÂä6ö×öæVçE&W6÷W&6TÖævW"&W6÷W&6W2ÒæWr7—7FVÒä6ö×öæVçDÖöFVÂä6ö×öæVçE&W6÷W&6TÖævW"‡G—Vöb„f÷&ÕFööÅ7FVW"’“°¢F†—2çF–ÖW#ÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF–ÖW"‡F†—2æ6ö×öæVçG2“°¢F†—2çF$6öçG&öÃÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF$6öçG&öÂ‚“°¢F†—2çF$v–âÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æ‡6&$Ö–åtÕõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æ‡6&$†–v…tÕõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&ÄÖ–åtÕõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä†–v…tÕõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Åv–åõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä–çFVw&ÅõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&%v–åõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&VÃƒ’ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃƒ‚ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃƒrÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&$–çFVw&ÅõFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&VÃ#rÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2çF%7FVW"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æÆ&Äeõ6WBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Äeô7BÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ3bÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃSÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ3‚ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ“bÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&%¦W&õt5õFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Å¦W&õt5õFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&VÃ“’ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æçVDFVG¦öæUv–GF‚ÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æ'Få¦W&õt5õFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2çF$FVG¦öæRÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æ‡6&%76—fT–çFVw&Äv–âÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æ‡6&%76—fT7W'fGW&RÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&VÃbÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä7W'fGW&Tv–âÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä…67&öÆÄ&"‚“°¢F†—2æÆ&Å76—fT–çFVw&Äv–âÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃrÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ–ÖvTÆ—7CÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ—7B‡F†—2æ6ö×öæVçG2“°¢F†—2çæVÃ"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2åæVÂ‚“°¢F†—2æÆ&ÅtÔF—7Æ’ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ’ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ'FäW‡æBÒæWrGvöÂå&WVD'WGFöâ‚“°¢F†—2çF%FööÅ6WGWÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF$6öçG&öÂ‚“°¢F†—2çF$ÖöFW2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æ6&÷„—5&V6÷&EFööÄÆ–æRÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æÆ&VÃBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ‚ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ6&÷„—576—fU7FVW&–ærÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æÆ&VÃÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ6&÷…&V6÷&E6÷W&6UFööÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æ6&÷„—4föÆÆ÷t7W'&VçBÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æ6&÷„—4föÆÆ÷u—f÷BÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2çF$7F—fRÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æÆ&VÃ#"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ'FäFVÆWFUG&6·2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2æÆ&VÃ#ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ'Fä'V–ÆEFööÅG&6·2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2æÆ&VÃ#ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ'FäFVÆWFU&V6÷&FVEG&6·2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2æ6&÷…76W5W%&VfW&Væ6RÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6öÖ&ô&÷‚‚“°¢F†—2æÆ&VÃ"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃRÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æçVEFööÄwV–Fæ6U76–ærÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æçVDçVFvRÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2çF%6WGWÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2æÆ&VÃ’ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ‚ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃRÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ6&÷„F—&V7F–öæÅfÇfTVæ&ÆRÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æçVDF—&V7F–öæÅfÇfTöåF–ÖRÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æçVDF—&V7F–öæÅfÇfTöfeF–ÖRÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æÆ&VÃ3ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃƒ2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ6&÷„–çfW'Dõ2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æ6&÷„–çfW'D7GVF÷"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2çF$çFVææÒæWr7—7FVÒåv–æF÷w2äf÷&×2åF%vR‚“°¢F†—2ç–7GW&T&÷ƒ"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å–7GW&T&÷‚‚“°¢F†—2ç–7GW&T&÷ƒÒæWr7—7FVÒåv–æF÷w2äf÷&×2å–7GW&T&÷‚‚“°¢F†—2æÆ&VÃrÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃbÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä–çfW'E&öÆÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Å&öÆÅ¦W&ôöfg6WBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Å¦W&õ&öÆÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Ä†VF–ætöfg6WBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&Å&VÖ÷fTöfg6WBÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ6&÷„FF–çfW'E&öÆÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä6†V6´&÷‚‚“°¢F†—2æ'Få¦W&õ&öÆÂÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2æÆ&VÃ2ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æÆ&VÃ"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2äÆ&VÂ‚“°¢F†—2æ'Få&VÖ÷fU¦W&ôöfg6WBÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä'WGFöâ‚“°¢F†—2æçVE—f÷EFõFööÂÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æçVE—f÷EFôçFVææÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æ'Få&öÆÄöfg6WEWÒæWrGvöÂå&WVD'WGFöâ‚“°¢F†—2æ'Få&öÆÄöfg6WDF÷vâÒæWrGvöÂå&WVD'WGFöâ‚“°¢F†—2æçVDGVÄ†VF–ætöfg6WBÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æçVDçFVææ†V–v‡EõFööÂÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æçVDçFVææöfg6WEõFööÂÒæWrGvöÂäçVFÆW74çVÖW&–5WF÷vâ‚“°¢F†—2æ–ÖvTÆ—7C"ÒæWr7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ—7B‡F†—2æ6ö×öæVçG2“°¢F†—2çF$6öçG&öÃå7W7VæDÆ–÷WB‚“°¢F†—2çF$v–âå7W7VæDÆ–÷WB‚“°¢F†—2çF%7FVW"å7W7VæDÆ–÷WB‚“°¢F†—2çF$FVG¦öæRå7W7VæDÆ–÷WB‚“°¢F†—2çæVÃ"å7W7VæDÆ–÷WB‚“°¢F†—2çF%FööÅ6WGWå7W7VæDÆ–÷WB‚“°¢F†—2çF$ÖöFW2å7W7VæDÆ–÷WB‚“°¢F†—2çF$7F—fRå7W7VæDÆ–÷WB‚“°¢F†—2çF%6WGWå7W7VæDÆ–÷WB‚“°¢F†—2çF$çFVææå7W7VæDÆ–÷WB‚“°¢‚…7—7FVÒä6ö×öæVçDÖöFVÂä•7W÷'D–æ—F–Æ—¦R’‡F†—2ç–7GW&T&÷ƒ"’’ä&Vv–ä–æ—B‚“°¢‚…7—7FVÒä6ö×öæVçDÖöFVÂä•7W÷'D–æ—F–Æ—¦R’‡F†—2ç–7GW&T&÷ƒ’’ä&Vv–ä–æ—B‚“°¢F†—2å7W7VæDÆ–÷WB‚“°¢òò ¢òòF–ÖW#¢òò ¢F†—2çF–ÖW#äVæ&ÆVBÒG'VS°¢F†—2çF–ÖW#ä–çFW'fÂÒ#S°¢F†—2çF–ÖW#åF–6²³ÒæWr7—7FVÒäWfVçD†æFÆW"‡F†—2åF–ÖW#õF–6²“°¢òò ¢òòF$6öçG&öÃ¢òò ¢F†—2çF$6öçG&öÃäV&æ6RÒ7—7FVÒåv–æF÷w2äf÷&×2åF$V&æ6Rä'WGFöç3°¢F†—2çF$6öçG&öÃä6öçG&öÇ2äFB‡F†—2çF$v–â“°¢F†—2çF$6öçG&öÃä6öçG&öÇ2äFB‡F†—2çF%7FVW"“°¢F†—2çF$6öçG&öÃä6öçG&öÇ2äFB‡F†—2çF$FVG¦öæR“°¢F†—2çF$6öçG&öÃäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â$bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2çF$6öçG&öÃä–ÖvTÆ—7BÒF†—2æ–ÖvTÆ—7C°¢F†—2çF$6öçG&öÃä—FVÕ6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ÂC‚“°¢F†—2çF$6öçG&öÃäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ"ÂR“°¢F†—2çF$6öçG&öÃäÖ&v–âÒæWr7—7FVÒåv–æF÷w2äf÷&×2åFF–ærƒB“°¢F†—2çF$6öçG&öÃä×VÇF–Æ–æRÒG'VS°¢F†—2çF$6öçG&öÃäæÖRÒ'F$6öçG&öÃ#°¢F†—2çF$6öçG&öÃå6VÆV7FVD–æFW‚Ò°¢F†—2çF$6öçG&öÃå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3s2ÂCC’“°¢F†—2çF$6öçG&öÃå6—¦TÖöFRÒ7—7FVÒåv–æF÷w2äf÷&×2åF%6—¦TÖöFRäf—†VC°¢F†—2çF$6öçG&öÃåF$–æFW‚Ò3Cs°¢òò ¢òòF$v–à¢òò ¢F†—2çF$v–âäWFõ67&öÆÂÒG'VS°¢F†—2çF$v–âä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åÆUGW'Vö—6S°¢F†—2çF$v–âä&6¶w&÷VæD–ÖvTÆ–÷WBÒ7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ–÷WBå¦ööÓ°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æ‡6&$Ö–åtÕõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æ‡6&$†–v…tÕõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&ÄÖ–åtÕõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&Ä†–v…tÕõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&Åv–åõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&Ä–çFVw&ÅõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æ‡6&%v–åõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&VÃƒ’“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&VÃƒ‚“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&VÃƒr“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æ‡6&$–çFVw&ÅõFööÂ“°¢F†—2çF$v–âä6öçG&öÇ2äFB‡F†—2æÆ&VÃ#r“°¢F†—2çF$v–âä–ÖvT–æFW‚Ò°¢F†—2çF$v–âäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂS"“°¢F†—2çF$v–âäæÖRÒ'F$v–â#°¢F†—2çF$v–âå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3cRÂ3“2“°¢F†—2çF$v–âåF$–æFW‚Ò3°¢òò ¢òò‡6&$Ö–åtÕõFööÀ¢òò ¢F†—2æ‡6&$Ö–åtÕõFööÂäÆ&vT6†ævRÒ°¢F†—2æ‡6&$Ö–åtÕõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSrÂ33‚“°¢F†—2æ‡6&$Ö–åtÕõFööÂäÖ†–×VÒÒ#°¢F†—2æ‡6&$Ö–åtÕõFööÂäæÖRÒ&‡6&$Ö–åtÕõFööÂ#°¢F†—2æ‡6&$Ö–åtÕõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3"ÂC“°¢F†—2æ‡6&$Ö–åtÕõFööÂåF$–æFW‚ÒSSs°¢F†—2æ‡6&$Ö–åtÕõFööÂåfÇVRÒ°¢F†—2æ‡6&$Ö–åtÕõFööÂå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$Ö–åtÕõFööÅõ67&öÆÂ“°¢òò ¢òò‡6&$†–v…tÕõFööÀ¢òò ¢F†—2æ‡6&$†–v…tÕõFööÂäÆ&vT6†ævRÒ#°¢F†—2æ‡6&$†–v…tÕõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSrÂ#3‚“°¢F†—2æ‡6&$†–v…tÕõFööÂäÖ†–×VÒÒ#SS°¢F†—2æ‡6&$†–v…tÕõFööÂäæÖRÒ&‡6&$†–v…tÕõFööÂ#°¢F†—2æ‡6&$†–v…tÕõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3"ÂC“°¢F†—2æ‡6&$†–v…tÕõFööÂåF$–æFW‚ÒSSS°¢F†—2æ‡6&$†–v…tÕõFööÂåfÇVRÒS°¢F†—2æ‡6&$†–v…tÕõFööÂå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$†–v…tÕõFööÅõ67&öÆÂ“°¢òò ¢òòÆ&ÄÖ–åtÕõFööÀ¢òò ¢F†—2æÆ&ÄÖ–åtÕõFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&ÄÖ–åtÕõFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&ÄÖ–åtÕõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂ3C“°¢F†—2æÆ&ÄÖ–åtÕõFööÂäæÖRÒ&Æ&ÄÖ–åtÕõFööÂ#°¢F†—2æÆ&ÄÖ–åtÕõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSbÂ3R“°¢F†—2æÆ&ÄÖ–åtÕõFööÂåF$–æFW‚ÒSSƒ°¢F†—2æÆ&ÄÖ–åtÕõFööÂåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&ÄÖ–åtÕõFööÂåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Ä†–v…tÕõFööÀ¢òò ¢F†—2æÆ&Ä†–v…tÕõFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Ä†–v…tÕõFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Ä†–v…tÕõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂ#3’“°¢F†—2æÆ&Ä†–v…tÕõFööÂäæÖRÒ&Æ&Ä†–v…tÕõFööÂ#°¢F†—2æÆ&Ä†–v…tÕõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSbÂ3R“°¢F†—2æÆ&Ä†–v…tÕõFööÂåF$–æFW‚ÒSSc°¢F†—2æÆ&Ä†–v…tÕõFööÂåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&Ä†–v…tÕõFööÂåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Åv–åõFööÀ¢òò ¢F†—2æÆ&Åv–åõFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Åv–åõFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Åv–åõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂ3r“°¢F†—2æÆ&Åv–åõFööÂäæÖRÒ&Æ&Åv–åõFööÂ#°¢F†—2æÆ&Åv–åõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSbÂ3R“°¢F†—2æÆ&Åv–åõFööÂåF$–æFW‚ÒSSC°¢F†—2æÆ&Åv–åõFööÂåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&Åv–åõFööÂåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Ä–çFVw&ÅõFööÀ¢òò ¢F†—2æÆ&Ä–çFVw&ÅõFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Ä–çFVw&ÅõFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Ä–çFVw&ÅõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂ3‚“°¢F†—2æÆ&Ä–çFVw&ÅõFööÂäæÖRÒ&Æ&Ä–çFVw&ÅõFööÂ#°¢F†—2æÆ&Ä–çFVw&ÅõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSbÂ3R“°¢F†—2æÆ&Ä–çFVw&ÅõFööÂåF$–æFW‚Ò3S#°¢F†—2æÆ&Ä–çFVw&ÅõFööÂåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&Ä–çFVw&ÅõFööÂåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òò‡6&%v–åõFööÀ¢òò ¢F†—2æ‡6&%v–åõFööÂäÆ&vT6†ævRÒ°¢F†—2æ‡6&%v–åõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSrÂ3b“°¢F†—2æ‡6&%v–åõFööÂäÖ†–×VÒÒ#SS°¢F†—2æ‡6&%v–åõFööÂäÖ–æ–×VÒÒ°¢F†—2æ‡6&%v–åõFööÂäæÖRÒ&‡6&%v–åõFööÂ#°¢F†—2æ‡6&%v–åõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3"ÂC“°¢F†—2æ‡6&%v–åõFööÂåF$–æFW‚ÒSS3°¢F†—2æ‡6&%v–åõFööÂåfÇVRÒC°¢F†—2æ‡6&%v–åõFööÂå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&%v–åõFööÅõ67&öÆÂ“°¢òò ¢òòÆ&VÃƒ¢òò ¢F†—2æÆ&VÃƒ’äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃƒ’äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃƒ’äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒƒ"Â‚“°¢F†—2æÆ&VÃƒ’äæÖRÒ&Æ&VÃƒ’#°¢F†—2æÆ&VÃƒ’å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#c"Â#B“°¢F†—2æÆ&VÃƒ’åF$–æFW‚ÒSS“°¢F†—2æÆ&VÃƒ’åFW‡BÒ%&÷÷'F–öæÂv–â#°¢F†—2æÆ&VÃƒ’åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òòÆ&VÃƒ€¢òò ¢F†—2æÆ&VÃƒ‚äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃƒ‚äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃƒ‚äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒƒ"Â#“°¢F†—2æÆ&VÃƒ‚äæÖRÒ&Æ&VÃƒ‚#°¢F†—2æÆ&VÃƒ‚å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#c"Â#B“°¢F†—2æÆ&VÃƒ‚åF$–æFW‚ÒSc°¢F†—2æÆ&VÃƒ‚åFW‡BÒ$Ö†–×VÒtÒ#°¢F†—2æÆ&VÃƒ‚åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òòÆ&VÃƒp¢òò ¢F†—2æÆ&VÃƒräföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃƒräf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃƒräÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒƒ"Â3“°¢F†—2æÆ&VÃƒräæÖRÒ&Æ&VÃƒr#°¢F†—2æÆ&VÃƒrå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#c"Â#B“°¢F†—2æÆ&VÃƒråF$–æFW‚ÒSc°¢F†—2æÆ&VÃƒråFW‡BÒ$Ö–æ–×VÒtÒFòÖ÷fR#°¢F†—2æÆ&VÃƒråFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òò‡6&$–çFVw&ÅõFööÀ¢òò ¢F†—2æ‡6&$–çFVw&ÅõFööÂäÆ&vT6†ævRÒ°¢F†—2æ‡6&$–çFVw&ÅõFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSrÂ3R“°¢F†—2æ‡6&$–çFVw&ÅõFööÂäÖ†–×VÒÒ#SS°¢F†—2æ‡6&$–çFVw&ÅõFööÂäæÖRÒ&‡6&$–çFVw&ÅõFööÂ#°¢F†—2æ‡6&$–çFVw&ÅõFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3"ÂC“°¢F†—2æ‡6&$–çFVw&ÅõFööÂåF$–æFW‚Ò3S°¢F†—2æ‡6&$–çFVw&ÅõFööÂåfÇVRÒS°¢F†—2æ‡6&$–çFVw&ÅõFööÂå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$–çFVw&ÅõFööÅõ67&öÆÂ“°¢òò ¢òòÆ&VÃ#p¢òò ¢F†—2æÆ&VÃ#räföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ#räf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃ#räÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsrÂR“°¢F†—2æÆ&VÃ#räæÖRÒ&Æ&VÃ#r#°¢F†—2æÆ&VÃ#rå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#s2Â#b“°¢F†—2æÆ&VÃ#råF$–æFW‚Ò3S°¢F†—2æÆ&VÃ#råFW‡BÒ$FW&–F—fRv–â#°¢F†—2æÆ&VÃ#råFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢F†—2æÆ&VÃ#råW6T6ö×F–&ÆUFW‡E&VæFW&–ærÒG'VS°¢òò ¢òòF%7FVW ¢òò ¢F†—2çF%7FVW"äWFõ67&öÆÂÒG'VS°¢F†—2çF%7FVW"ä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åÆUGW'Vö—6S°¢F†—2çF%7FVW"ä&6¶w&÷VæD–ÖvTÆ–÷WBÒ7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ–÷WBå¦ööÓ°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&Äeõ6WB“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&Äeô7B“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ3b“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃS“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ3‚“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ“b“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æ‡6&%¦W&õt5õFööÂ“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçB“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æ‡6&$Æ÷t†–v„F—7Fæ6R“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6R“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&Å¦W&õt5õFööÂ“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçB“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ“’“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æçVDFVG¦öæUv–GF‚“°¢F†—2çF%7FVW"ä6öçG&öÇ2äFB‡F†—2æ'Få¦W&õt5õFööÂ“°¢F†—2çF%7FVW"ä–ÖvT–æFW‚ÒC°¢F†—2çF%7FVW"äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂS"“°¢F†—2çF%7FVW"äæÖRÒ'F%7FVW"#°¢F†—2çF%7FVW"å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3cRÂ3“2“°¢F†—2çF%7FVW"åF$–æFW‚ÒS°¢òò ¢òòÆ&Äeõ6W@¢òò ¢F†—2æÆ&Äeõ6WBäæ6†÷"Ò‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2’‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2åF÷Â7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2å&–v‡B’’“°¢F†—2æÆ&Äeõ6WBäWFõ6—¦RÒG'VS°¢F†—2æÆ&Äeõ6WBäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â$bÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Äeõ6WBäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çB‚ÓC‚Â‚“°¢F†—2æÆ&Äeõ6WBäæÖRÒ&Æ&Äeõ6WB#°¢F†—2æÆ&Äeõ6WBå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSÂ’“°¢F†—2æÆ&Äeõ6WBåF$–æFW‚ÒS#“°¢F†—2æÆ&Äeõ6WBåFW‡BÒ"ÓSRã‚#°¢F†—2æÆ&Äeõ6WBåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Äeô7@¢òò ¢F†—2æÆ&Äeô7Bäæ6†÷"Ò‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2’‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2åF÷Â7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2å&–v‡B’’“°¢F†—2æÆ&Äeô7BäWFõ6—¦RÒG'VS°¢F†—2æÆ&Äeô7BäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â$bÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Äeô7BäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çB‚ÓC‚ÂC"“°¢F†—2æÆ&Äeô7BäæÖRÒ&Æ&Äeô7B#°¢F†—2æÆ&Äeô7Bå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSBÂ’“°¢F†—2æÆ&Äeô7BåF$–æFW‚ÒS#ƒ°¢F†—2æÆ&Äeô7BåFW‡BÒ#cbãƒ’#°¢F†—2æÆ&Äeô7BåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃ3`¢òò ¢F†—2æÆ&VÃ3bäæ6†÷"Ò‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2’‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2åF÷Â7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2å&–v‡B’’“°¢F†—2æÆ&VÃ3bäWFõ6—¦RÒG'VS°¢F†—2æÆ&VÃ3bäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â’ãsTbÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ3bäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çB‚ÓCc"ÂCB“°¢F†—2æÆ&VÃ3bäæÖRÒ&Æ&VÃ3b#°¢F†—2æÆ&VÃ3bå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSÂb“°¢F†—2æÆ&VÃ3båF$–æFW‚ÒS3°¢F†—2æÆ&VÃ3båFW‡BÒ$b7C¢#°¢F†—2æÆ&VÃ3båFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃS¢òò ¢F†—2æÆ&VÃSäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃSäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃSäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSbÂ#"“°¢F†—2æÆ&VÃSäæÖRÒ&Æ&VÃS#°¢F†—2æÆ&VÃSå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3Â#R“°¢F†—2æÆ&VÃSåF$–æFW‚ÒSC°¢F†—2æÆ&VÃSåFW‡BÒ$FVB¦öæR#°¢F†—2æÆ&VÃSåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃ3€¢òò ¢F†—2æÆ&VÃ3‚äæ6†÷"Ò‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2’‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2åF÷Â7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2å&–v‡B’’“°¢F†—2æÆ&VÃ3‚äWFõ6—¦RÒG'VS°¢F†—2æÆ&VÃ3‚äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â’ãsTbÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ3‚äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çB‚ÓCc2Â#“°¢F†—2æÆ&VÃ3‚äæÖRÒ&Æ&VÃ3‚#°¢F†—2æÆ&VÃ3‚å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒSÂb“°¢F†—2æÆ&VÃ3‚åF$–æFW‚ÒS3°¢F†—2æÆ&VÃ3‚åFW‡BÒ$b6WC¢#°¢F†—2æÆ&VÃ3‚åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Ä7GVÅ7FVW$ævÆUWW ¢òò ¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äæ6†÷"Ò‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2’‚…7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2åF÷Â7—7FVÒåv–æF÷w2äf÷&×2äæ6†÷%7G–ÆW2å&–v‡B’’“°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äWFõ6—¦RÒG'VS°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"ä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åG&ç7&VçC°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â$bÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çB‚ÓcSrÂb“°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"äæÖRÒ&Æ&Ä7GVÅ7FVW$ævÆUWW"#°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3’Â’“°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"åF$–æFW‚Ò3#C°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"åFW‡BÒ##SR#°¢F†—2æÆ&Ä7GVÅ7FVW$ævÆUWW"åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃ“`¢òò ¢F†—2æÆ&VÃ“bäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ“bäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃ“bäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒbÂ3’“°¢F†—2æÆ&VÃ“bäæÖRÒ&Æ&VÃ“b#°¢F†—2æÆ&VÃ“bå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#Â#B“°¢F†—2æÆ&VÃ“båF$–æFW‚ÒSss°¢F†—2æÆ&VÃ“båFW‡BÒ$7GVF÷"Æ–Ö—G2R#°¢F†—2æÆ&VÃ“båFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òò‡6&%¦W&õt5õFööÀ¢òò ¢F†—2æ‡6&%¦W&õt5õFööÂäÆ&vT6†ævRÒ#°¢F†—2æ‡6&%¦W&õt5õFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsbÂ#b“°¢F†—2æ‡6&%¦W&õt5õFööÂäÖ†–×VÒÒC°¢F†—2æ‡6&%¦W&õt5õFööÂäÖ–æ–×VÒÒÓC°¢F†—2æ‡6&%¦W&õt5õFööÂäæÖRÒ&‡6&%¦W&õt5õFööÂ#°¢F†—2æ‡6&%¦W&õt5õFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂC“°¢F†—2æ‡6&%¦W&õt5õFööÂå6ÖÆÄ6†ævRÒ#°¢F†—2æ‡6&%¦W&õt5õFööÂåF$–æFW‚ÒScS°¢F†—2æ‡6&%¦W&õt5õFööÂå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&%¦W&õt5õFööÅõ67&öÆÂ“°¢òò ¢òòÆ&Ä7GVF÷$Æ–Ö—G5W&6Vç@¢òò ¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ’Â332“°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBäæÖRÒ&Æ&Ä7GVF÷$Æ–Ö—G5W&6VçB#°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒS"Â3R“°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBåF$–æFW‚ÒSc“°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&Ä7GVF÷$Æ–Ö—G5W&6VçBåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃ¢òò ¢F†—2æÆ&VÃäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsÂƒ‚“°¢F†—2æÆ&VÃäæÖRÒ&Æ&VÃ#°¢F†—2æÆ&VÃå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒcbÂ#B“°¢F†—2æÆ&VÃåF$–æFW‚ÒScc°¢F†—2æÆ&VÃåFW‡BÒ$7GVF÷"6VçFW"#°¢F†—2æÆ&VÃåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òò‡6&$Æ÷t†–v„F—7Fæ6P¢òò ¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RäÆ&vT6†ævRÒ°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsbÂ#3R“°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RäÖ†–×VÒÒ#°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RäÖ–æ–×VÒÒ°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RäæÖRÒ&‡6&$Æ÷t†–v„F—7Fæ6R#°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6Rå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂC“°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RåF$–æFW‚ÒSs°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6RåfÇVRÒ#°¢F†—2æ‡6&$Æ÷t†–v„F—7Fæ6Rå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$Æ÷t†–v„F—7Fæ6Uõ67&öÆÂ“°¢òò ¢òòÆ&ÄÆ÷t†–v„F—7Fæ6P¢òò ¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6Räf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ’Â#3"“°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RäæÖRÒ&Æ&ÄÆ÷t†–v„F—7Fæ6R#°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6Rå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒS"Â3R“°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RåF$–æFW‚ÒSs°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&ÄÆ÷t†–v„F—7Fæ6RåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&Å¦W&õt5õFööÀ¢òò ¢F†—2æÆ&Å¦W&õt5õFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂRãsTbÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Å¦W&õt5õFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Å¦W&õt5õFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒbÂ#b“°¢F†—2æÆ&Å¦W&õt5õFööÂäæÖRÒ&Æ&Å¦W&õt5õFööÂ#°¢F†—2æÆ&Å¦W&õt5õFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒsÂ3R“°¢F†—2æÆ&Å¦W&õt5õFööÂåF$–æFW‚ÒScs°¢F†—2æÆ&Å¦W&õt5õFööÂåFW‡BÒ"ÓSRãƒ‚#°¢F†—2æÆ&Å¦W&õt5õFööÂåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òò‡6&$7GVF÷$Æ–Ö—G5W&6Vç@¢òò ¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBäÆ&vT6†ævRÒ°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsbÂ33b“°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBäÖ–æ–×VÒÒ#°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBäæÖRÒ&‡6&$7GVF÷$Æ–Ö—G5W&6VçB#°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂC“°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBåF$–æFW‚ÒScƒ°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBåfÇVRÒ#°¢F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçBå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$7GVF÷$Æ–Ö—G5W&6VçEõ67&öÆÂ“°¢òò ¢òòÆ&VÃ“¢òò ¢F†—2æÆ&VÃ“’äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ“’äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃ“’äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsbÂ#r“°¢F†—2æÆ&VÃ“’äæÖRÒ&Æ&VÃ“’#°¢F†—2æÆ&VÃ“’å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂ#B“°¢F†—2æÆ&VÃ“’åF$–æFW‚ÒSsS°¢F†—2æÆ&VÃ“’åFW‡BÒ$Æ÷r†–v‚F—7Fæ6R†6Ò’#°¢F†—2æÆ&VÃ“’åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òòçVDFVG¦öæUv–GF€¢òò ¢F†—2æçVDFVG¦öæUv–GF‚äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ“RÂr“°¢F†—2æçVDFVG¦öæUv–GF‚äÖöFRÒGvöÂåVæ—DÖöFRå6ÖÆÃ°¢F†—2æçVDFVG¦öæUv–GF‚äæÖRÒ&çVDFVG¦öæUv–GF‚#°¢F†—2æçVDFVG¦öæUv–GF‚å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒrÂ3b“°¢F†—2æçVDFVG¦öæUv–GF‚åF$–æFW‚ÒS3ƒ°¢F†—2æçVDFVG¦öæUv–GF‚åfÇVT6†ævVB³ÒæWr7—7FVÒäWfVçD†æFÆW"‡F†—2æçVDFVG¦öæUv–GF…õfÇVT6†ævVB“°¢òò ¢òò'Få¦W&õt5õFööÀ¢òò ¢F†—2æ'Få¦W&õt5õFööÂä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"äÖ–çD7&VÓ°¢F†—2æ'Få¦W&õt5õFööÂä&6¶w&÷VæD–ÖvTÆ–÷WBÒ7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ–÷WBäæöæS°¢F†—2æ'Få¦W&õt5õFööÂäfÆDV&æ6Rä&÷&FW%6—¦RÒ°¢F†—2æ'Få¦W&õt5õFööÂäfÆE7G–ÆRÒ7—7FVÒåv–æF÷w2äf÷&×2äfÆE7G–ÆRäfÆC°¢F†—2æ'Få¦W&õt5õFööÂäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æ'Få¦W&õt5õFööÂäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærå7—7FVÔ6öÆ÷'2ä7F—fT6F–öåFW‡C°¢F†—2æ'Få¦W&õt5õFööÂä–ÖvRÒvÆö&Ã£¥GvöÂå&÷W'F–W2å&W6÷W&6W2å7FVW%¦W&ó°¢F†—2æ'Få¦W&õt5õFööÂäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒSbÂƒR“°¢F†—2æ'Få¦W&õt5õFööÂäæÖRÒ&'Få¦W&õt5õFööÂ#°¢F†—2æ'Få¦W&õt5õFööÂå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ“‚Â3“°¢F†—2æ'Få¦W&õt5õFööÂåF$–æFW‚ÒSs#°¢F†—2æ'Få¦W&õt5õFööÂåW6Uf—7VÅ7G–ÆT&6´6öÆ÷"ÒfÇ6S°¢F†—2æ'Få¦W&õt5õFööÂä6Æ–6²³ÒæWr7—7FVÒäWfVçD†æFÆW"‡F†—2æ'Få¦W&õt5õFööÅô6Æ–6²“°¢òò ¢òòF$FVG¦öæP¢òò ¢F†—2çF$FVG¦öæRä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åÆUGW'Vö—6S°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æ‡6&%76—fT–çFVw&Äv–â“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æ‡6&%76—fT7W'fGW&R“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&ÄÖçVÅtÕõW&6VçB“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æ‡6&$ÖçVÅtÕõW&6VçB“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&VÃb“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&VÃ2“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&Ä7W'fGW&Tv–â“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&VÃ“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æ‡6&$ÖçVÅ6V6öæG4öâ“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&Å76—fT–çFVw&Äv–â“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&ÄÖçVÅ6V6öæG4öâ“°¢F†—2çF$FVG¦öæRä6öçG&öÇ2äFB‡F†—2æÆ&VÃr“°¢F†—2çF$FVG¦öæRä–ÖvT–æFW‚Ò#°¢F†—2çF$FVG¦öæRäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂS"“°¢F†—2çF$FVG¦öæRäæÖRÒ'F$FVG¦öæR#°¢F†—2çF$FVG¦öæRåFF–ærÒæWr7—7FVÒåv–æF÷w2äf÷&×2åFF–ærƒ2“°¢F†—2çF$FVG¦öæRå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3cRÂ3“2“°¢F†—2çF$FVG¦öæRåF$–æFW‚Òs°¢òò ¢òò‡6&%76—fT–çFVw&Äv–à¢òò ¢F†—2æ‡6&%76—fT–çFVw&Äv–âäÆ&vT6†ævRÒ°¢F†—2æ‡6&%76—fT–çFVw&Äv–âäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒs‚ÂCB“°¢F†—2æ‡6&%76—fT–çFVw&Äv–âäÖ†–×VÒÒ#S°¢F†—2æ‡6&%76—fT–çFVw&Äv–âäæÖRÒ&‡6&%76—fT–çFVw&Äv–â#°¢F†—2æ‡6&%76—fT–çFVw&Äv–âå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂC“°¢F†—2æ‡6&%76—fT–çFVw&Äv–âåF$–æFW‚ÒSc3°¢F†—2æ‡6&%76—fT–çFVw&Äv–âåfÇVRÒC°¢F†—2æ‡6&%76—fT–çFVw&Äv–âå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&%76—fT–çFVw&Äv–åõ67&öÆÂ“°¢òò ¢òò‡6&%76—fT7W'fGW&P¢òò ¢F†—2æ‡6&%76—fT7W'fGW&RäÆ&vT6†ævRÒ°¢F†—2æ‡6&%76—fT7W'fGW&RäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒƒÂS2“°¢F†—2æ‡6&%76—fT7W'fGW&RäÖ†–×VÒÒS°¢F†—2æ‡6&%76—fT7W'fGW&RäæÖRÒ&‡6&%76—fT7W'fGW&R#°¢F†—2æ‡6&%76—fT7W'fGW&Rå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#ƒÂC“°¢F†—2æ‡6&%76—fT7W'fGW&RåF$–æFW‚ÒSc°¢F†—2æ‡6&%76—fT7W'fGW&RåfÇVRÒC°¢F†—2æ‡6&%76—fT7W'fGW&Rå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&%76—fT7W'fGW&Uõ67&öÆÂ“°¢òò ¢òòÆ&ÄÖçVÅtÕõW&6Vç@¢òò ¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ2Â3C“°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBäæÖRÒ&Æ&ÄÖçVÅtÕõW&6VçB#°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒcÂ3R“°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBåF$–æFW‚ÒSƒc°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&ÄÖçVÅtÕõW&6VçBåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òò‡6&$ÖçVÅtÕõW&6Vç@¢òò ¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBäÆ&vT6†ævRÒ°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒcrÂ33‚“°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBäÖ–æ–×VÒÒ°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBäæÖRÒ&‡6&$ÖçVÅtÕõW&6VçB#°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#“"ÂC“°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBåF$–æFW‚ÒSƒS°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBåfÇVRÒS°¢F†—2æ‡6&$ÖçVÅtÕõW&6VçBå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$ÖçVÅtÕõW&6VçEõ67&öÆÂ“°¢òò ¢òòÆ&VÃ`¢òò ¢F†—2æÆ&VÃbäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃbäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃbäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsrÂ#R“°¢F†—2æÆ&VÃbäæÖRÒ&Æ&VÃb#°¢F†—2æÆ&VÃbå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#c"Â#B“°¢F†—2æÆ&VÃbåF$–æFW‚ÒSc#°¢F†—2æÆ&VÃbåFW‡BÒ%76—fR7W'fRv–â#°¢F†—2æÆ&VÃbåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òòÆ&VÃ0¢òò ¢F†—2æÆ&VÃ2äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃ2äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃ2äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ“rÂ3’“°¢F†—2æÆ&VÃ2äæÖRÒ&Æ&VÃ2#°¢F†—2æÆ&VÃ2å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#s2Â#b“°¢F†—2æÆ&VÃ2åF$–æFW‚ÒSƒC°¢F†—2æÆ&VÃ2åFW‡BÒ$ÖçVÂ7FVW"tÒR#°¢F†—2æÆ&VÃ2åFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢F†—2æÆ&VÃ2åW6T6ö×F–&ÆUFW‡E&VæFW&–ærÒG'VS°¢òò ¢òòÆ&Ä7W'fGW&Tv–à¢òò ¢F†—2æÆ&Ä7W'fGW&Tv–âäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Ä7W'fGW&Tv–âäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Ä7W'fGW&Tv–âäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒÂSR“°¢F†—2æÆ&Ä7W'fGW&Tv–âäæÖRÒ&Æ&Ä7W'fGW&Tv–â#°¢F†—2æÆ&Ä7W'fGW&Tv–âå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒcrÂ3R“°¢F†—2æÆ&Ä7W'fGW&Tv–âåF$–æFW‚ÒSc°¢F†—2æÆ&Ä7W'fGW&Tv–âåFW‡BÒ##‚ã‚#°¢F†—2æÆ&Ä7W'fGW&Tv–âåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃ¢òò ¢F†—2æÆ&VÃäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ“rÂ##2“°¢F†—2æÆ&VÃäæÖRÒ&Æ&VÃ#°¢F†—2æÆ&VÃå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#s2Â#b“°¢F†—2æÆ&VÃåF$–æFW‚ÒSƒ°¢F†—2æÆ&VÃåFW‡BÒ$ÖçVÂ7FVW"6V6öæG2öâ#°¢F†—2æÆ&VÃåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢F†—2æÆ&VÃåW6T6ö×F–&ÆUFW‡E&VæFW&–ærÒG'VS°¢òò ¢òò‡6&$ÖçVÅ6V6öæG4öà¢òò ¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâäÆ&vT6†ævRÒ°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒcrÂ#S"“°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâäÖ†–×VÒÒ°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâäÖ–æ–×VÒÒ°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâäæÖRÒ&‡6&$ÖçVÅ6V6öæG4öâ#°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#“"ÂC“°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâåF$–æFW‚ÒSƒ#°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâåfÇVRÒ#°¢F†—2æ‡6&$ÖçVÅ6V6öæG4öâå67&öÆÂ³ÒæWr7—7FVÒåv–æF÷w2äf÷&×2å67&öÆÄWfVçD†æFÆW"‡F†—2æ‡6&$ÖçVÅ6V6öæG4öåõ67&öÆÂ“°¢òò ¢òòÆ&Å76—fT–çFVw&Äv–à¢òò ¢F†—2æÆ&Å76—fT–çFVw&Äv–âäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&Å76—fT–çFVw&Äv–âäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&Å76—fT–çFVw&Äv–âäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒ‚ÂCb“°¢F†—2æÆ&Å76—fT–çFVw&Äv–âäæÖRÒ&Æ&Å76—fT–çFVw&Äv–â#°¢F†—2æÆ&Å76—fT–çFVw&Äv–âå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒcrÂ3R“°¢F†—2æÆ&Å76—fT–çFVw&Äv–âåF$–æFW‚ÒScC°¢F†—2æÆ&Å76—fT–çFVw&Äv–âåFW‡BÒ#"ãR#°¢F†—2æÆ&Å76—fT–çFVw&Äv–âåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&ÄÖçVÅ6V6öæG4öà¢òò ¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâäföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"Â„bÂ7—7FVÒäG&v–æräföçE7G–ÆRå&VwVÆ"Â7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâäf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâäÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂ#SB“°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâäæÖRÒ&Æ&ÄÖçVÅ6V6öæG4öâ#°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦RƒcÂ3R“°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâåF$–æFW‚ÒSƒ3°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâåFW‡BÒ#ƒƒ‚#°¢F†—2æÆ&ÄÖçVÅ6V6öæG4öâåFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆU&–v‡C°¢òò ¢òòÆ&VÃp¢òò ¢F†—2æÆ&VÃräföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂBã#TbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&VÃräf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"ä&Æ6³°¢F†—2æÆ&VÃräÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒsBÂb“°¢F†—2æÆ&VÃräæÖRÒ&Æ&VÃr#°¢F†—2æÆ&VÃrå6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ#c"Â#B“°¢F†—2æÆ&VÃråF$–æFW‚ÒScS°¢F†—2æÆ&VÃråFW‡BÒ%76—fRF¢‡6V6öæG2’#°¢F†—2æÆ&VÃråFW‡DÆ–vâÒ7—7FVÒäG&v–ærä6öçFVçDÆ–væÖVçBäÖ–FFÆT6VçFW#°¢òò ¢òò–ÖvTÆ—7C¢òò ¢F†—2æ–ÖvTÆ—7Cä–ÖvU7G&VÒÒ‚…7—7FVÒåv–æF÷w2äf÷&×2ä–ÖvTÆ—7E7G&VÖW"’‡&W6÷W&6W2ävWDö&¦V7B‚&–ÖvTÆ—7Cä–ÖvU7G&VÒ"’’“°¢F†—2æ–ÖvTÆ—7CåG&ç7&VçD6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åG&ç7&VçC°¢F†—2æ–ÖvTÆ—7Cä–ÖvW2å6WD¶W”æÖRƒÂ%6eõF"çær"“°¢F†—2æ–ÖvTÆ—7Cä–ÖvW2å6WD¶W”æÖRƒÂ%5Eôv–åF"çær"“°¢F†—2æ–ÖvTÆ—7Cä–ÖvW2å6WD¶W”æÖRƒ"Â$6öå5ô–×ÆVÖVçD†—F6‚çær"“°¢F†—2æ–ÖvTÆ—7Cä–ÖvW2å6WD¶W”æÖRƒ2Â%5Eõ7FæÆW•F"çær"“°¢F†—2æ–ÖvTÆ—7Cä–ÖvW2å6WD¶W”æÖRƒBÂ%5Eõ7FVW%F"çær"“°¢òò ¢òòæVÃ ¢òò ¢F†—2çæVÃ"ä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åv†—FU6Öö¶S°¢F†—2çæVÃ"ä6öçG&öÇ2äFB‡F†—2æÆ&ÅtÔF—7Æ’“°¢F†—2çæVÃ"ä6öçG&öÇ2äFB‡F†—2æÆ&VÃ’“°¢F†—2çæVÃ"ä6öçG&öÇ2äFB‡F†—2æ'FäW‡æB“°¢F†—2çæVÃ"äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒBÂCSB“°¢F†—2çæVÃ"äæÖRÒ'æVÃ"#°¢F†—2çæVÃ"å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ3cbÂSR“°¢F†—2çæVÃ"åF$–æFW‚Ò3#C°¢òò ¢òòÆ&ÅtÔF—7Æ¢òò ¢F†—2æÆ&ÅtÔF—7Æ’ä&6´6öÆ÷"Ò7—7FVÒäG&v–ærä6öÆ÷"åG&ç7&VçC°¢F†—2æÆ&ÅtÔF—7Æ’äföçBÒæWr7—7FVÒäG&v–æräföçB‚%F†öÖ"ÂRãsTbÂ7—7FVÒäG&v–æräföçE7G–ÆRä&öÆBÂ7—7FVÒäG&v–æräw&†–75Væ—Båö–çBÂ‚†'—FR’ƒ’’“°¢F†—2æÆ&ÅtÔF—7Æ’äf÷&T6öÆ÷"Ò7—7FVÒäG&v–ærå7—7FVÔ6öÆ÷'2ä7F—fT6F–öåFW‡C°¢F†—2æÆ&ÅtÔF—7Æ’äÆö6F–öâÒæWr7—7FVÒäG&v–æråö–çBƒcBÂ“°¢F†—2æÆ&ÅtÔF—7Æ’äæÖRÒ&Æ&ÅtÔF—7Æ’#°¢F†—2æÆ&ÅtÔF—7Æ’å6—¦RÒæWr7—7FVÒäG&v–ærå6—¦Rƒ“"Â3r“°¢F†—2æÆ&ÅtÔF—7Æ’åF$–æFW‚Ò>{ë[h‘éì¶»§q«^t€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹	Õ¥±‘Q½½±QÉ…­Ì¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹	Õ¥±‘Q½½±QÉ…­Í}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÈÀ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌÐÈ°€ÄÌä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹9…µ”€ô€‰±…‰•°ÈÀˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÈÀÄ°€Ôä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹Q…‰%¹‘•à€ô€ØÀÐì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹Q•áÐ€ô€‰•±•Ñ”I•½É‘•Q½½°QÉ…­Ìˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÈÀ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹MÑ}5…¹‘…Ñ½Éäì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹Q•…°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹I•Õ±…È°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹%µ•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ•5½‘”¹9½½¹ÑÉ½°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌàÀ°€ÈÀÄ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹9…µ”€ô€‰‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ìˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÈØ°€ØÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹Q…‰%¹‘•à€ô€ØÀÌì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ì¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Í}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹¹¡½È€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¹¡½ÉMÑå±•Ì¹	½ÑÑ½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹1…Ù•¹‘•Èì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹É½Á½Ý¹MÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹½µ‰½	½áMÑå±”¹É½Á½Ý¹1¥ÍÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÈÜ¸ÜÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹½Éµ…ÑÑ¥¹¹…‰±•€ôÑÉÕ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹%Ñ•µÌ¹‘‘I…¹”¡¹•Ü½‰©•Ñmtì(€€€€€€€€€€€€ˆÀˆ°(€€€€€€€€€€€€ˆÄˆ°(€€€€€€€€€€€€ˆÈˆ°(€€€€€€€€€€€€ˆÌˆ°(€€€€€€€€€€€€ˆÐ‰ô¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð àÜ°€äÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹5…É¥¸€ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…‘‘¥¹œ È°€Ì°€È°€Ì¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹5…áÉ½Á½Ý¹%Ñ•µÌ€ô€Ôì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹9…µ”€ô€‰‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ää°€ÔÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹Q…‰%¹‘•à€ô€ØÀÈì(€€€€€€€€€€€Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”¹M•±•Ñ•‘%¹‘•á¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰½áA…ÍÍ•ÍA•ÉI•™•É•¹•}M•±•Ñ•‘%¹‘•á¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄÈ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹¥É•‰É¥¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ØÔ°€ÄÔÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹9…µ”€ô€‰±…‰•°ÄÈˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÌ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹Q…‰%¹‘•à€ô€ØÀÄì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹Q•áÐ€ô€ˆÀ€ô=™˜ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÈ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄÐ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌØ°€Èà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹9…µ”€ô€‰±…‰•°ÄÐˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÈÀÄ°€Ôä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹Q…‰%¹‘•à€ô€ØÀÀì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹Q•áÐ€ô€‰A…ÍÍ•ÌA•ÈI•½É‘•QÉ…¬ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÐ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄÀ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌØ°€ÄàÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹9…µ”€ô€‰±…‰•°ÄÀˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÈÀÄ°€ÐÄ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹Q…‰%¹‘•à€ô€ÔäÀì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹Q•áÐ€ô€‰Q½½°]¥‘Ñ ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÀ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°Ô(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÔÜ°€ÌÈÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹9…µ”€ô€‰±…‰•°Ôˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔà°€ÐÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹Q…‰%¹‘•à€ô€Ôààì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹Q•áÐ€ô€‰±½‰…°9Õ‘”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ô¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹•¥µ…±A±…•Ì€ô€Äì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð Èä°€ÈÈà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹5…á¥µÕ´€ô€ÈÀÀÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹9…µ”€ô€‰¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÈÄÔ°€ØÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹Q…‰%¹‘•à€ô€Ôàäì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œ¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘9Õ‘”(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ØÔ°€ÌÜÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹5…á¥µÕ´€ô€ÔÀÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹5¥¹¥µÕ´€ô€´ÔÀÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹9…µ”€ô€‰¹Õ‘9Õ‘”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÌ°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹Q…‰%¹‘•à€ô€ÔàÜì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘9Õ‘”¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘9Õ‘•}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼Ñ…‰M•ÑÕÀ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹…¥¹Í‰½É¼ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹9½¹”ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°Ää¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°Äà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°ÄÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°ÌÄ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°àÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹%µ…•%¹‘•à€ô€Àì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð Ð°€ÔÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹9…µ”€ô€‰Ñ…‰M•ÑÕÀˆì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹A…‘‘¥¹œ€ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…‘‘¥¹œ Ì¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÔÜÄ°€ÐÐà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹Q…‰%¹‘•à€ô€Ðì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°Ää(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÀÐ°€ÌÄà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹9…µ”€ô€‰±…‰•°Ääˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔà°€ÌØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹Q…‰%¹‘•à€ô€ÔÐØì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹Q•áÐ€ô€‰=™˜Q¥µ”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ää¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°Äà(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀÜ°€ÌÄà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹9…µ”€ô€‰±…‰•°Äàˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔà°€ÌØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹Q…‰%¹‘•à€ô€ÔÐÔì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹Q•áÐ€ô€‰=¸Q¥µ”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Äà¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄÔ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÄÐ°€Èàä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹9…µ”€ô€‰±…‰•°ÄÔˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄäÔ°€ÔÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹Q…‰%¹‘•à€ô€ÔÐÐì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹Q•áÐ€ô€‰¥É•Ñ¥½¹…°Y…±Ù”QåÁ”€¡	…¹œ	…¹œ¤ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÔ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹ÁÁ•…É…¹”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹ÁÁ•…É…¹”¹	ÕÑÑ½¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹M}A¥¹Ìì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹5•‘¥ÕµÅÕ…µ…É¥¹”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹MåÍÑ•µ½±½ÉÌ¹½¹ÑÉ½±Q•áÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ØÈ°€ÌÐØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹9…µ”€ô€‰‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹I¥¡ÑQ½1•™Ð€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹I¥¡ÑQ½1•™Ð¹e•Ìì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ää°€Øä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹Q…‰%¹‘•à€ô€ÔÐÌì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹5¥‘‘±••¹Ñ•Èì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±•}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹•¥µ…±A±…•Ì€ô€Äì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÄÄ°€ÌÔä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹5…á¥µÕ´€ô€Õì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹5¥¹¥µÕ´€ô€À¸Åì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹9…µ”€ô€‰¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐà°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹Q…‰%¹‘•à€ô€ÔÐÈì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ•}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹•¥µ…±A±…•Ì€ô€Äì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÄÐ°€ÌÔä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹5…á¥µÕ´€ô€ÈÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹5¥¹¥µÕ´€ô€À¸Åì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹9…µ”€ô€‰¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐà°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹Q…‰%¹‘•à€ô€ÔÐÄì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ•}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÌÄ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌÈä°€ÔÜ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹9…µ”€ô€‰±…‰•°ÌÄˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔà°€ÌØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹Q…‰%¹‘•à€ô€ÔÄäì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹Q•áÐ€ô€‰%¹Ù•ÉÐA=Lˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÌÄ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°àÌ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÄÀØ°€ÐÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹9…µ”€ô€‰±…‰•°àÌˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÜà°€ÔÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹Q…‰%¹‘•à€ô€ÔÄàì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹Q•áÐ€ô€‰%¹Ù•ÉÐÑÕ…Ñ½È¥É•Ñ¥½¸ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°àÌ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰½á%¹Ù•ÉÑA=L(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹ÁÁ•…É…¹”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹ÁÁ•…É…¹”¹	ÕÑÑ½¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹MÑ}%¹Ù•ÉÑ]Lì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹¡•­•€ôÑÉÕ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹¡•­MÑ…Ñ”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­MÑ…Ñ”¹¡•­•ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹5•‘¥ÕµÅÕ…µ…É¥¹”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹MåÍÑ•µ½±½ÉÌ¹½¹ÑÉ½±Q•áÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌÔä°€äÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹9…µ”€ô€‰‰½á%¹Ù•ÉÑA=Lˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹I¥¡ÑQ½1•™Ð€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹I¥¡ÑQ½1•™Ð¹e•Ìì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ää°€Øä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹Q…‰%¹‘•à€ô€ÔÄØì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹5¥‘‘±••¹Ñ•Èì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=L¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰½á%¹Ù•ÉÑA=M}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰½á%¹Ù•ÉÑÑÕ…Ñ½È(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹ÁÁ•…É…¹”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹ÁÁ•…É…¹”¹	ÕÑÑ½¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹MÑ}%¹Ù•ÉÑ¥É•Ñ¥½¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹5•‘¥ÕµÅÕ…µ…É¥¹”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹MåÍÑ•µ½±½ÉÌ¹½¹ÑÉ½±Q•áÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÄÐØ°€äÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹9…µ”€ô€‰‰½á%¹Ù•ÉÑÑÕ…Ñ½Èˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹I¥¡ÑQ½1•™Ð€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹I¥¡ÑQ½1•™Ð¹e•Ìì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ää°€Øä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹Q…‰%¹‘•à€ô€ÔÄÜì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹5¥‘‘±••¹Ñ•Èì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½È¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰½á%¹Ù•ÉÑÑÕ…Ñ½É}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼Ñ…‰¹Ñ•¹¹„(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹…¥¹Í‰½É¼ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°ÄÜ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°ÄØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±‰±i•É½I½±°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°Ì¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹±…‰•°È¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹%µ…•%¹‘•à€ô€Äì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð Ð°€ÔÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹9…µ”€ô€‰Ñ…‰¹Ñ•¹¹„ˆì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÔÜÄ°€ÐÐà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹Q…‰%¹‘•à€ô€äì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼Á¥ÑÕÉ•	½àÈ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹Q½½±¹Ñ•¹¹…}½É•}™Ðì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀä°€ÌÄÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹9…µ”€ô€‰Á¥ÑÕÉ•	½àÈˆì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÌ°€ÄÈà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹Q…‰%¹‘•à€ô€Ôàäì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¹Q…‰MÑ½À€ô™…±Í”ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼Á¥ÑÕÉ•	½àÄ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹	…­É½Õ¹‘%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹Q½½±}½É•}™Ðì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÀØ°€ÌÄÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹9…µ”€ô€‰Á¥ÑÕÉ•	½àÄˆì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÐ°€ÄÈà¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹Q…‰%¹‘•à€ô€Ôààì(€€€€€€€€€€€Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¹Q…‰MÑ½À€ô™…±Í”ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄÜ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÀØ°€ÈÌÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹9…µ”€ô€‰±…‰•°ÄÜˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÐ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹Q…‰%¹‘•à€ô€ÔàÜì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹Q•áÐ€ô€‰Q½½°I•™•É•¹”A½¥¹Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄÜ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°ÄØ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀÐ°€ÈÌÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹9…µ”€ô€‰±…‰•°ÄØˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔÈ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹Q…‰%¹‘•à€ô€ÔàÔì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹Q•áÐ€ô€‰A¥Ù½ÐQ¼¹Ñ•¹¹„ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°ÄØ¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±‰±%¹Ù•ÉÑI½±°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈØ°€È¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹9…µ”€ô€‰±‰±%¹Ù•ÉÑI½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÄÔ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹Q…‰%¹‘•à€ô€ÔÌàì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹Q•áÐ€ô€‰%¹Ù•ÉÐI½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±%¹Ù•ÉÑI½±°¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±‰±I½±±i•É½=™™Í•Ð(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÈÀ¸ÈÕ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹%µ•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ•5½‘”¹9½½¹ÑÉ½°ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌÌ°€ÌÐÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹9…µ”€ô€‰±‰±I½±±i•É½=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÀÀ°€ÌÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹Q…‰%¹‘•à€ô€ÔÈäì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹Q•áÐ€ô€‰±…‰•°ÄÄˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I½±±i•É½=™™Í•Ð¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹5¥‘‘±••¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±‰±i•É½I½±°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ä°€ÈÔÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹9…µ”€ô€‰±‰±i•É½I½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐà°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹Q…‰%¹‘•à€ô€ÔÌÜì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹Q•áÐ€ô€‰i•É¼I½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±i•É½I½±°¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±‰±!•…‘¥¹=™™Í•Ð(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹QÉ…¹ÍÁ…É•¹Ðì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹%µ•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ•5½‘”¹9½½¹ÑÉ½°ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈäØ°€ÄÄÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹9…µ”€ô€‰±‰±!•…‘¥¹=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄØÄ°€ÈÜ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹Q…‰%¹‘•à€ô€ÔÌäì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹Q•áÐ€ô€‰!•…‘¥¹œ=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±!•…‘¥¹=™™Í•Ð¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±‰±I•µ½Ù•=™™Í•Ð(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð Ð°€ÄÈØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹9…µ”€ô€‰±‰±I•µ½Ù•=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÔà°€ÈÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹Q…‰%¹‘•à€ô€ÔÌØì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹Q•áÐ€ô€‰I•µ½Ù”=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±‰±I•µ½Ù•=™™Í•Ð¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰½á…Ñ…%¹Ù•ÉÑI½±°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹ÁÁ•…É…¹”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹ÁÁ•…É…¹”¹	ÕÑÑ½¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹1¥¡ÑÉ••¸ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹…}%¹Ù•ÉÑI½±°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀ°€Èä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹9…µ”€ô€‰‰½á…Ñ…%¹Ù•ÉÑI½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹I¥¡ÑQ½1•™Ð€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹I¥¡ÑQ½1•™Ð¹e•Ìì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÈØ°€ØÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹Q…‰%¹‘•à€ô€ÔÌÈì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹5¥‘‘±••¹Ñ•Èì(€€€€€€€€€€€Ñ¡¥Ì¹‰½á…Ñ…%¹Ù•ÉÑI½±°¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰Ñ¹i•É½I½±°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹Q•…°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹I•Õ±…È°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹…}I½±±M•Ñi•É¼ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹%µ•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ•5½‘”¹9½½¹ÑÉ½°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀ°€ÈÜä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹9…µ”€ô€‰‰Ñ¹i•É½I½±°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÈØ°€ØÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹Q…‰%¹‘•à€ô€ÔÌÀì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹i•É½I½±°¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹i•É½I½±±}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°Ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌäÈ°€Ø¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹9…µ”€ô€‰±…‰•°Ìˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÜÈ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹Q…‰%¹‘•à€ô€ÔàÌì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹Q•áÐ€ô€‰¹Ñ•¹¹„=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°Ì¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼±…‰•°È(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÉ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÄäÐ°€Ø¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹9…µ”€ô€‰±…‰•°Èˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÜÈ°€ÈÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹Q…‰%¹‘•à€ô€ÔàÄì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹Q•áÐ€ô€‰¹Ñ•¹¹„!•¥¡Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹±…‰•°È¹Q•áÑ±¥¸€ôMåÍÑ•´¹É…Ý¥¹œ¹½¹Ñ•¹Ñ±¥¹µ•¹Ð¹	½ÑÑ½µ•¹Ñ•Èì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹±…ÑÁÁ•…É…¹”¹	½É‘•É½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹±…ÑÁÁ•…É…¹”¹¡•­•‘	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹Q•…°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€Ðá°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹	½±°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹	±…¬ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹½¹…}I•µ½Ù•=™™Í•Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹%µ•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ•5½‘”¹9½½¹ÑÉ½°ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀ°€ÄÔÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹9…µ”€ô€‰‰Ñ¹I•µ½Ù•i•É½=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÈØ°€ØÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹Q…‰%¹‘•à€ô€ÔÌÄì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ð¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹I•µ½Ù•i•É½=™™Í•Ñ}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘A¥Ù½ÑQ½Q½½°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÀØ°€ÈÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹5…á¥µÕ´€ô€ÄÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹5¥¹¥µÕ´€ô€´ÄÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹9…µ”€ô€‰¹Õ‘A¥Ù½ÑQ½Q½½°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÐ°€ÔÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹Q…‰%¹‘•à€ô€ÔàØì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½°¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½Q½½±}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀà°€ÈÔÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹5…á¥µÕ´€ô€ÄÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹5¥¹¥µÕ´€ô€´ÄÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹9…µ”€ô€‰¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÐ°€ÔÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹Q…‰%¹‘•à€ô€ÔàÐì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹…}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰Ñ¹I½±±=™™Í•ÑUÀ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹±…ÑÁÁ•…É…¹”¹	½É‘•ÉM¥é”€ô€Àì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹I•Õ±…È°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹MåÍÑ•µ½±½ÉÌ¹	ÕÑÑ½¹…”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹UÁÉÉ½ÜØÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð äà°€ÌÜÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹5…É¥¸€ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…‘‘¥¹œ È°€Ì°€È°€Ì¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹9…µ”€ô€‰‰Ñ¹I½±±=™™Í•ÑUÀˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” Ôä°€Øä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹Q…‰%¹‘•à€ô€ÔÌÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ôÑÉÕ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÀ¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•ÑUÁ}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼‰Ñ¹I½±±=™™Í•Ñ½Ý¸(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹	…­É½Õ¹‘%µ…•1…å½ÕÐ€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1…å½ÕÐ¹i½½´ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹±…ÑÁÁ•…É…¹”¹	½É‘•ÉM¥é”€ô€Àì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹±…ÑMÑå±”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹±…ÑMÑå±”¹±…Ðì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€ÄÐ¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹I•Õ±…È°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹½É•½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹MåÍÑ•µ½±½ÉÌ¹	ÕÑÑ½¹…”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹%µ…”€ô±½‰…°èéQÝ½°¹AÉ½Á•ÉÑ¥•Ì¹I•Í½ÕÉ•Ì¹¹ÉÉ½ÜØÐì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÄÌ°€ÌÜÔ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹5…É¥¸€ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…‘‘¥¹œ È°€Ì°€È°€Ì¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹9…µ”€ô€‰‰Ñ¹I½±±=™™Í•Ñ½Ý¸ˆì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” Ôä°€Øä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹Q…‰%¹‘•à€ô€ÔÌÌì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹UÍ•Y¥ÍÕ…±MÑå±•	…­½±½È€ôÑÉÕ”ì(€€€€€€€€€€€Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¸¹±¥¬€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹‰Ñ¹I½±±=™™Í•Ñ½Ý¹}±¥¬¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹•¥µ…±A±…•Ì€ô€Äì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÌÀÈ°€ÄÐÐ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹5¥¹¥µÕ´€ô€´ÄÀÁì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹9…µ”€ô€‰¹Õ‘Õ…±!•…‘¥¹=™™Í•Ðˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐà°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹Q…‰%¹‘•à€ô€ÔÐÀì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ð¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘Õ…±!•…‘¥¹=™™Í•Ñ}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÈÀä°€ÌÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹5…á¥µÕ´€ô€Õì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹9…µ”€ô€‰¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÌ°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹Q…‰%¹‘•à€ô€ÔàÀì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½±}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹1½…Ñ¥½¸€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹A½¥¹Ð ÐÀÜ°€ÌÌ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹5…á¥µÕ´€ô€Õì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹5¥¹¥µÕ´€ô€´Õì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹5½‘”€ôQÝ½°¹U¹¥Ñ5½‘”¹Mµ…±°ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹9…µ”€ô€‰¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°ˆì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹M¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” ÄÐÌ°€ÔØ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹Q…‰%¹‘•à€ô€ÔàÈì(€€€€€€€€€€€Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°¹Y…±Õ•¡…¹•€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½±}Y…±Õ•¡…¹•¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼¥µ…•1¥ÍÐÈ(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹%µ…•MÑÉ•…´€ô€ ¡MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1¥ÍÑMÑÉ•…µ•È¤¡É•Í½ÕÉ•Ì¹•Ñ=‰©•Ð ‰¥µ…•1¥ÍÐÈ¹%µ…•MÑÉ•…´ˆ¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹QÉ…¹ÍÁ…É•¹Ñ½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹QÉ…¹ÍÁ…É•¹Ðì(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹%µ…•Ì¹M•Ñ-•å9…µ” À°€‰½¹M}%µÁ±•µ•¹Ñ½¹™¥œ¹Á¹œˆ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹%µ…•Ì¹M•Ñ-•å9…µ” Ä°€‰½¹M}%µÁ±•µ•¹Ñ¹Ñ•¹¹„¹Á¹œˆ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹%µ…•Ì¹M•Ñ-•å9…µ” È°€‰5½‘•Ñ¥Ù”¹Á¹œˆ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹¥µ…•1¥ÍÐÈ¹%µ…•Ì¹M•Ñ-•å9…µ” Ì°€‰5½‘•A…ÍÍ¥Ù”¹Á¹œˆ¤ì(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€€¼¼½ÉµQ½½±MÑ••È(€€€€€€€€€€€€¼¼€(€€€€€€€€€€€Ñ¡¥Ì¹ÕÑ½M…±•¥µ•¹Í¥½¹Ì€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é• äÙ°€äÙ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹ÕÑ½M…±•5½‘”€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹ÕÑ½M…±•5½‘”¹Á¤ì(€€€€€€€€€€€Ñ¡¥Ì¹	…­½±½È€ôMåÍÑ•´¹É…Ý¥¹œ¹½±½È¹]¡¥Ñ•Mµ½­”ì(€€€€€€€€€€€Ñ¡¥Ì¹±¥•¹ÑM¥é”€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹M¥é” äÔÄ°€ÔÄÈ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹Ñ…‰Q½½±M•ÑÕÀ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹Á…¹•°È¤ì(€€€€€€€€€€€Ñ¡¥Ì¹½¹ÑÉ½±Ì¹‘¡Ñ¡¥Ì¹Ñ…‰½¹ÑÉ½°Ä¤ì(€€€€€€€€€€€Ñ¡¥Ì¹½¹Ð€ô¹•ÜMåÍÑ•´¹É…Ý¥¹œ¹½¹Ð ‰Q…¡½µ„ˆ°€à¸ÈÕ°MåÍÑ•´¹É…Ý¥¹œ¹½¹ÑMÑå±”¹I•Õ±…È°MåÍÑ•´¹É…Ý¥¹œ¹É…Á¡¥ÍU¹¥Ð¹A½¥¹Ð°€ ¡‰åÑ”¤ À¤¤¤ì(€€€€€€€€€€€Ñ¡¥Ì¹5…á¥µ¥é•	½à€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹5¥¹¥µ¥é•	½à€ô™…±Í”ì(€€€€€€€€€€€Ñ¡¥Ì¹9…µ”€ô€‰½ÉµQ½½±MÑ••Èˆì(€€€€€€€€€€€Ñ¡¥Ì¹A…‘‘¥¹œ€ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…‘‘¥¹œ È¤ì(€€€€€€€€€€€Ñ¡¥Ì¹MÑ…ÉÑA½Í¥Ñ¥½¸€ôMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹½ÉµMÑ…ÉÑA½Í¥Ñ¥½¸¹•¹Ñ•ÉA…É•¹Ðì(€€€€€€€€€€€Ñ¡¥Ì¹Q•áÐ€ô€‰Q½½°MÑ••È½¹™¥ÕÉ…Ñ¥½¸ˆì(€€€€€€€€€€€Ñ¡¥Ì¹½Éµ±½Í¥¹œ€¬ô¹•ÜMåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹½Éµ±½Í¥¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹½ÉµQ½½±MÑ••É}½Éµ±½Í¥¹œ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹1½…€¬ô¹•ÜMåÍÑ•´¹Ù•¹Ñ!…¹‘±•È¡Ñ¡¥Ì¹½ÉµQ½½±MÑ••É}1½…¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰½¹ÑÉ½°Ä¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰…¥¸¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰MÑ••È¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰MÑ••È¹A•É™½Éµ1…å½ÕÐ ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰•…‘é½¹”¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Á…¹•°È¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰Q½½±M•ÑÕÀ¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰5½‘•Ì¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰Ñ¥Ù”¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰M•ÑÕÀ¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€Ñ¡¥Ì¹Ñ…‰¹Ñ•¹¹„¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì(€€€€€€€€€€€€ ¡MåÍÑ•´¹½µÁ½¹•¹Ñ5½‘•°¹%MÕÁÁ½ÉÑ%¹¥Ñ¥…±¥é”¤¡Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÈ¤¤¹¹‘%¹¥Ð ¤ì(€€€€€€€€€€€€ ¡MåÍÑ•´¹½µÁ½¹•¹Ñ5½‘•°¹%MÕÁÁ½ÉÑ%¹¥Ñ¥…±¥é”¤¡Ñ¡¥Ì¹Á¥ÑÕÉ•	½àÄ¤¤¹¹‘%¹¥Ð ¤ì(€€€€€€€€€€€Ñ¡¥Ì¹I•ÍÕµ•1…å½ÕÐ¡™…±Í”¤ì((€€€€€€€ô((€€€€€€€€•¹‘É•¥½¸(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q¥µ•ÈÑ¥µ•ÈÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰½¹ÑÉ½°Ñ…‰½¹ÑÉ½°Äì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰…¥¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰MÑ••Èì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±ÑÕ…±MÑ••É¹±•UÁÁ•Èì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÈÜì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É%¹Ñ•É…±}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±%¹Ñ•É…±}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A…¹•°Á…¹•°Èì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±Y}M•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±Y}Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÌØì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Ìàì(€€€€€€€ÁÉ¥Ù…Ñ”I•Á•…Ñ	ÕÑÑ½¸‰Ñ¹áÁ…¹ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰½¹ÑÉ½°Ñ…‰Q½½±M•ÑÕÀì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘•…‘é½¹•]¥‘Ñ ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰M•ÑÕÀì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÔÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰•…‘é½¹”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1¥ÍÐ¥µ…•1¥ÍÐÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹%µ…•1¥ÍÐ¥µ…•1¥ÍÐÈì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°àÜì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ààì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°àäì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É5¥¹A]5}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…ÉA…¥¹}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±A…¥¹}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±!¥¡A]5}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±5¥¹A]5}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É!¥¡A]5}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÌÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°àÌì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%¹Ù•ÉÑA=Lì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%¹Ù•ÉÑÑÕ…Ñ½Èì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°äØì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±ÑÕ…Ñ½É1¥µ¥ÑÍA•É•¹Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ääì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…ÉÑÕ…Ñ½É1¥µ¥ÑÍA•É•¹Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹i•É½]M}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É1½Ý!¥¡¥ÍÑ…¹”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÀÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±1½Ý!¥¡¥ÍÑ…¹”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…Éi•É½]M}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±i•É½]M}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Èì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘¹Ñ•¹¹…!•¥¡Ñ}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Ìì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘¹Ñ•¹¹…=™™Í•Ñ}Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±A]5¥ÍÁ±…äì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°äì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%Í½±±½ÝÕÉÉ•¹Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰5½‘•Ìì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±ÕÉÙ…ÑÕÉ•…¥¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…ÉA…ÍÍ¥Ù•ÕÉÙ…ÑÕÉ”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Øì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±A…ÍÍ¥Ù•%¹Ñ•É…±…¥¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…ÉA…ÍÍ¥Ù•%¹Ñ•É…±…¥¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Üì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%ÍA…ÍÍ¥Ù•MÑ••É¥¹œì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%Í½±±½ÝA¥Ù½Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Äì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰Ñ¥Ù”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á%ÍI•½É‘Q½½±1¥¹”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±5…¹Õ…±A]5}A•É•¹Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É5…¹Õ…±A]5}A•É•¹Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÌì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±5…¹Õ…±M•½¹‘Í=¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹!MÉ½±±	…È¡Í‰…É5…¹Õ…±M•½¹‘Í=¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÄì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘9Õ‘”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Ôì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°àì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½áI•½É‘M½ÕÉ•Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘Q½½±Õ¥‘…¹•MÁ…¥¹œì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÀì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÐì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÈì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹½µ‰½	½à‰½áA…ÍÍ•ÍA•ÉI•™•É•¹”ì(€€€€€€€ÁÉ¥Ù…Ñ”I•Á•…Ñ	ÕÑÑ½¸‰Ñ¹I½±±=™™Í•ÑUÀì(€€€€€€€ÁÉ¥Ù…Ñ”I•Á•…Ñ	ÕÑÑ½¸‰Ñ¹I½±±=™™Í•Ñ½Ý¸ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±I½±±i•É½=™™Í•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹i•É½I½±°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹I•µ½Ù•i•É½=™™Í•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á…Ñ…%¹Ù•ÉÑI½±°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±%¹Ù•ÉÑI½±°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±i•É½I½±°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±I•µ½Ù•=™™Í•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹Q…‰A…”Ñ…‰¹Ñ•¹¹„ì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘Õ…±!•…‘¥¹=™™Í•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±‰±!•…‘¥¹=™™Í•Ðì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÜì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘A¥Ù½ÑQ½Q½½°ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄØì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘A¥Ù½ÑQ½¹Ñ•¹¹„ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A¥ÑÕÉ•	½àÁ¥ÑÕÉ•	½àÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹A¥ÑÕÉ•	½àÁ¥ÑÕÉ•	½àÈì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Ääì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°Äàì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÄÔì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹¡•­	½à‰½á¥É•Ñ¥½¹…±Y…±Ù•¹…‰±”ì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=¹Q¥µ”ì(€€€€€€€ÁÉ¥Ù…Ñ”9Õ‘±•ÍÍ9Õµ•É¥UÁ½Ý¸¹Õ‘¥É•Ñ¥½¹…±Y…±Ù•=™™Q¥µ”ì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÈÀì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹•±•Ñ•I•½É‘•‘QÉ…­Ìì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÈÄì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹	Õ¥±‘Q½½±QÉ…­Ìì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹1…‰•°±…‰•°ÈÈì(€€€€€€€ÁÉ¥Ù…Ñ”MåÍÑ•´¹]¥¹‘½ÝÌ¹½ÉµÌ¹	ÕÑÑ½¸‰Ñ¹•±•Ñ•QÉ…­Ìì(€€€ô)ô(

@@ -37,6 +37,8 @@ namespace Twol
 
         //passive tool steering
         private double segAvg = 0, toolDistance = 0, errorProp = 0, passiveDistance = 0;
+        private double filteredToolDistance = 0;
+        private DateTime passiveFilterLastTime = DateTime.MinValue, passiveCorrectionLastTime = DateTime.MinValue;
         private int passiveCounter = 0;
 
         //toolDifferential
@@ -64,15 +66,38 @@ namespace Twol
 
             if (Settings.Tool.setToolSteer.isPassiveSteering || Settings.Tool.setToolSteer.isFollowCurrent)
             {
-                // With dual tool GPS, use the configured implement reference point rather than the antenna.
-                // For a single tool position, heading is unavailable for fore/aft geometry correction.
-                bool hasToolHeading = mf.pnTool.isDualGPSConnected
+                // Use the configured working point (for example, planter row units) when tool orientation
+                // is available. Dual GPS supplies implement heading; a single receiver can use its course
+                // over ground when the NMEA source provides it.
+                bool hasDualToolHeading = mf.pnTool.isDualGPSConnected
                     && mf.pnTool.headingTrueDual != float.MaxValue
                     && !double.IsNaN(mf.pnTool.headingTrueDual)
                     && !double.IsInfinity(mf.pnTool.headingTrueDual);
-                vec2 toolGuidancePoint = hasToolHeading
-                    ? new vec2(mf.toolPos)
-                    : new vec2(mf.pnTool.fix);
+                bool hasToolCourse = !mf.pnTool.isDualGPSConnected
+                    && mf.pnTool.headingTrue != float.MaxValue
+                    && !double.IsNaN(mf.pnTool.headingTrue)
+                    && !double.IsInfinity(mf.pnTool.headingTrue);
+                vec2 toolGuidancePoint;
+                if (hasDualToolHeading)
+                {
+                    toolGuidancePoint = new vec2(mf.toolPos);
+                }
+                else if (hasToolCourse)
+                {
+                    double toolHeading = glm.toRadians(mf.pnTool.headingTrue);
+                    double foreAftOffset = Settings.Tool.setToolSteer.pivotToAntennaDistance
+                        + Settings.Tool.setToolSteer.PivotToToolDistance;
+                    toolGuidancePoint = new vec2(
+                        mf.pnTool.fix.easting + Math.Cos(toolHeading) * Settings.Tool.setToolSteer.antennaOffset
+                            - Math.Sin(toolHeading) * foreAftOffset,
+                        mf.pnTool.fix.northing - Math.Sin(toolHeading) * Settings.Tool.setToolSteer.antennaOffset
+                            - Math.Cos(toolHeading) * foreAftOffset);
+                }
+                else
+                {
+                    // If the receiver supplies position only, use its antenna as the best available point.
+                    toolGuidancePoint = new vec2(mf.pnTool.fix);
+                }
 
                 if (FindClosestSegment(curList, isLoop, toolGuidancePoint, out A, out B))
                 {
@@ -83,7 +108,7 @@ namespace Twol
 
                     hasValidToolXte = mf.pnTool.fixQuality != 0
                         && mf.pnTool.fixQuality != byte.MaxValue
-                        && (!mf.pnTool.isDualGPSConnected || hasToolHeading)
+                        && (!mf.pnTool.isDualGPSConnected || hasDualToolHeading)
                         && !double.IsNaN(toolGuidancePoint.easting)
                         && !double.IsInfinity(toolGuidancePoint.easting)
                         && !double.IsNaN(toolGuidancePoint.northing)
@@ -331,6 +356,9 @@ namespace Twol
                             passiveDistance = 0;
                             passiveCounter = 0;
                             toolDistance = 0;
+                            filteredToolDistance = 0;
+                            passiveFilterLastTime = DateTime.MinValue;
+                            passiveCorrectionLastTime = DateTime.MinValue;
                         }
                         else
                         {
@@ -349,6 +377,24 @@ namespace Twol
                             {
                                 toolDistance = 0;
                                 passiveDistance = 0;
+                                filteredToolDistance = 0;
+                                passiveFilterLastTime = DateTime.MinValue;
+                                passiveCorrectionLastTime = DateTime.MinValue;
+                            }
+
+                            // Filter implement cross-track error by elapsed time so GPS noise does not
+                            // become a rapid steering-target change when the guidance update rate varies.
+                            DateTime now = DateTime.UtcNow;
+                            if (isPassiveSteeringFlag)
+                            {
+                                double filterSeconds = passiveFilterLastTime == DateTime.MinValue
+                                    ? 0
+                                    : (now - passiveFilterLastTime).TotalSeconds;
+                                if (filterSeconds < 0) filterSeconds = 0;
+                                if (filterSeconds > 0.5) filterSeconds = 0.5;
+                                double filterAlpha = filterSeconds / (0.25 + filterSeconds);
+                                filteredToolDistance += (toolDistance - filteredToolDistance) * filterAlpha;
+                                passiveFilterLastTime = now;
                             }
 
 
@@ -383,14 +429,27 @@ namespace Twol
 
                             segAvg = 0.8 * segAvg + 0.2 * segCurv;
 
-                            double gain = Math.Abs(toolDistance);
+                            double gain = Math.Abs(filteredToolDistance);
                             if (gain > 0.6) gain = 0.6;
                             if (gain < 0.2) gain = 0.2;
 
                             if (passiveCounter++ > Settings.Tool.setToolSteer.passiveIntegralGain * 10)
                             {
-                                errorProp = toolDistance * -gain;
+                                errorProp = filteredToolDistance * -gain;
+                                if (passiveCorrectionLastTime == DateTime.MinValue)
+                                    passiveCorrectionLastTime = now;
+
+                                // Limit how quickly the tractor target can move as passive guidance
+                                // acquires a displaced implement. The limit is time-based, not tied
+                                // to the GPS/update loop frequency.
+                                double correctionSeconds = (now - passiveCorrectionLastTime).TotalSeconds;
+                                if (correctionSeconds < 0) correctionSeconds = 0;
+                                if (correctionSeconds > 0.5) correctionSeconds = 0.5;
+                                double maxCorrectionStep = 0.20 * correctionSeconds;
+                                if (errorProp > maxCorrectionStep) errorProp = maxCorrectionStep;
+                                if (errorProp < -maxCorrectionStep) errorProp = -maxCorrectionStep;
                                 passiveDistance += errorProp;
+                                passiveCorrectionLastTime = now;
                                 passiveCounter = 0;
                             }
 
@@ -435,8 +494,8 @@ namespace Twol
 
                     if (Settings.Tool.setToolSteer.isPassiveSteering && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
-                        if (hasValidToolXte && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
-                            && Math.Abs(distanceFromCurrentLine) < 0.10 && Math.Abs(distanceFromCurrentLineTool) < 0.20)
+                        if (!Uturn && hasValidToolXte && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
+                            && Math.Abs(distanceFromCurrentLine) < 0.10)
                             isPassiveSteeringFlag = true;
                     }
                 }

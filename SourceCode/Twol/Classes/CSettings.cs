@@ -135,6 +135,8 @@
             antennaHeight = _setting.antennaHeight;
             antennaOffset = _setting.antennaOffset;
             dualHeadingOffset = _setting.dualHeadingOffset;
+            pivotToAntennaDistance = _setting.pivotToAntennaDistance;
+            PivotToToolDistance = _setting.PivotToToolDistance;
 
             rollZero = _setting.antennaOffset;
             invertRoll = _setting.invertRoll;
