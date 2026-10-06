@@ -33,9 +33,11 @@ namespace Twol
         //in pivot follow mode - tool to vehicle pivot history
         public void GuidanceFollowPivot(bool Uturn, List<vec3> curList)
         {
-            if (FindClosestSegment(curList, false, mf.pnTool.fix, out A, out B))
+            vec2 toolReferencePoint = GetToolReferencePoint();
+            if (mf.pnTool.fixQuality != 0 && mf.pnTool.fixQuality != byte.MaxValue
+                && FindClosestSegment(curList, false, toolReferencePoint, out A, out B))
             {
-                distanceFromCurrentLineTool = FindDistanceToSegment(mf.pnTool.fix, curList[A], curList[B], out _, out _, true, false, false);
+                distanceFromCurrentLineTool = FindDistanceToSegment(toolReferencePoint, curList[A], curList[B], out _, out _, true, false, false);
             }
             else
             {
@@ -43,6 +45,45 @@ namespace Twol
             }
 
             mf.guidanceToolXTE = distanceFromCurrentLineTool;
+        }
+
+        private vec2 GetToolReferencePoint()
+        {
+            bool hasDualHeading = mf.pnTool.isDualGPSConnected
+                && IsValidHeading(mf.pnTool.headingTrueDual);
+            if (hasDualHeading)
+                return new vec2(mf.toolPos);
+
+            bool hasFreshImuHeading = !mf.pnTool.isDualGPSConnected
+                && mf.ahrsTool.imuHeadingLastUpdateUtc != DateTime.MinValue
+                && (DateTime.UtcNow - mf.ahrsTool.imuHeadingLastUpdateUtc).TotalMilliseconds <= 500
+                && IsValidHeading(mf.ahrsTool.imuHeading);
+            bool hasCourse = !mf.pnTool.isDualGPSConnected && IsValidHeading(mf.pnTool.headingTrue);
+
+            if (hasFreshImuHeading || hasCourse)
+            {
+                double headingDegrees = hasFreshImuHeading ? mf.ahrsTool.imuHeading : mf.pnTool.headingTrue;
+                if (!hasFreshImuHeading && mf.isReverse) headingDegrees += 180.0;
+                headingDegrees %= 360.0;
+                if (headingDegrees < 0) headingDegrees += 360.0;
+
+                double heading = glm.toRadians(headingDegrees);
+                double foreAftOffset = Settings.Tool.setToolSteer.pivotToAntennaDistance
+                    + Settings.Tool.setToolSteer.PivotToToolDistance;
+                return new vec2(
+                    mf.pnTool.fix.easting + Math.Cos(heading) * Settings.Tool.setToolSteer.antennaOffset
+                        - Math.Sin(heading) * foreAftOffset,
+                    mf.pnTool.fix.northing - Math.Sin(heading) * Settings.Tool.setToolSteer.antennaOffset
+                        - Math.Cos(heading) * foreAftOffset);
+            }
+
+            return new vec2(mf.pnTool.fix);
+        }
+
+        private static bool IsValidHeading(double heading)
+        {
+            return !double.IsNaN(heading) && !double.IsInfinity(heading)
+                && heading >= 0 && heading < 360;
         }
 
         // in tool line mode - record and playback of tool line

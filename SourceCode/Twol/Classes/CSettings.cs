@@ -84,6 +84,7 @@
         public bool isFollowCurrent = false;
         public bool isPassiveSteering = false;
         public bool isFollowPivot = false;
+        public bool isFollowTractorTrackDuringTurn = true;
         public bool isRecordToolLine = false;
         public bool isRecordSourceTool = true;
 
@@ -121,6 +122,7 @@
             isFollowCurrent = _setting.isFollowCurrent;
             isPassiveSteering = _setting.isPassiveSteering;
             isFollowPivot = _setting.isFollowPivot;
+            isFollowTractorTrackDuringTurn = _setting.isFollowTractorTrackDuringTurn;
             isRecordToolLine = _setting.isRecordToolLine;
 
             gainP = _setting.gainP;

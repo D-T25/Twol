@@ -12,6 +12,7 @@ namespace Twol
         private bool toolSend = false;
         private int toolCounterSettings = 0, toolCounterConfig = 0;
         private int windowSizeState = 0;
+        private CheckBox cboxFollowTrackDuringTurn;
 
         //Form stuff
         public FormToolSteer(Form callingForm)
@@ -22,6 +23,20 @@ namespace Twol
             this.Text = gStr.Get(gs.gsToolSteerConfiguration);
             this.Width = 967;
             this.Height = 550;
+
+            cboxFollowTrackDuringTurn = new CheckBox
+            {
+                AutoSize = true,
+                Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold),
+                Location = new System.Drawing.Point(51, 253),
+                Name = "cboxFollowTrackDuringTurn",
+                Size = new System.Drawing.Size(356, 23),
+                TabIndex = 598,
+                Text = "Follow tractor path during U-turns",
+                UseVisualStyleBackColor = true
+            };
+            cboxFollowTrackDuringTurn.Click += cboxFollowTrackDuringTurn_Click;
+            tabModes.Controls.Add(cboxFollowTrackDuringTurn);
 
             label51.Text = gStr.Get(gs.gsDeadzone);
         }
@@ -71,6 +86,8 @@ namespace Twol
             cboxIsFollowCurrent.Checked = Settings.Tool.setToolSteer.isFollowCurrent;
             cboxIsPassiveSteering.Checked = Settings.Tool.setToolSteer.isPassiveSteering;
             cboxIsFollowPivot.Checked = Settings.Tool.setToolSteer.isFollowPivot;
+            cboxFollowTrackDuringTurn.Checked = Settings.Tool.setToolSteer.isFollowTractorTrackDuringTurn;
+            UpdateFollowTrackDuringTurnEnabled();
             cboxIsRecordToolLine.Checked = Settings.Tool.setToolSteer.isRecordToolLine;
 
             //active Tool
@@ -340,6 +357,7 @@ namespace Twol
 
             Settings.Tool.setToolSteer.isFollowCurrent = cboxIsFollowCurrent.Checked;
             ResetMode();
+            UpdateFollowTrackDuringTurnEnabled();
         }
 
         private void cboxIsFollowPivot_Click(object sender, EventArgs e)
@@ -349,6 +367,12 @@ namespace Twol
 
             Settings.Tool.setToolSteer.isFollowPivot = cboxIsFollowPivot.Checked;
             ResetMode();
+            UpdateFollowTrackDuringTurnEnabled();
+        }
+
+        private void cboxFollowTrackDuringTurn_Click(object sender, EventArgs e)
+        {
+            Settings.Tool.setToolSteer.isFollowTractorTrackDuringTurn = cboxFollowTrackDuringTurn.Checked;
         }
 
         private void cboxIsPassiveSteering_Click(object sender, EventArgs e)
@@ -358,6 +382,12 @@ namespace Twol
 
             Settings.Tool.setToolSteer.isPassiveSteering = cboxIsPassiveSteering.Checked;
             ResetMode();
+            UpdateFollowTrackDuringTurnEnabled();
+        }
+
+        private void UpdateFollowTrackDuringTurnEnabled()
+        {
+            cboxFollowTrackDuringTurn.Enabled = cboxIsFollowCurrent.Checked;
         }
 
         // Record Source For Tool

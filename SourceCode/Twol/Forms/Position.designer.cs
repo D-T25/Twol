@@ -394,9 +394,20 @@ namespace Twol
             {
                 gyd.Guidance(pivotAxlePos, steerAxlePos, trks.currentRefTrack.mode == TrackMode.Polygon, yt.isYouTurnTriggered, yt.isYouTurnTriggered ? yt.ytList : trks.currentGuidanceTrack);
 
+                bool followTractorTrackDuringTurn = Settings.Tool.setToolSteer.isFollowCurrent
+                    && Settings.Tool.setToolSteer.isFollowTractorTrackDuringTurn
+                    && yt.isYouTurnTriggered && isJobStarted;
+
                 if (Settings.Tool.setToolSteer.isFollowPivot && isJobStarted)
                 {
                     gydTool.GuidanceFollowPivot(yt.isYouTurnTriggered, followPivotPoints);
+                }
+                else if (followTractorTrackDuringTurn
+                    && isJobStarted && followPivotPoints.Count >= 2)
+                {
+                    // During the turn, target the tractor's recorded pivot path. Once the turn ends,
+                    // Guidance Line mode resumes targeting the next row and the tool acquires it.
+                    gydTool.GuidanceFollowPivot(true, followPivotPoints);
                 }
             }
             else
@@ -789,12 +800,15 @@ namespace Twol
             {
                 //tool track recording
                 double toolFollowPivotDistanceToLastTriggerSq = glm.DistanceSquared(toolPivotPos, prevToolFollowPivotTriggeredPosition);
-                if (Settings.Tool.setToolSteer.isFollowPivot && toolFollowPivotDistanceToLastTriggerSq > 0.5)
+                if ((Settings.Tool.setToolSteer.isFollowPivot || Settings.Tool.setToolSteer.isFollowCurrent)
+                    && toolFollowPivotDistanceToLastTriggerSq > 0.5)
                 {
                     //followPivotPoints.Add(new vec2(toolPivotPos.easting, toolPivotPos.northing));
                     followPivotPoints.Add(new vec3(pivotAxlePos.easting, pivotAxlePos.northing, 0));
 
-                    if (followPivotPoints.Count > 20) { followPivotPoints.RemoveRange(0, 5); }
+                    // Retain enough of the path for a long implement to reach the tractor's turn
+                    // trace, while bounding memory and keeping older passes out of the active trace.
+                    TrimFollowPivotHistory(60.0);
 
                     //save the north & east as previous
                     prevToolFollowPivotTriggeredPosition.northing = toolPivotPos.northing;
@@ -844,6 +858,21 @@ namespace Twol
                     if (boundaryDistance > 1)
                         AddBoundaryPoint();
                 }
+            }
+        }
+
+        private void TrimFollowPivotHistory(double maxPathLengthMeters)
+        {
+            while (followPivotPoints.Count > 2)
+            {
+                double pathLength = 0;
+                for (int i = 1; i < followPivotPoints.Count; i++)
+                {
+                    pathLength += Math.Sqrt(glm.DistanceSquared(followPivotPoints[i], followPivotPoints[i - 1]));
+                }
+
+                if (pathLength <= maxPathLengthMeters) break;
+                followPivotPoints.RemoveAt(0);
             }
         }
 
