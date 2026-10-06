@@ -84,6 +84,7 @@ int16_t EEread = 0;
 
 uint8_t remoteSwitch = 0, workSwitch = 0, steerSwitch = 1, switchByte = 0;//Switches
 uint8_t guidanceStatus = 0;//On Off
+bool guidanceReverse = false;
 float gpsSpeed = 0;//speed sent as *10
 
 //steering variables
@@ -277,7 +278,7 @@ void toolsteerLoop()
             actuatorPositionPercent = (float)(actuatorPosition) / 68;
         }    
 
-        if ((watchdogTimer < WATCHDOG_THRESHOLD && guidanceStatus == 1) || manualPWM != 0)
+        if ((watchdogTimer < WATCHDOG_THRESHOLD && bitRead(guidanceStatus, 0)) || manualPWM != 0)
         {
             //Enable H Bridge for IBT2, hyd aux, etc for cytron
             if (toolSettings.CytronDriver)
@@ -288,6 +289,9 @@ void toolsteerLoop()
             else digitalWrite(DIR1_RL_ENABLE, 1);
  
             calcSteeringPID();  //do the pid
+            // Backing reverses the implement's steering response. Manual jog remains
+            // operator-directed and is therefore not inverted here.
+            if (guidanceReverse && manualPWM == 0) pwmDrive = -pwmDrive;
             motorDrive();       //out to motors the pwm value
             // Autosteer Led goes GREEN if autosteering
 
@@ -345,6 +349,14 @@ void ReceiveUdp()
                 toolXTE_cm *= 0.1;
 
                 guidanceStatus = udpPacket.udpData[dataIDs::status];
+                bool newGuidanceReverse = bitRead(guidanceStatus, 1);
+                if (newGuidanceReverse != guidanceReverse)
+                {
+                    // Avoid a derivative kick when reverse mode changes.
+                    lastXTE_Error = toolXTE_cm;
+                    dValue = 0;
+                    guidanceReverse = newGuidanceReverse;
+                }
 
                 //Bit 8,9   vehicle XTE from Twol * 1000 (mm) is sent
                 vehicleXTE_cm = ((float)(udpPacket.udpData[dataIDs::xteVehLo] | ((int8_t)udpPacket.udpData[dataIDs::xteVehHi]) << 8)); //low high bytes

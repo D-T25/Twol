@@ -16,7 +16,7 @@ enum PGNs {
 enum dataIDs {
 	xteLo = 5,
 	xteHi = 6,
-	status = 7,
+	status = 7, // bit 0: guidance enabled, bit 1: reverse guidance
 	xteVehLo = 8,
 	xteVehHi = 9,
 	speed10 = 10,

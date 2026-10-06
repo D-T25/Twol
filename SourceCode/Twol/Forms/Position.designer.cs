@@ -539,7 +539,12 @@ namespace Twol
 
                     if (!vehicle.isInFreeDriveMode)
                     {
-                        PGN_233.pgn[PGN_233.status] = PGN_254.pgn[PGN_254.status];
+                        // Bit 0 enables active tool steering; bit 1 tells the tool controller
+                        // that the implement is being guided while the tractor is backing.
+                        byte toolGuidanceStatus = PGN_254.pgn[PGN_254.status];
+                        if ((toolGuidanceStatus & 0x01) != 0 && isReverse)
+                            toolGuidanceStatus |= 0x02;
+                        PGN_233.pgn[PGN_233.status] = toolGuidanceStatus;
 
                         // if Tool XTE is in the deadzone send 0 to disable PWM
                         if (Math.Abs(guidanceToolXTE) < Settings.Tool.setToolSteer.deadzoneWidth)

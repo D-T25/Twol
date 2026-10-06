@@ -49,7 +49,7 @@ void calcSteeringPID(void)
     else //Directional valve
     {
         pwmDrive = 0;
-        if (guidanceStatus != 0)
+        if (bitRead(guidanceStatus, 0) != 0)
         {
             errorAbs = abs(toolXTE_cm);
 
