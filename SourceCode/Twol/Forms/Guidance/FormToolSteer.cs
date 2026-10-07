@@ -20,17 +20,24 @@ namespace Twol
             InitializeComponent();
 
             this.Text = gStr.Get(gs.gsToolSteerConfiguration);
-            this.Width = 967;
+            // Start with the compact tuning panel; expand only for tool setup.
+            this.Width = 390;
             this.Height = 550;
+            windowSizeState = 0;
+            btnExpand.Image = Properties.Resources.ArrowRight;
+            tabToolSetup.Visible = false;
 
             label51.Text = gStr.Get(gs.gsDeadzone);
 
-            TabPage passiveSettingsTab = new TabPage("Passive Settings");
-            passiveSettingsTab.BackColor = System.Drawing.Color.Gainsboro;
+            // Keep all four tuning tabs in one row in the compact left panel.
+            tabControl1.ItemSize = new System.Drawing.Size(90, 48);
+            tabControl1.Multiline = false;
+            TabPage passiveSettingsTab = new TabPage("Passive");
+            passiveSettingsTab.BackColor = System.Drawing.Color.PaleTurquoise;
             FormPassiveGuidanceSettings passiveSettings = new FormPassiveGuidanceSettings();
             passiveSettings.Dock = DockStyle.Fill;
             passiveSettingsTab.Controls.Add(passiveSettings);
-            tabToolSetup.TabPages.Add(passiveSettingsTab);
+            tabControl1.TabPages.Add(passiveSettingsTab);
         }
 
         private void FormToolSteer_Load(object sender, EventArgs e)
@@ -220,11 +227,13 @@ namespace Twol
             if (windowSizeState == 1)
             {
                 this.Size = new System.Drawing.Size(970, 550);
+                tabToolSetup.Visible = true;
                 btnExpand.Image = Properties.Resources.ArrowLeft;
             }
             else if (windowSizeState == 0)
             {
                 this.Size = new System.Drawing.Size(390, 550);
+                tabToolSetup.Visible = false;
                 btnExpand.Image = Properties.Resources.ArrowRight;
             }
         }
