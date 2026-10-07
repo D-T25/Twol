@@ -59,7 +59,7 @@ namespace Twol
             AddRow(rows, 4, "Tool look-ahead", "seconds (0 = off)", lookAheadSeconds);
 
             trackingSensitivity.Value = ClampValue(Settings.Tool.setToolSteer.passiveTrackingSensitivity, 50, 200);
-            headingSensitivity.Value = ClampValue(Settings.Tool.setToolSteer.passiveHeadingSensitivity, 0, 200);
+            headingSensitivity.Value = ClampValue(Settings.Tool.setToolSteer.passiveHeadingSensitivity, 50, 200);
             acquireSensitivity.Value = ClampValue(Settings.Tool.setToolSteer.passiveAcquireSensitivity, 50, 200);
             curveSensitivity.Value = ClampValue(Settings.Tool.setToolSteer.passiveCurveSensitivity, 50, 200);
 
