@@ -4,8 +4,8 @@ using System.Windows.Forms;
 
 namespace Twol
 {
-    // Runtime-created dialog so passive tuning does not depend on a generated designer file.
-    public sealed class FormPassiveGuidanceSettings : Form
+    // Runtime-created settings control hosted on the tool guidance tabs.
+    public sealed class FormPassiveGuidanceSettings : UserControl
     {
         private readonly NumericUpDown trackingSensitivity;
         private readonly NumericUpDown headingSensitivity;
@@ -15,13 +15,7 @@ namespace Twol
 
         public FormPassiveGuidanceSettings()
         {
-            Text = "Passive Guidance Settings";
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            StartPosition = FormStartPosition.CenterParent;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ShowInTaskbar = false;
-            ClientSize = new Size(520, 430);
+            Size = new Size(520, 430);
             Font = new System.Drawing.Font("Tahoma", 10F);
 
             Label description = new Label();
@@ -74,19 +68,10 @@ namespace Twol
             ok.Text = "Apply";
             ok.Location = new Point(310, 390);
             ok.Size = new Size(90, 30);
-            ok.DialogResult = DialogResult.OK;
             ok.Click += ApplySettings;
             Controls.Add(ok);
 
-            Button cancel = new Button();
-            cancel.Text = "Cancel";
-            cancel.Location = new Point(410, 390);
-            cancel.Size = new Size(90, 30);
-            cancel.DialogResult = DialogResult.Cancel;
-            Controls.Add(cancel);
 
-            AcceptButton = ok;
-            CancelButton = cancel;
         }
 
         private static NumericUpDown CreateSensitivityControl(int value)
