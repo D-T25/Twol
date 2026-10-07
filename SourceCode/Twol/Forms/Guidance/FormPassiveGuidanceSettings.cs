@@ -22,7 +22,7 @@ namespace Twol
             MinimizeBox = false;
             ShowInTaskbar = false;
             ClientSize = new Size(520, 430);
-            Font = new Font("Tahoma", 10F);
+            Font = new System.Drawing.Font("Tahoma", 10F);
 
             Label description = new Label();
             description.Text = "Tune how the tractor responds to implement position and direction.";
@@ -67,7 +67,7 @@ namespace Twol
             help.Text = "100 keeps the current response. Higher sensitivity increases response. Look-ahead predicts tool cross-track error from tool heading and speed; it needs a valid tool heading.";
             help.Location = new Point(20, 334);
             help.Size = new Size(480, 48);
-            help.Font = new Font(Font, FontStyle.Regular);
+            help.Font = new System.Drawing.Font("Tahoma", 10F, FontStyle.Regular);
             Controls.Add(help);
 
             Button ok = new Button();
