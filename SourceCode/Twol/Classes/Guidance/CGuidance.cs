@@ -61,6 +61,7 @@ namespace Twol
                 isLoop = false;
 
             bool hasValidToolXte = false;
+            double passiveToolXte = 0;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
 
@@ -115,9 +116,44 @@ namespace Twol
                         && !double.IsInfinity(toolGuidancePoint.northing)
                         && !double.IsNaN(distanceFromCurrentLineTool)
                         && !double.IsInfinity(distanceFromCurrentLineTool);
+
+                    passiveToolXte = distanceFromCurrentLineTool;
+
+                    // Optional look-ahead estimates where the implement will be after the configured
+                    // preview time. Keep it off unless an operator enables it, and do not predict
+                    // while reversing or during a U-turn.
+                    double lookAheadSeconds = Math.Max(0.0, Math.Min(2.0,
+                        Settings.Tool.setToolSteer.passiveLookAheadSeconds));
+                    double headingSensitivity = Math.Max(50.0, Math.Min(200.0,
+                        Settings.Tool.setToolSteer.passiveHeadingSensitivity)) / 100.0;
+                    if (hasValidToolXte && !Uturn && !mf.isReverse && lookAheadSeconds > 0
+                        && (hasDualToolHeading || hasToolCourse))
+                    {
+                        double toolSpeedMetersPerSecond = Math.Abs(mf.pnTool.avgSpeed) / 3.6;
+                        double toolHeadingDegrees = hasDualToolHeading
+                            ? mf.pnTool.headingTrueDual
+                            : mf.pnTool.headingTrue;
+                        double toolHeadingRadians = glm.toRadians(toolHeadingDegrees);
+                        double previewDistance = toolSpeedMetersPerSecond * lookAheadSeconds * headingSensitivity;
+                        vec2 predictedToolPoint = new vec2(
+                            toolGuidancePoint.easting + Math.Sin(toolHeadingRadians) * previewDistance,
+                            toolGuidancePoint.northing + Math.Cos(toolHeadingRadians) * previewDistance);
+                        double predictedToolXte = FindDistanceToSegment(
+                            predictedToolPoint, curList[A], curList[B], out _, out _, true, false, false);
+                        if (!Uturn && !mf.trks.isHeadingSameWay)
+                            predictedToolXte *= -1.0;
+
+                        double lookAheadCorrection = predictedToolXte - distanceFromCurrentLineTool;
+                        if (lookAheadCorrection > 0.5) lookAheadCorrection = 0.5;
+                        if (lookAheadCorrection < -0.5) lookAheadCorrection = -0.5;
+                        passiveToolXte += lookAheadCorrection;
+                    }
                 }
                 else
+                {
                     distanceFromCurrentLineTool = 0;
+                    passiveToolXte = 0;
+                }
 
                 toolDifferential = 0;
                 toolDifferentialRing[toolDifferentialRingCount++ % toolDifferentialRing.Length] = distanceFromCurrentLineTool;
@@ -366,7 +402,7 @@ namespace Twol
                             {
                                 // Zero is a valid on-line measurement. Keep the accumulated correction when the
                                 // implement crosses the line instead of treating zero as missing data.
-                                toolDistance = distanceFromCurrentLineTool;
+                                toolDistance = passiveToolXte;
 
                                 if (!mf.trks.isHeadingSameWay)
                                 {
@@ -419,7 +455,12 @@ namespace Twol
 
                             double segCurv = 0;
                             if (d > 0 && !double.IsNaN(d) && !double.IsInfinity(d))
-                                segCurv = ((2 * Math.Sin(theta / 2)) / -d) * Settings.Tool.setToolSteer.curvatureGain;
+                            {
+                                double curveSensitivity = Math.Max(50.0, Math.Min(200.0,
+                                    Settings.Tool.setToolSteer.passiveCurveSensitivity)) / 100.0;
+                                segCurv = ((2 * Math.Sin(theta / 2)) / -d)
+                                    * Settings.Tool.setToolSteer.curvatureGain * curveSensitivity;
+                            }
 
                             if (double.IsNaN(segCurv) || double.IsInfinity(segCurv))
                                 segCurv = 0;
@@ -445,7 +486,9 @@ namespace Twol
                                 double correctionSeconds = (now - passiveCorrectionLastTime).TotalSeconds;
                                 if (correctionSeconds < 0) correctionSeconds = 0;
                                 if (correctionSeconds > 0.5) correctionSeconds = 0.5;
-                                double maxCorrectionStep = 0.20 * correctionSeconds;
+                                double trackingSensitivity = Math.Max(50.0, Math.Min(200.0,
+                                    Settings.Tool.setToolSteer.passiveTrackingSensitivity)) / 100.0;
+                                double maxCorrectionStep = 0.20 * trackingSensitivity * correctionSeconds;
                                 if (errorProp > maxCorrectionStep) errorProp = maxCorrectionStep;
                                 if (errorProp < -maxCorrectionStep) errorProp = -maxCorrectionStep;
                                 passiveDistance += errorProp;
@@ -494,8 +537,13 @@ namespace Twol
 
                     if (Settings.Tool.setToolSteer.isPassiveSteering && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
-                        if (!Uturn && hasValidToolXte && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
-                            && Math.Abs(distanceFromCurrentLine) < 0.10)
+                        double acquireSensitivity = Math.Max(50.0, Math.Min(200.0,
+                            Settings.Tool.setToolSteer.passiveAcquireSensitivity)) / 100.0;
+                        double acquireHeadingLimit = 1.5 * acquireSensitivity;
+                        double acquireLineLimit = 0.10 * acquireSensitivity;
+                        if (!Uturn && hasValidToolXte
+                            && Math.Abs(mf.vehicle.modeActualHeadingError) < acquireHeadingLimit
+                            && Math.Abs(distanceFromCurrentLine) < acquireLineLimit)
                             isPassiveSteeringFlag = true;
                     }
                 }
