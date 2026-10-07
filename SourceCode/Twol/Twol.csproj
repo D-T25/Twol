@@ -298,6 +298,7 @@
     <Compile Include="Forms\Settings\FormGraphXTE.Designer.cs">
       <DependentUpon>FormGraphXTE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Guidance\FormPassiveGuidanceSettings.cs" />
     <Compile Include="Forms\Guidance\FormToolSteer.cs">
       <SubType>Form</SubType>
     </Compile>
