@@ -107,6 +107,13 @@
         public double curvatureGain = 5.0;
         public double passiveIntegralGain = 0.005;
 
+        // Passive guidance tuning; 100 preserves the current controller response.
+        public int passiveTrackingSensitivity = 100;
+        public int passiveHeadingSensitivity = 100;
+        public int passiveAcquireSensitivity = 100;
+        public int passiveCurveSensitivity = 100;
+        public double passiveLookAheadSeconds = 0.0;
+
         public double deadzoneWidth = 0.0;
         public byte manualSteerPWM = 125;
         public int manualSteerSeconds = 2;
@@ -145,6 +152,11 @@
 
             curvatureGain = _setting.curvatureGain;
             passiveIntegralGain = _setting.passiveIntegralGain;
+            passiveTrackingSensitivity = _setting.passiveTrackingSensitivity;
+            passiveHeadingSensitivity = _setting.passiveHeadingSensitivity;
+            passiveAcquireSensitivity = _setting.passiveAcquireSensitivity;
+            passiveCurveSensitivity = _setting.passiveCurveSensitivity;
+            passiveLookAheadSeconds = _setting.passiveLookAheadSeconds;
             deadzoneWidth = _setting.deadzoneWidth;
 
             manualSteerPWM = _setting.manualSteerPWM;
