@@ -56,7 +56,7 @@ namespace Twol
                 "0.0–2.0 seconds, in 0.1 second steps. Zero is off. Requires valid implement heading and speed; disabled in reverse and U-turns.");
 
             Label help = new Label();
-            help.Text = "Adjustments take effect immediately. Look-ahead: 0 = off.";
+            help.Text = "Live adjustment. Look-ahead: 0 = off.";
             help.Font = new System.Drawing.Font("Tahoma", 9F, FontStyle.Regular);
             help.Dock = DockStyle.Fill;
             help.TextAlign = ContentAlignment.MiddleCenter;
