@@ -25,17 +25,12 @@ namespace Twol
 
             label51.Text = gStr.Get(gs.gsDeadzone);
 
-            Button passiveSettingsButton = new Button();
-            passiveSettingsButton.Text = "Passive Settings";
-            passiveSettingsButton.Location = new System.Drawing.Point(300, 350);
-            passiveSettingsButton.Size = new System.Drawing.Size(230, 54);
-            passiveSettingsButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            passiveSettingsButton.Click += (sender, args) =>
-            {
-                using (FormPassiveGuidanceSettings dialog = new FormPassiveGuidanceSettings())
-                    dialog.ShowDialog(this);
-            };
-            tabModes.Controls.Add(passiveSettingsButton);
+            TabPage passiveSettingsTab = new TabPage("Passive Settings");
+            passiveSettingsTab.BackColor = System.Drawing.Color.Gainsboro;
+            FormPassiveGuidanceSettings passiveSettings = new FormPassiveGuidanceSettings();
+            passiveSettings.Dock = DockStyle.Fill;
+            passiveSettingsTab.Controls.Add(passiveSettings);
+            tabToolSetup.TabPages.Add(passiveSettingsTab);
         }
 
         private void FormToolSteer_Load(object sender, EventArgs e)
