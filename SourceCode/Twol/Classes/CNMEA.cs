@@ -83,6 +83,22 @@ namespace Twol
             lonStart = 0;
         }
 
+        // The built-in tool simulator supplies local coordinates rather than NMEA packets.
+        // Publish the same position/heading contract as live receivers without faking receipt
+        // times anywhere in the guidance controller.
+        public void PublishSimulatedToolFix(double east, double north, double headingDegrees, double speedKph)
+        {
+            fix = new vec2(east, north);
+            ConvertLocalToWGS84(north - fixOffset.northing, east - fixOffset.easting,
+                out latitude, out longitude);
+            headingTrueDual = CToolHeadingResolver.WrapDegrees(headingDegrees);
+            isDualGPSConnected = true;
+            fixQuality = 8;
+            vtgSpeed = avgSpeed = speedKph;
+            positionReceivedUtc = dualHeadingReceivedUtc = DateTime.UtcNow;
+            courseReceivedUtc = imuHeadingReceivedUtc = DateTime.MinValue;
+        }
+
         public void AverageTheSpeed()
         {
             avgSpeed = (avgSpeed * 0.8) + (vtgSpeed * 0.2);
