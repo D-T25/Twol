@@ -618,7 +618,8 @@ namespace Twol
                     if (isReverse)
                         DrawReverse();
 
-                    if (Settings.Vehicle.setGPS_isRTK)
+                    // Synthetic fix quality is cycled by the simulator UI; it is not a live RTK outage.
+                    if (Settings.Vehicle.setGPS_isRTK && !timerSim.Enabled)
                     {
                         if (pn.fixQuality != 4)
                         {
