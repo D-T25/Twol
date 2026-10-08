@@ -1,4 +1,4 @@
-﻿namespace Twol
+namespace Twol
 {
     public class CFeatureSettings
     {
@@ -105,14 +105,19 @@
         public int passesPerReference = 0;
 
         public double curvatureGain = 5.0;
-        public double passiveIntegralGain = 0.005;
+        public double passiveIntegralGain = 4.0;
 
-        // Passive guidance tuning; 100 preserves the current controller response.
+        // Passive response sensitivities. These are Twol controls, not proprietary OEM algorithms.
         public int passiveTrackingSensitivity = 100;
         public int passiveHeadingSensitivity = 100;
         public int passiveAcquireSensitivity = 100;
         public int passiveCurveSensitivity = 100;
         public double passiveLookAheadSeconds = 0.0;
+        public int passiveCorrectionStrength = 100;
+        public double passiveMaximumOffset = 1.0;
+        public bool passiveEarlyCorrection = true;
+        // Reuse passiveIntegralGain for profile compatibility; it is now actual seconds.
+        // Old profiles keep their selected hold value. No second interval field can disagree.
 
         public double deadzoneWidth = 0.0;
         public byte manualSteerPWM = 125;
@@ -145,7 +150,7 @@
             pivotToAntennaDistance = _setting.pivotToAntennaDistance;
             PivotToToolDistance = _setting.PivotToToolDistance;
 
-            rollZero = _setting.antennaOffset;
+            rollZero = _setting.rollZero;
             invertRoll = _setting.invertRoll;
 
             nudgeGlobal = _setting.nudgeGlobal;
@@ -157,6 +162,9 @@
             passiveAcquireSensitivity = _setting.passiveAcquireSensitivity;
             passiveCurveSensitivity = _setting.passiveCurveSensitivity;
             passiveLookAheadSeconds = _setting.passiveLookAheadSeconds;
+            passiveCorrectionStrength = _setting.passiveCorrectionStrength;
+            passiveMaximumOffset = _setting.passiveMaximumOffset;
+            passiveEarlyCorrection = _setting.passiveEarlyCorrection;
             deadzoneWidth = _setting.deadzoneWidth;
 
             manualSteerPWM = _setting.manualSteerPWM;

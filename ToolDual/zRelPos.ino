@@ -27,7 +27,8 @@ void relPosDecode() {
     relPosD += relPosHPD;
 
 
-    uint32_t flags = ackPacket[66];
+    uint32_t flags = (uint32_t)ackPacket[66] | ((uint32_t)ackPacket[67] << 8)
+        | ((uint32_t)ackPacket[68] << 16) | ((uint32_t)ackPacket[69] << 24);
 
     //  Serial.println(flags, BIN);
 
@@ -42,10 +43,13 @@ void relPosDecode() {
     //relPosNormalized = flags & (512);
 
     //must be all ok
-    if (!gnssFixOk || !diffSoln || !relPosValid) return;
+    if (!gnssFixOk || !diffSoln || !relPosValid || !(flags & 256))
+    { dualReadyRelPos = false; return; }
 
     if (carrSoln >= 1)
     {
+        useDual = true;
+        dualHeadingLastUpdate = millis();
         if (baseline == 0) baseline += 0.01; 
         rollDual = (asin(relPosD / baseline)) * -RAD_TO_DEG;
         digitalWrite(GPSGREEN_LED, HIGH);   //Turn green GPS LED ON

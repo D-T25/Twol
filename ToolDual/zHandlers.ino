@@ -3,7 +3,7 @@
 const char *asciiHex = "0123456789ABCDEF";
 
 // the new PANDA sentence buffer
-char nmea[100];
+char nmea[256];
 
 // GGA
 char fixTime[12];
@@ -22,10 +22,10 @@ char vtgHeading[12] = {};
 char speedKnots[10] = {};
 
 // IMU
-char imuHeading[6];
-char imuRoll[6];
-char imuPitch[6];
-char imuYawRate[6];
+char imuHeading[12];
+char imuRoll[12];
+char imuPitch[12];
+char imuYawRate[12];
 
 // HPR
 char solQuality[2];
@@ -82,28 +82,65 @@ void GGA_Handler() // Rec'd GGA
   gpsReadyTime = systick_millis_count; // Used for GGA timeout (LED's ETC)
 }
 
+// Optional implement BNO08x. Relative game-vector yaw avoids trusting a
+// magnetometer next to steel. Twol anchors yaw to GNSS course and handles reverse.
+void setToolImuReports()
+{
+#if TOOL_USE_BNO08X
+  toolImu.enableReport(SH2_GAME_ROTATION_VECTOR, REPORT_INTERVAL * 1000);
+  toolImu.enableReport(SH2_GYROSCOPE_CALIBRATED, REPORT_INTERVAL * 1000);
+#endif
+}
+
+void updateToolImu()
+{
+#if TOOL_USE_BNO08X
+  if (!toolImuConnected) return;
+  if (toolImu.wasReset()) { toolImuHeadingValid = false; setToolImuReports(); }
+  // Bound work per loop so sensor traffic cannot starve steering/Ethernet.
+  for (int count = 0; count < 8 && toolImu.getSensorEvent(&toolImuSensorValue); ++count)
+  {
+    if (toolImuSensorValue.sensorId == SH2_GAME_ROTATION_VECTOR)
+    {
+      double qr = toolImuSensorValue.un.gameRotationVector.real;
+      double qi = toolImuSensorValue.un.gameRotationVector.i;
+      double qj = toolImuSensorValue.un.gameRotationVector.j;
+      double qk = toolImuSensorValue.un.gameRotationVector.k;
+      double norm = qr*qr + qi*qi + qj*qj + qk*qk;
+      if (!isfinite(norm) || norm < 0.5 || norm > 1.5) { toolImuHeadingValid = false; continue; }
+      double yaw = atan2(2*(qi*qj + qk*qr), qi*qi - qj*qj - qk*qk + qr*qr);
+      double sinPitch = -2*(qi*qk - qj*qr)/norm;
+      sinPitch = constrain(sinPitch, -1.0, 1.0);
+      toolImuHeading = fmod(360.0 - yaw*57.29577951308232, 360.0);
+      if (toolImuHeading < 0) toolImuHeading += 360;
+      toolImuPitch = -asin(sinPitch)*57.29577951308232; // X forward/Y left/Z up: nose-up positive.
+      toolImuRoll = atan2(2*(qj*qk + qi*qr), -qi*qi-qj*qj+qk*qk+qr*qr)*57.29577951308232;
+      toolImuHeadingValid = true;
+      toolImuLastUpdate = millis();
+    }
+    else if (toolImuSensorValue.sensorId == SH2_GYROSCOPE_CALIBRATED)
+      toolImuYawRate = -toolImuSensorValue.un.gyroscope.z*57.29577951308232;
+  }
+  if ((uint32_t)(millis() - toolImuLastUpdate) > 500) toolImuHeadingValid = false;
+#endif
+}
+
 void imuHandler()
 {
-  if (useDual) // in UM982 case
+  imuHeading[0] = imuRoll[0] = imuPitch[0] = imuYawRate[0] = '\0';
+  if (useDual)
   {
-    // the roll
-    dtostrf(rollDual, 4, 2, imuRoll);
-
-    // the Dual heading raw
-    dtostrf(heading, 4, 2, imuHeading);
-
-    static double headingOld = heading;
-
-    headingRate = (heading - headingOld) * GPS_Hz;
-    headingOld = heading;
-    if (headingRate > 360)
-      headingRate -= 360;
-    if (headingRate < -360)
-      headingRate += 360;
-
-    int16_t yawRatex10 = (int16_t)(headingRate * 10);
-    itoa(yawRatex10, imuYawRate, 10);
-
+    dtostrf(rollDual, 6, 2, imuRoll);
+    dtostrf(heading, 6, 2, imuHeading);
+    // PAOGI does not need IMU yaw for passive guidance.
+  }
+  else if (toolImuConnected && toolImuHeadingValid
+      && (uint32_t)(millis() - toolImuLastUpdate) <= 500)
+  {
+    dtostrf(toolImuHeading, 6, 2, imuHeading);
+    dtostrf(toolImuRoll, 6, 2, imuRoll);
+    dtostrf(toolImuPitch, 6, 2, imuPitch);
+    dtostrf(toolImuYawRate, 6, 2, imuYawRate);
   }
 }
 
@@ -120,6 +157,7 @@ void HPR_Handler()
   parser.getArg(4, solQuality);
   solQualityHPR = atoi(solQuality);
   useDual = true;
+  dualHeadingLastUpdate = millis();
   dualReadyRelPos = true;
   imuHandler();
   BuildNmea();
@@ -186,6 +224,16 @@ void BuildNmea(void)
   // 15
   strcat(nmea, imuYawRate);
 
+  // Backward-compatible optional fields: source, validity, age in ms, GPS course.
+  // 0 = no heading, 1 = dual baseline, 2 = relative IMU yaw (not true north).
+  bool validHeading = imuHeading[0] != '\0';
+  strcat(nmea, useDual ? ",1," : validHeading ? ",2," : ",0,");
+  strcat(nmea, validHeading ? "1," : "0,");
+  char headingAge[12];
+  ultoa(validHeading ? (uint32_t)(millis() - (useDual ? dualHeadingLastUpdate : toolImuLastUpdate)) : 0, headingAge, 10);
+  strcat(nmea, headingAge);
+  strcat(nmea, ",");
+  if ((uint32_t)(millis() - courseLastUpdate) <= 500) strcat(nmea, vtgHeading);
   strcat(nmea, "*");
 
   CalculateChecksum();
@@ -328,6 +376,7 @@ void VTG_Handler()
 {
   // vtg heading
   parser.getArg(0, vtgHeading);
+  courseLastUpdate = millis();
 
   // vtg Speed knots
   parser.getArg(4, speedKnots);

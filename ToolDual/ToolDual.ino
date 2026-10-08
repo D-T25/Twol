@@ -93,6 +93,18 @@ int relposnedByteCount = 0;
 
 #include "zNMEAParser.h"
 #include <Wire.h>
+// Set to 0 for a build without the Adafruit BNO08x dependency.
+#ifndef TOOL_USE_BNO08X
+#define TOOL_USE_BNO08X 1
+#endif
+#if TOOL_USE_BNO08X
+#include <Adafruit_BNO08x.h>
+Adafruit_BNO08x toolImu(-1);
+sh2_SensorValue_t toolImuSensorValue;
+#endif
+bool toolImuConnected = false, toolImuHeadingValid = false;
+double toolImuHeading = 0, toolImuRoll = 0, toolImuPitch = 0, toolImuYawRate = 0;
+uint32_t toolImuLastUpdate = 0, dualHeadingLastUpdate = 0, courseLastUpdate = 0;
 
 bool useDual = false;
 bool dualReadyGGA = false;
@@ -191,11 +203,23 @@ void setup()
     EthernetStart();
 
     Serial.println("\r\nStarting IMU...");
+#if TOOL_USE_BNO08X
+    toolImuConnected = toolImu.begin_I2C(0x4A, &ImuWire);
+    if (!toolImuConnected) toolImuConnected = toolImu.begin_I2C(0x4B, &ImuWire);
+    if (toolImuConnected) setToolImuReports();
+#endif
+    Serial.println(toolImuConnected ? "BNO08x connected" : "No IMU: GPS course/position fallback");
     Serial.println("\r\nEnd setup, waiting for GPS...\r\n");
 }
 
 void loop()
 {
+    updateToolImu();
+    if (useDual && (uint32_t)(millis() - dualHeadingLastUpdate) > 500)
+    {
+        useDual = false;
+        dualReadyRelPos = false;
+    }
     // Read incoming nmea from GPS
     if (SerialGPS.available())
     {
@@ -227,8 +251,9 @@ void loop()
 
     // If both dual messages are ready, send to AgOpen
     // Serial.println("Dual GGA Ready: " + String(dualReadyGGA) + " RelPos Ready: " + String(dualReadyRelPos));
-    if (dualReadyGGA == true && dualReadyRelPos == true)
+    if (dualReadyGGA && (dualReadyRelPos || !useDual))
     {
+        if (!useDual) imuHandler();
         BuildNmea();
         dualReadyGGA = false;
         dualReadyRelPos = false;
@@ -240,7 +265,6 @@ void loop()
         if (calcChecksum())
         {
             digitalWrite(GPSRED_LED, LOW); // Turn red GPS LED OFF (we are now in dual mode so green LED)
-            useDual = true;
             relPosDecode();
         }
         /*  else {

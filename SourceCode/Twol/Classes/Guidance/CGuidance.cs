@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Configuration;
 
@@ -36,10 +36,24 @@ namespace Twol
         public double pivotDistanceErrorLast, pivotDerivative;
 
         //passive tool steering
-        private double segAvg = 0, toolDistance = 0, errorProp = 0, passiveDistance = 0;
-        private double filteredToolDistance = 0;
-        private DateTime passiveFilterLastTime = DateTime.MinValue, passiveCorrectionLastTime = DateTime.MinValue;
-        private int passiveCounter = 0;
+        private double segAvg;
+        private double passiveAppliedOffset;
+        private DateTime passiveCurveTime = DateTime.MinValue;
+        private readonly CPassiveController passiveController = new CPassiveController();
+        private readonly CToolHeadingResolver toolHeadingResolver = new CToolHeadingResolver();
+        public string PassiveHeadingSource { get { return toolHeadingResolver.Source; } }
+        public double PassiveTractorOffset
+        {
+            get
+            {
+                double configured = Settings.Tool.setToolSteer.passiveMaximumOffset;
+                double limit = CPassiveController.Clamp(CPassiveController.Finite(configured) ? configured : 1, 0.1, 3);
+                return CPassiveController.Clamp(passiveAppliedOffset, -limit, limit);
+            }
+        }
+        public string PassiveCorrectionReason { get { return passiveController.CorrectionReason; } }
+        public double PassiveFilteredToolError { get { return passiveController.FilteredError; } }
+        public double PassiveToolErrorRate { get { return passiveController.ErrorRate; } }
 
         //toolDifferential
         public double toolDifferential = 0, toolDifferentialLast;
@@ -61,43 +75,43 @@ namespace Twol
                 isLoop = false;
 
             bool hasValidToolXte = false;
-            double passiveToolXte = 0;
+            double passiveToolXte = 0, passiveHeadingLateralSpeed = 0;
+            bool hasPassiveHeading = false;
+            DateTime passiveNow = DateTime.UtcNow;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
 
             if (Settings.Tool.setToolSteer.isPassiveSteering || Settings.Tool.setToolSteer.isFollowCurrent)
             {
-                // Use the configured working point (for example, planter row units) when tool orientation
-                // is available. Dual GPS supplies implement heading; a single receiver can use its course
-                // over ground when the NMEA source provides it.
-                bool hasDualToolHeading = mf.pnTool.isDualGPSConnected
-                    && mf.pnTool.headingTrueDual != float.MaxValue
-                    && !double.IsNaN(mf.pnTool.headingTrueDual)
-                    && !double.IsInfinity(mf.pnTool.headingTrueDual);
-                bool hasToolCourse = !mf.pnTool.isDualGPSConnected
-                    && mf.pnTool.headingTrue != float.MaxValue
-                    && !double.IsNaN(mf.pnTool.headingTrue)
-                    && !double.IsInfinity(mf.pnTool.headingTrue);
-                vec2 toolGuidancePoint;
-                if (hasDualToolHeading)
+                // Resolve heading from fresh dual GNSS, GNSS-referenced IMU, receiver course,
+                // or a displacement window. Convert the raw antenna fix here for both modes:
+                // the general position pipeline previously updated pnTool.fix only for dual GNSS.
+                mf.pnTool.ConvertWGS84ToLocal(mf.pnTool.latitude, mf.pnTool.longitude,
+                    out double rawNorth, out double rawEast);
+                bool positionValid = mf.pnTool.fixQuality != 0 && mf.pnTool.fixQuality != byte.MaxValue
+                    && CToolHeadingResolver.Fresh(passiveNow, mf.pnTool.positionReceivedUtc, 1.5)
+                    && CPassiveController.Finite(rawEast) && CPassiveController.Finite(rawNorth);
+                hasPassiveHeading = toolHeadingResolver.Resolve(passiveNow, rawEast, rawNorth,
+                    positionValid, mf.pnTool.positionReceivedUtc, mf.pnTool.vtgSpeed / 3.6,
+                    mf.isReverse, mf.pnTool.fixQuality == 4, mf.pnTool.headingTrueDual,
+                    mf.pnTool.dualHeadingReceivedUtc, mf.pnTool.headingTrue,
+                    mf.pnTool.courseReceivedUtc, mf.pnTool.imuHeading, mf.pnTool.imuHeadingReceivedUtc,
+                    Settings.Tool.setToolSteer.dualHeadingOffset, out double toolBodyHeading);
+                vec2 toolGuidancePoint = new vec2(rawEast, rawNorth);
+                if (hasPassiveHeading)
                 {
-                    toolGuidancePoint = new vec2(mf.toolPos);
-                }
-                else if (hasToolCourse)
-                {
-                    double toolHeading = glm.toRadians(mf.pnTool.headingTrue);
-                    double foreAftOffset = Settings.Tool.setToolSteer.pivotToAntennaDistance
+                    double radians = glm.toRadians(toolBodyHeading);
+                    double lateral = Settings.Tool.setToolSteer.antennaOffset;
+                    // Compensate roll only when the corresponding orientation measurement is fresh.
+                    if (toolHeadingResolver.Source == "Dual GNSS")
+                        lateral -= Math.Sin(glm.toRadians(mf.pnTool.dualRoll)) * Settings.Tool.setToolSteer.antennaHeight;
+                    else if (CToolHeadingResolver.Fresh(passiveNow, mf.pnTool.imuHeadingReceivedUtc, 0.5)
+                        && mf.pnTool.imuRoll != short.MaxValue)
+                        lateral -= Math.Sin(glm.toRadians(mf.ahrsTool.imuRoll)) * Settings.Tool.setToolSteer.antennaHeight;
+                    double foreAft = Settings.Tool.setToolSteer.pivotToAntennaDistance
                         + Settings.Tool.setToolSteer.PivotToToolDistance;
-                    toolGuidancePoint = new vec2(
-                        mf.pnTool.fix.easting + Math.Cos(toolHeading) * Settings.Tool.setToolSteer.antennaOffset
-                            - Math.Sin(toolHeading) * foreAftOffset,
-                        mf.pnTool.fix.northing - Math.Sin(toolHeading) * Settings.Tool.setToolSteer.antennaOffset
-                            - Math.Cos(toolHeading) * foreAftOffset);
-                }
-                else
-                {
-                    // If the receiver supplies position only, use its antenna as the best available point.
-                    toolGuidancePoint = new vec2(mf.pnTool.fix);
+                    toolGuidancePoint.easting += Math.Cos(radians) * lateral - Math.Sin(radians) * foreAft;
+                    toolGuidancePoint.northing -= Math.Sin(radians) * lateral + Math.Cos(radians) * foreAft;
                 }
 
                 if (FindClosestSegment(curList, isLoop, toolGuidancePoint, out A, out B))
@@ -107,47 +121,20 @@ namespace Twol
                     if (!Uturn && !mf.trks.isHeadingSameWay)
                         distanceFromCurrentLineTool *= -1.0;
 
-                    hasValidToolXte = mf.pnTool.fixQuality != 0
-                        && mf.pnTool.fixQuality != byte.MaxValue
-                        && (!mf.pnTool.isDualGPSConnected || hasDualToolHeading)
-                        && !double.IsNaN(toolGuidancePoint.easting)
-                        && !double.IsInfinity(toolGuidancePoint.easting)
-                        && !double.IsNaN(toolGuidancePoint.northing)
-                        && !double.IsInfinity(toolGuidancePoint.northing)
-                        && !double.IsNaN(distanceFromCurrentLineTool)
-                        && !double.IsInfinity(distanceFromCurrentLineTool);
-
+                    hasValidToolXte = positionValid && CPassiveController.Finite(distanceFromCurrentLineTool);
                     passiveToolXte = distanceFromCurrentLineTool;
-
-                    // Optional look-ahead estimates where the implement will be after the configured
-                    // preview time. Keep it off unless an operator enables it, and do not predict
-                    // while reversing or during a U-turn.
-                    double lookAheadSeconds = Math.Max(0.0, Math.Min(2.0,
-                        Settings.Tool.setToolSteer.passiveLookAheadSeconds));
-                    double headingSensitivity = Math.Max(50.0, Math.Min(200.0,
-                        Settings.Tool.setToolSteer.passiveHeadingSensitivity)) / 100.0;
-                    if (hasValidToolXte && !Uturn && !mf.isReverse && lookAheadSeconds > 0
-                        && (hasDualToolHeading || hasToolCourse))
+                    // Work in the segment's signed coordinate system for both directions of travel.
+                    // Physical heading remains forward-facing in reverse; travel direction flips 180.
+                    if (hasValidToolXte && hasPassiveHeading && !Uturn)
                     {
-                        double toolSpeedMetersPerSecond = Math.Abs(mf.pnTool.avgSpeed) / 3.6;
-                        double toolHeadingDegrees = hasDualToolHeading
-                            ? mf.pnTool.headingTrueDual
-                            : mf.pnTool.headingTrue;
-                        double toolHeadingRadians = glm.toRadians(toolHeadingDegrees);
-                        double previewDistance = toolSpeedMetersPerSecond * lookAheadSeconds * headingSensitivity;
-                        vec2 predictedToolPoint = new vec2(
-                            toolGuidancePoint.easting + Math.Sin(toolHeadingRadians) * previewDistance,
-                            toolGuidancePoint.northing + Math.Cos(toolHeadingRadians) * previewDistance);
-                        double predictedToolXte = FindDistanceToSegment(
-                            predictedToolPoint, curList[A], curList[B], out _, out _, true, false, false);
-                        if (!Uturn && !mf.trks.isHeadingSameWay)
-                            predictedToolXte *= -1.0;
-
-                        double lookAheadCorrection = predictedToolXte - distanceFromCurrentLineTool;
-                        if (lookAheadCorrection > 0.5) lookAheadCorrection = 0.5;
-                        if (lookAheadCorrection < -0.5) lookAheadCorrection = -0.5;
-                        passiveToolXte += lookAheadCorrection;
+                        double travelHeading = glm.toRadians(toolBodyHeading) + (mf.isReverse ? Math.PI : 0);
+                        double speed = toolHeadingResolver.SpeedMetersPerSecond;
+                        vec2 future = new vec2(toolGuidancePoint.easting + Math.Sin(travelHeading) * speed,
+                            toolGuidancePoint.northing + Math.Cos(travelHeading) * speed);
+                        double currentSegmentXte = FindDistanceToSegment(toolGuidancePoint, curList[A], curList[B], out _, out _, true, false, false);
+                        passiveHeadingLateralSpeed = FindDistanceToSegment(future, curList[A], curList[B], out _, out _, true, false, false) - currentSegmentXte;
                     }
+
                 }
                 else
                 {
@@ -372,139 +359,60 @@ namespace Twol
                         }
                     }
 
-                    //Passive Tool Steering
+                    // Passive correction still excludes U-turns. Engagement limits are fixed;
+                    // Acquire Sensitivity changes correction strength, not when it may engage.
                     if (Settings.Tool.setToolSteer.isPassiveSteering)
                     {
-                        if (Uturn || mf.sectionOnCounter == 0)
+                        if (Uturn || mf.sectionOnCounter == 0 || !hasValidToolXte || Math.Abs(mf.pn.avgSpeed) < 2)
                         {
-                            isPassiveTriggered = true;
+                            if (Uturn || mf.sectionOnCounter == 0) isPassiveTriggered = true;
                             isPassiveSteeringFlag = false;
+                            passiveController.Reset();
+                            passiveAppliedOffset = 0;
                             segAvg = 0;
-                            passiveDistance = 0;
-                            passiveCounter = 0;
-                            toolDistance = 0;
+                            passiveCurveTime = DateTime.MinValue;
                         }
-                        else if (!hasValidToolXte)
+                        else if (isPassiveSteeringFlag)
                         {
-                            // A missing/invalid tool position must not arm passive steering or retain its correction.
-                            isPassiveSteeringFlag = false;
-                            segAvg = 0;
-                            passiveDistance = 0;
-                            passiveCounter = 0;
-                            toolDistance = 0;
-                            filteredToolDistance = 0;
-                            passiveFilterLastTime = DateTime.MinValue;
-                            passiveCorrectionLastTime = DateTime.MinValue;
+                            CToolSteerSettings tuning = Settings.Tool.setToolSteer;
+                            double segmentError = passiveToolXte * (mf.trks.isHeadingSameWay ? 1 : -1);
+                            double correction = passiveController.Update(passiveNow, segmentError,
+                                passiveHeadingLateralSpeed, hasPassiveHeading, tuning.passiveLookAheadSeconds,
+                                tuning.passiveIntegralGain, tuning.passiveTrackingSensitivity,
+                                tuning.passiveHeadingSensitivity, tuning.passiveAcquireSensitivity,
+                                tuning.passiveCorrectionStrength, tuning.passiveMaximumOffset,
+                                tuning.passiveEarlyCorrection);
+                            double d = glm.Distance(curList[A], curList[B]);
+                            double theta = curList[B].heading - curList[A].heading;
+                            while (theta > Math.PI) theta -= glm.twoPI;
+                            while (theta < -Math.PI) theta += glm.twoPI;
+                            double curve = d > 0.001 ? -2 * Math.Sin(theta / 2) / d
+                                * tuning.curvatureGain * CPassiveController.Clamp(tuning.passiveCurveSensitivity, 50, 200) / 100 : 0;
+                            if (!CPassiveController.Finite(curve)) curve = 0;
+                            double limit = CPassiveController.Clamp(CPassiveController.Finite(tuning.passiveMaximumOffset)
+                                ? tuning.passiveMaximumOffset : 1, 0.1, 3);
+                            curve = CPassiveController.Clamp(curve, -limit, limit);
+                            double curveDt = passiveCurveTime == DateTime.MinValue ? 0 : (passiveNow - passiveCurveTime).TotalSeconds;
+                            passiveCurveTime = passiveNow;
+                            segAvg += (curve - segAvg) * CPassiveController.Clamp(curveDt, 0, 0.5)
+                                / (0.4 + CPassiveController.Clamp(curveDt, 0, 0.5));
+                            double offset = CPassiveController.Clamp(correction + segAvg, -limit, limit);
+                            double targetStep = 0.20 * CPassiveController.Clamp(tuning.passiveCorrectionStrength, 50, 200) / 100
+                                * CPassiveController.Clamp(curveDt, 0, 0.5);
+                            passiveAppliedOffset += CPassiveController.Clamp(offset - passiveAppliedOffset, -targetStep, targetStep);
+                            passiveAppliedOffset = CPassiveController.Clamp(passiveAppliedOffset, -limit, limit);
+                            offset = passiveAppliedOffset;
+                            goalPoint.easting += Math.Sin(curList[B].heading + Math.PI / 2) * offset;
+                            goalPoint.northing += Math.Cos(curList[B].heading + Math.PI / 2) * offset;
                         }
-                        else
-                        {
-                            if (isPassiveSteeringFlag)
-                            {
-                                // Zero is a valid on-line measurement. Keep the accumulated correction when the
-                                // implement crosses the line instead of treating zero as missing data.
-                                toolDistance = passiveToolXte;
-
-                                if (!mf.trks.isHeadingSameWay)
-                                {
-                                    toolDistance *= -1.0;
-                                }
-                            }
-                            else
-                            {
-                                toolDistance = 0;
-                                passiveDistance = 0;
-                                filteredToolDistance = 0;
-                                passiveFilterLastTime = DateTime.MinValue;
-                                passiveCorrectionLastTime = DateTime.MinValue;
-                            }
-
-                            // Filter implement cross-track error by elapsed time so GPS noise does not
-                            // become a rapid steering-target change when the guidance update rate varies.
-                            DateTime now = DateTime.UtcNow;
-                            if (isPassiveSteeringFlag)
-                            {
-                                double filterSeconds = passiveFilterLastTime == DateTime.MinValue
-                                    ? 0
-                                    : (now - passiveFilterLastTime).TotalSeconds;
-                                if (filterSeconds < 0) filterSeconds = 0;
-                                if (filterSeconds > 0.5) filterSeconds = 0.5;
-                                double filterAlpha = filterSeconds / (0.25 + filterSeconds);
-                                filteredToolDistance += (toolDistance - filteredToolDistance) * filterAlpha;
-                                passiveFilterLastTime = now;
-                            }
-
-
-                            vec3 p1 = curList[A];
-                            vec3 p2 = curList[B];
-
-                            //line crossing or too slow kill the integral
-                            //if ((distanceFromCurrentLine > 0 != distanceFromCurrentLineLast > 0) || mf.avgSpeed < 2)
-                            //{
-                            //    errorIntegral = 0;
-                            //    distanceFromCurrentLineLast = distanceFromCurrentLine;
-                            //}
-
-                            double d = glm.Distance(p1, p2);
-
-                            double theta = p2.heading - p1.heading;
-                            if (theta > Math.PI) theta -= Math.PI;
-                            else if (theta < -Math.PI) theta += Math.PI;
-
-                            if (theta > glm.PIBy2) theta -= Math.PI;
-                            else if (theta < -glm.PIBy2) theta += Math.PI;
-
-                            double segCurv = 0;
-                            if (d > 0 && !double.IsNaN(d) && !double.IsInfinity(d))
-                            {
-                                double curveSensitivity = Math.Max(50.0, Math.Min(200.0,
-                                    Settings.Tool.setToolSteer.passiveCurveSensitivity)) / 100.0;
-                                segCurv = ((2 * Math.Sin(theta / 2)) / -d)
-                                    * Settings.Tool.setToolSteer.curvatureGain * curveSensitivity;
-                            }
-
-                            if (double.IsNaN(segCurv) || double.IsInfinity(segCurv))
-                                segCurv = 0;
-
-                            if (segCurv > 2.0) segCurv = 2.0;
-                            if (segCurv < -2.0) segCurv = -2.0;
-
-                            segAvg = 0.8 * segAvg + 0.2 * segCurv;
-
-                            double gain = Math.Abs(filteredToolDistance);
-                            if (gain > 0.6) gain = 0.6;
-                            if (gain < 0.2) gain = 0.2;
-
-                            if (passiveCounter++ > Settings.Tool.setToolSteer.passiveIntegralGain * 10)
-                            {
-                                errorProp = filteredToolDistance * -gain;
-                                if (passiveCorrectionLastTime == DateTime.MinValue)
-                                    passiveCorrectionLastTime = now;
-
-                                // Limit how quickly the tractor target can move as passive guidance
-                                // acquires a displaced implement. The limit is time-based, not tied
-                                // to the GPS/update loop frequency.
-                                double correctionSeconds = (now - passiveCorrectionLastTime).TotalSeconds;
-                                if (correctionSeconds < 0) correctionSeconds = 0;
-                                if (correctionSeconds > 0.5) correctionSeconds = 0.5;
-                                double trackingSensitivity = Math.Max(50.0, Math.Min(200.0,
-                                    Settings.Tool.setToolSteer.passiveTrackingSensitivity)) / 100.0;
-                                double maxCorrectionStep = 0.20 * trackingSensitivity * correctionSeconds;
-                                if (errorProp > maxCorrectionStep) errorProp = maxCorrectionStep;
-                                if (errorProp < -maxCorrectionStep) errorProp = -maxCorrectionStep;
-                                passiveDistance += errorProp;
-                                passiveCorrectionLastTime = now;
-                                passiveCounter = 0;
-                            }
-
-                            if (passiveDistance > 1.0) passiveDistance = 1.0;
-                            if (passiveDistance < -1.0) passiveDistance = -1.0;
-
-                            if (mf.pn.avgSpeed < 2) passiveDistance = 0;
-
-                            double passiveDist = segAvg + passiveDistance;
-                            goalPoint.easting += (Math.Sin(curList[B].heading + 1.57) * passiveDist);
-                            goalPoint.northing += (Math.Cos(curList[B].heading + 1.57) * passiveDist);
-                        }
+                    }
+                    else
+                    {
+                        passiveController.Reset();
+                        passiveAppliedOffset = 0;
+                        segAvg = 0;
+                        passiveCurveTime = DateTime.MinValue;
+                        isPassiveSteeringFlag = false;
                     }
 
                     //calc "D" the distance from pivot axle to lookahead point
@@ -537,13 +445,9 @@ namespace Twol
 
                     if (Settings.Tool.setToolSteer.isPassiveSteering && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
-                        double acquireSensitivity = Math.Max(50.0, Math.Min(200.0,
-                            Settings.Tool.setToolSteer.passiveAcquireSensitivity)) / 100.0;
-                        double acquireHeadingLimit = 1.5 * acquireSensitivity;
-                        double acquireLineLimit = 0.10 * acquireSensitivity;
-                        if (!Uturn && hasValidToolXte
-                            && Math.Abs(mf.vehicle.modeActualHeadingError) < acquireHeadingLimit
-                            && Math.Abs(distanceFromCurrentLine) < acquireLineLimit)
+                        if (!Uturn && mf.sectionOnCounter > 0 && Math.Abs(mf.pn.avgSpeed) >= 2 && hasValidToolXte
+                            && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
+                            && Math.Abs(distanceFromCurrentLine) < 0.10)
                             isPassiveSteeringFlag = true;
                     }
                 }
@@ -576,8 +480,10 @@ namespace Twol
 
                 distanceFromCurrentLineTool = 0;
                 isPassiveSteeringFlag = false;
-                passiveDistance = 0;
-                passiveCounter = 0;
+                passiveController.Reset();
+                passiveAppliedOffset = 0;
+                segAvg = 0;
+                passiveCurveTime = DateTime.MinValue;
                 completeUturn = true;
             }
             if (Uturn && completeUturn)

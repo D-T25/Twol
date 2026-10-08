@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 
 namespace Twol
@@ -44,6 +44,32 @@ namespace Twol
 
         public byte fixQuality = byte.MaxValue;
         public double avgSpeed = 0;
+        // Receipt times are separate from DGPS correction age. Never reuse stale heading.
+        public DateTime positionReceivedUtc = DateTime.MinValue;
+        public DateTime courseReceivedUtc = DateTime.MinValue;
+        public DateTime dualHeadingReceivedUtc = DateTime.MinValue;
+        public DateTime imuHeadingReceivedUtc = DateTime.MinValue;
+
+        private void ReadHeading(int index, out double value, out DateTime received)
+        {
+            received = DateTime.MinValue;
+            if (index < words.Length && double.TryParse(words[index], NumberStyles.Float,
+                CultureInfo.InvariantCulture, out value) && !double.IsNaN(value)
+                && !double.IsInfinity(value) && value >= 0 && value <= 360)
+            {
+                received = DateTime.UtcNow;
+                return;
+            }
+            value = float.MaxValue;
+        }
+
+        private double ReadImuAngle(int index, double missing)
+        {
+            double value;
+            return index < words.Length && double.TryParse(words[index], NumberStyles.Float,
+                CultureInfo.InvariantCulture, out value) && !double.IsNaN(value)
+                && !double.IsInfinity(value) ? value : missing;
+        }
 
         public bool isDualGPSConnected = false;
 
@@ -219,7 +245,7 @@ namespace Twol
                 //parse them accordingly
                 if (words.Length < 3) break;
 
-                if (words[0] == "$PANDA" && words.Length > 14)
+                if (words[0] == "$PANDA" && words.Length > 15)
                 {
                     ParsePANDA();
                     if (isGPSSentencesOn) pandaSentence = nextNMEASentence;
@@ -327,7 +353,7 @@ namespace Twol
 
                 double.TryParse(words[4], NumberStyles.Float, CultureInfo.InvariantCulture, out elevation);
 
-                double.TryParse(words[5], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrueDual);
+                ReadHeading(5, out headingTrueDual, out dualHeadingReceivedUtc);
 
                 double.TryParse(words[6], NumberStyles.Float, CultureInfo.InvariantCulture, out dualRoll);
 
@@ -351,6 +377,7 @@ namespace Twol
                 double.TryParse(words[20], NumberStyles.Float, CultureInfo.InvariantCulture, out age);
 
                 isDualGPSConnected = true;
+                positionReceivedUtc = DateTime.UtcNow;
                 isNMEAToSend = true;
             }
         }
@@ -438,6 +465,7 @@ namespace Twol
                 { if (words[5] == "W") longitude *= -1; }
 
                 isDualGPSConnected = false;
+                positionReceivedUtc = DateTime.UtcNow;
                 isNMEAToSend = true;
             }
         }
@@ -468,7 +496,7 @@ namespace Twol
             if (!string.IsNullOrEmpty(words[1]))
             {
                 //True heading
-                double.TryParse(words[1], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrue);
+                ReadHeading(1, out headingTrue, out courseReceivedUtc);
             }
         }
 
@@ -508,7 +536,7 @@ namespace Twol
             if (!string.IsNullOrEmpty(words[1]))
             {
                 //Dual heading
-                double.TryParse(words[3], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrueDual);
+                ReadHeading(3, out headingTrueDual, out dualHeadingReceivedUtc);
 
                 double.TryParse(words[4], NumberStyles.Float, CultureInfo.InvariantCulture, out dualRoll);
 
@@ -585,7 +613,18 @@ namespace Twol
                 vtgSpeed *= 1.852f;
 
                 //Dual antenna derived heading
-                double.TryParse(words[12], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrueDual);
+                ReadHeading(12, out headingTrueDual, out dualHeadingReceivedUtc);
+                if (words.Length > 18)
+                {
+                    double sampleAge;
+                    if (words[16] != "1" || words[17] != "1" || !double.TryParse(words[18],
+                        NumberStyles.Float, CultureInfo.InvariantCulture, out sampleAge)
+                        || double.IsNaN(sampleAge) || double.IsInfinity(sampleAge) || sampleAge < 0 || sampleAge > 500)
+                        dualHeadingReceivedUtc = DateTime.MinValue;
+                    else if (dualHeadingReceivedUtc != DateTime.MinValue)
+                        dualHeadingReceivedUtc = dualHeadingReceivedUtc.AddMilliseconds(-sampleAge);
+                }
+                if (words.Length > 19) ReadHeading(19, out headingTrue, out courseReceivedUtc);
 
                 //dualRoll
                 double.TryParse(words[13], NumberStyles.Float, CultureInfo.InvariantCulture, out dualRoll);
@@ -627,6 +666,7 @@ namespace Twol
                 isDualGPSConnected = true;
 
                 //always send because its probably the only one.
+                positionReceivedUtc = DateTime.UtcNow;
                 isNMEAToSend = true;
             }
         }
@@ -728,20 +768,33 @@ namespace Twol
                 vtgSpeed *= 1.852f;
 
                 //imu heading
-                double.TryParse(words[12], NumberStyles.Float, CultureInfo.InvariantCulture, out imuHeading);
+                ReadHeading(12, out imuHeading, out imuHeadingReceivedUtc);
+                // New ToolDual senders append validity/age and course. Legacy PANDA remains supported.
+                if (words.Length > 18)
+                {
+                    double sampleAge;
+                    if (words[16] != "2" || words[17] != "1" || !double.TryParse(words[18],
+                        NumberStyles.Float, CultureInfo.InvariantCulture, out sampleAge)
+                        || double.IsNaN(sampleAge) || double.IsInfinity(sampleAge) || sampleAge < 0 || sampleAge > 500)
+                        imuHeadingReceivedUtc = DateTime.MinValue;
+                    else if (imuHeadingReceivedUtc != DateTime.MinValue)
+                        imuHeadingReceivedUtc = imuHeadingReceivedUtc.AddMilliseconds(-sampleAge);
+                }
+                if (words.Length > 19) ReadHeading(19, out headingTrue, out courseReceivedUtc);
 
                 //dualRoll
-                double.TryParse(words[13], NumberStyles.Float, CultureInfo.InvariantCulture, out imuRoll);
+                imuRoll = ReadImuAngle(13, short.MaxValue);
 
                 //Pitch
-                double.TryParse(words[14], NumberStyles.Float, CultureInfo.InvariantCulture, out imuPitch);
+                imuPitch = ReadImuAngle(14, short.MaxValue);
 
                 //YawRate
-                double.TryParse(words[15], NumberStyles.Float, CultureInfo.InvariantCulture, out imuYawRate);
+                imuYawRate = ReadImuAngle(15, short.MaxValue);
 
                 isDualGPSConnected = false;
 
                 //always send because its probably the only one.
+                positionReceivedUtc = DateTime.UtcNow;
                 isNMEAToSend = true;
                 //}
             }
@@ -761,7 +814,7 @@ namespace Twol
             if (!string.IsNullOrEmpty(words[1]))
             {
                 //True heading
-                double.TryParse(words[1], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrueDual);
+                ReadHeading(1, out headingTrueDual, out dualHeadingReceivedUtc);
                 isDualGPSConnected = true;
             }
         }
@@ -806,7 +859,7 @@ namespace Twol
                 vtgSpeed *= 1.852f;
 
                 //True heading
-                double.TryParse(words[8], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrue);
+                ReadHeading(8, out headingTrue, out courseReceivedUtc);
 
                 double.TryParse(words[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double UTC);
 
@@ -841,6 +894,7 @@ namespace Twol
 
                 if (words[6] == "W") longitude *= -1;
 
+                positionReceivedUtc = DateTime.UtcNow;
                 isNMEAToSend = true;
             }
         }

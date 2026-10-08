@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -754,42 +754,37 @@ namespace Twol
                 {
                     traffic.cntrGPSOutTool += msgLen;
                     pnTool.rawBuffer += Encoding.ASCII.GetString(data, 0, msgLen);
+                    DateTime previousDualHeadingTime = pnTool.dualHeadingReceivedUtc;
                     pnTool.ParseNMEA(ref pnTool.rawBuffer);
 
                     if (pnTool.isDualGPSConnected)
                     {
-                        pnTool.headingTrueDual += Settings.Tool.setToolSteer.dualHeadingOffset;
-                        if (pnTool.headingTrueDual >= 360) pnTool.headingTrueDual -= 360;
-                        else if (pnTool.headingTrueDual < 0) pnTool.headingTrueDual += 360;
-
-                        double rollK = pnTool.dualRoll;
-                        if (Settings.Tool.setToolSteer.invertRoll) rollK *= -1;
-                        rollK -= Settings.Tool.setToolSteer.rollZero;
-                        pnTool.dualRoll = rollK;
+                        if (pnTool.dualHeadingReceivedUtc != DateTime.MinValue
+                            && pnTool.dualHeadingReceivedUtc != previousDualHeadingTime)
+                        {
+                            pnTool.headingTrueDual = CToolHeadingResolver.WrapDegrees(
+                                pnTool.headingTrueDual + Settings.Tool.setToolSteer.dualHeadingOffset);
+                            double rollK = pnTool.dualRoll;
+                            if (Settings.Tool.setToolSteer.invertRoll) rollK *= -1;
+                            pnTool.dualRoll = rollK - Settings.Tool.setToolSteer.rollZero;
+                        }
                     }
                     else
                     {
 
-                        if (pnTool.imuHeading != ushort.MaxValue)
-                        {
-                            ahrsTool.imuHeading = pnTool.imuHeading;
-                            ahrsTool.imuHeading *= 0.1;
-                        }
-
+                        // PANDA angles are degrees, not tenths of a degree.
+                        ahrsTool.imuHeading = pnTool.imuHeadingReceivedUtc == DateTime.MinValue
+                            ? 99999 : CToolHeadingResolver.WrapDegrees(pnTool.imuHeading
+                                + Settings.Tool.setToolSteer.dualHeadingOffset);
                         if (pnTool.imuRoll != short.MaxValue)
                         {
                             double rollK = pnTool.imuRoll;
-                            if (Settings.Tool.setToolSteer.invertRoll) rollK *= -0.1;
-                            else rollK *= 0.1;
-                            rollK -= Settings.Tool.setToolSteer.rollZero;
-                            ahrsTool.imuRoll = rollK;
-
-                            ahrsTool.imuPitch = pnTool.imuPitch;
-                            ahrsTool.imuYawRate = pnTool.imuYawRate;
-
-                            pnTool.imuHeading = ushort.MaxValue;
-                            pnTool.imuRoll = short.MaxValue;
+                            if (Settings.Tool.setToolSteer.invertRoll) rollK *= -1;
+                            ahrsTool.imuRoll = rollK - Settings.Tool.setToolSteer.rollZero;
                         }
+                        if (pnTool.imuPitch != short.MaxValue) ahrsTool.imuPitch = pnTool.imuPitch;
+                        if (pnTool.imuYawRate != short.MaxValue) ahrsTool.imuYawRate = pnTool.imuYawRate;
+
                     }
 
                     //new tool start

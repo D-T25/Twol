@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows.Forms;
 using Twol.Classes;
@@ -34,10 +34,13 @@ namespace Twol
             tabControl1.Multiline = false;
             TabPage passiveSettingsTab = new TabPage("Passive");
             passiveSettingsTab.BackColor = System.Drawing.Color.PaleTurquoise;
-            FormPassiveGuidanceSettings passiveSettings = new FormPassiveGuidanceSettings();
+            FormPassiveGuidanceSettings passiveSettings = new FormPassiveGuidanceSettings(mf);
             passiveSettings.Dock = DockStyle.Fill;
             passiveSettingsTab.Controls.Add(passiveSettings);
             tabControl1.TabPages.Add(passiveSettingsTab);
+            // The interval now lives only in Passive > Limits, with actual tenths of a second.
+            hsbarPassiveIntegralGain.Visible = lblPassiveIntegralGain.Visible = label7.Visible = false;
+            label6.Text = "Curve Base Gain";
         }
 
         private void FormToolSteer_Load(object sender, EventArgs e)
@@ -118,7 +121,7 @@ namespace Twol
             nudDeadzoneWidth.Value = Settings.Tool.setToolSteer.deadzoneWidth;
 
             hsbarPassiveCurvature.Value = (int)(Settings.Tool.setToolSteer.curvatureGain * 10);
-            lblCurvatureGain.Text = (Settings.Tool.setToolSteer.curvatureGain * 2).ToString("N1");
+            lblCurvatureGain.Text = Settings.Tool.setToolSteer.curvatureGain.ToString("N1");
 
             hsbarPassiveIntegralGain.Value = (int)(Settings.Tool.setToolSteer.passiveIntegralGain);
             lblPassiveIntegralGain.Text = (Settings.Tool.setToolSteer.passiveIntegralGain).ToString("N0");
@@ -318,7 +321,7 @@ namespace Twol
         {
             Settings.Tool.setToolSteer.curvatureGain = ((double)(e.NewValue) * 0.1);
 
-            lblCurvatureGain.Text = (Settings.Tool.setToolSteer.curvatureGain * 2).ToString("N1");
+            lblCurvatureGain.Text = Settings.Tool.setToolSteer.curvatureGain.ToString("N1");
         }
 
         private void hsbarPassiveIntegralGain_Scroll(object sender, ScrollEventArgs e)

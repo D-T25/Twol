@@ -162,6 +162,7 @@
     <Compile Include="Classes\CBoundary.cs" />
     <Compile Include="Classes\Guidance\CToolRecord.cs" />
     <Compile Include="Classes\Guidance\CGuidance.cs" />
+    <Compile Include="Classes\Guidance\CPassiveController.cs" />
     <Compile Include="Classes\CHeadLine.cs" />
     <Compile Include="Classes\CHello.cs" />
     <Compile Include="Classes\Guidance\CTrackMethods.cs" />
