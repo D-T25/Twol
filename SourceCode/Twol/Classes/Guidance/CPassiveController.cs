@@ -47,6 +47,28 @@ namespace Twol
             double elapsed = (now - lastCorrection).TotalSeconds;
             double absoluteError = Math.Abs(FilteredError);
             double outwardRate = ErrorRate * Math.Sign(FilteredError);
+            // Adding correction still observes the hold. Removing an offset that is carrying
+            // the tool through the line must not wait for that hold or the retry threshold.
+            // Position-derived lateral motion also permits braking without a heading receiver.
+            double approachSpeed = hasHeading && Finite(headingLateralSpeed)
+                ? Clamp(headingLateralSpeed, -0.5, 0.5) : Clamp(ErrorRate, -0.5, 0.5);
+            double releaseRate = 0.20 * Clamp(strength, 50, 200) / 100;
+            double returnTime = Math.Abs(Offset) / releaseRate;
+            double brakeWindow = returnTime + Clamp(heading, 50, 200) / 100
+                + Clamp(Finite(previewSeconds) ? previewSeconds : 0, 0, 2);
+            bool approaching = FilteredError * approachSpeed < 0 && Math.Abs(approachSpeed) > 0.02;
+            bool predictedCrossing = approaching
+                && FilteredError * (FilteredError + approachSpeed * brakeWindow) <= 0;
+            bool offsetPastLine = Offset * FilteredError > 0 && absoluteError > 0.02;
+            bool release = Math.Abs(Offset) > 0
+                && (offsetPastLine || (Offset * FilteredError < 0 && predictedCrossing));
+            if (release)
+            {
+                // Never reverse the offset during release, and retain the strength slew limit.
+                Offset -= Math.Sign(Offset) * Math.Min(Math.Abs(Offset), releaseRate * dt);
+                CorrectionReason = offsetPastLine ? "Release after crossing" : "Release approaching line";
+                return Offset;
+            }
             // Allow the tractor/tool time to respond, then escape a hold only if still off line
             // and demonstrably moving away, crossing, or failing to improve.
             double minimumWait = Math.Max(0.8, Math.Min(2, intervalSeconds * 0.5));

@@ -37,6 +37,27 @@ public static class Tests
         Tick(c,20.1,double.NaN); Check(c.Offset==0,"invalid error clears correction");
         c.Reset(); Tick(c,0,0.5,interval:0);Tick(c,0.1,0.5,interval:0);
         Check(c.Offset<0,"zero interval enables continuous correction");
+        // Reproduce an existing correction followed by a rapid approach during its hold.
+        c.Reset(); for(int i=0;i<=40;i++) Tick(c,i*0.1,0.5);
+        double held = c.Offset;
+        for(int i=41;i<=45;i++) Tick(c,i*0.1,0.5-(i-40)*0.06,-0.6);
+        Check(c.Offset>held && c.Offset<=0 && c.CorrectionReason=="Release approaching line",
+            "approach releases held offset before tool crosses even with retry disabled");
+        Check(c.Offset-held<=0.2*0.5+1e-9,"release obeys correction-strength slew limit");
+        c.Reset(); for(int i=0;i<=40;i++) Tick(c,i*0.1,0.5);
+        Tick(c,4.1,0.4,0);
+        Check(Math.Abs(c.Offset+0.2)<1e-9,"far tool retains correction while hold runs");
+        c.Reset(); for(int i=0;i<=40;i++) Tick(c,i*0.1,0.5);
+        for(int i=41;i<=50;i++) Tick(c,i*0.1,-0.1,0);
+        Check(c.Offset>-0.2 && c.Offset<=0 && c.CorrectionReason=="Release after crossing",
+            "crossed tool releases offset before four-second hold expires");
+        c.Reset(); for(int i=0;i<=40;i++) Tick(c,i*0.1,-0.5);
+        for(int i=41;i<=45;i++) Tick(c,i*0.1,-0.5+(i-40)*0.06,0.6);
+        Check(c.Offset<0.2 && c.Offset>=0,"release is symmetric on the other side of the line");
+        c.Reset(); for(int i=0;i<=40;i++) Tick(c,i*0.1,0.5);
+        for(int i=41;i<=50;i++) c.Update(start.AddSeconds(i*0.1),0.5-(i-40)*0.04,
+            double.NaN,false,0,4,100,100,100,100,1,false);
+        Check(c.Offset>-0.2 && c.Offset<=0,"position trend releases correction without tool heading");
         var h=new CToolHeadingResolver(); double body;
         Func<double,double,double,double,double,bool,bool> resolve=(t,e,n,speed,imu,reverse)=>h.Resolve(start.AddSeconds(t),e,n,true,
             start.AddSeconds(t),speed,reverse,true,double.NaN,DateTime.MinValue,double.NaN,DateTime.MinValue,
