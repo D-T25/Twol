@@ -143,7 +143,8 @@ namespace Twol
 
                 mf.pnTool.vtgSpeed = mf.pn.vtgSpeed;
                 mf.pnTool.avgSpeed = mf.pn.avgSpeed;
-                //mf.pnTool.ConvertLocalToWGS84(mf.pnTool.fix.northing, mf.pnTool.fix.easting, out mf.pnTool.latitude, out mf.pnTool.longitude);
+                mf.pnTool.PublishSimulatedToolFix(mf.pnTool.fix.easting, mf.pnTool.fix.northing,
+                    mf.pnTool.headingTrueDual, mf.pn.vtgSpeed);
             }
 
             mf.UpdateFixPosition();
