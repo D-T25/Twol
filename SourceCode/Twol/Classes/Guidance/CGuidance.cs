@@ -76,7 +76,7 @@ namespace Twol
 
             bool hasValidToolXte = false;
             double passiveToolXte = 0, passiveHeadingLateralSpeed = 0;
-            bool hasPassiveHeading = false;
+            bool hasPassiveHeading = false, passiveToolPathIsCurved = false;
             DateTime passiveNow = DateTime.UtcNow;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
@@ -116,6 +116,15 @@ namespace Twol
 
                 if (FindClosestSegment(curList, isLoop, toolGuidancePoint, out A, out B))
                 {
+                    // Detect curvature at the tool, which can still be in the bend after the
+                    // tractor has exited it. Segment heading projection is only used on straights.
+                    double toolSegmentLength = glm.Distance(curList[A], curList[B]);
+                    double toolTurn = curList[B].heading - curList[A].heading;
+                    while (toolTurn > Math.PI) toolTurn -= glm.twoPI;
+                    while (toolTurn < -Math.PI) toolTurn += glm.twoPI;
+                    passiveToolPathIsCurved = toolSegmentLength > 0.001
+                        && Math.Abs(2 * Math.Sin(toolTurn / 2) / toolSegmentLength) > 0.001;
+
                     distanceFromCurrentLineTool = FindDistanceToSegment(toolGuidancePoint, curList[A], curList[B], out _, out _, true, false, false);
 
                     if (!Uturn && !mf.trks.isHeadingSameWay)
@@ -381,7 +390,7 @@ namespace Twol
                                 tuning.passiveIntegralGain, tuning.passiveTrackingSensitivity,
                                 tuning.passiveHeadingSensitivity, tuning.passiveAcquireSensitivity,
                                 tuning.passiveCorrectionStrength, tuning.passiveMaximumOffset,
-                                tuning.passiveEarlyCorrection);
+                                tuning.passiveEarlyCorrection, passiveToolPathIsCurved);
                             double d = glm.Distance(curList[A], curList[B]);
                             double theta = curList[B].heading - curList[A].heading;
                             while (theta > Math.PI) theta -= glm.twoPI;

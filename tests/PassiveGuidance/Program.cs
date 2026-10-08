@@ -58,6 +58,23 @@ public static class Tests
         for(int i=41;i<=50;i++) c.Update(start.AddSeconds(i*0.1),0.5-(i-40)*0.04,
             double.NaN,false,0,4,100,100,100,100,1,false);
         Check(c.Offset>-0.2 && c.Offset<=0,"position trend releases correction without tool heading");
+        var curveTool = new CPassiveController();
+        for(int i=0;i<=40;i++) curveTool.Update(start.AddSeconds(i*0.1),0.5,-0.5,true,
+            0,4,100,100,100,100,1,false,true);
+        Check(Math.Abs(curveTool.Offset+0.2)<1e-9,
+            "normal curve heading does not cancel displaced-tool correction");
+        for(int i=41;i<=45;i++) curveTool.Update(start.AddSeconds(i*0.1),0.5,-0.5,true,
+            0,4,100,100,100,100,1,false,true);
+        Check(Math.Abs(curveTool.Offset+0.2)<1e-9,
+            "curve heading alone cannot release held correction when path error is unchanged");
+        for(int i=46;i<=55;i++) curveTool.Update(start.AddSeconds(i*0.1),0.5-(i-45)*0.04,0,true,
+            0,4,100,100,100,100,1,false,true);
+        Check(curveTool.Offset>-0.2 && curveTool.Offset<=0,
+            "real approach to curved path still releases correction");
+        curveTool.Reset();
+        for(int i=0;i<=40;i++) curveTool.Update(start.AddSeconds(i*0.1),-0.5,0.5,true,
+            0,4,100,100,100,100,1,false,true);
+        Check(Math.Abs(curveTool.Offset-0.2)<1e-9,"curve damping is symmetric for opposite turn");
         var h=new CToolHeadingResolver(); double body;
         Func<double,double,double,double,double,bool,bool> resolve=(t,e,n,speed,imu,reverse)=>h.Resolve(start.AddSeconds(t),e,n,true,
             start.AddSeconds(t),speed,reverse,true,double.NaN,DateTime.MinValue,double.NaN,DateTime.MinValue,

@@ -22,7 +22,7 @@ namespace Twol
         public double Update(DateTime now, double error, double headingLateralSpeed,
             bool hasHeading, double previewSeconds, double intervalSeconds,
             double tracking, double heading, double acquire, double strength,
-            double maximumOffset, bool earlyCorrection)
+            double maximumOffset, bool earlyCorrection, bool pathIsCurved = false)
         {
             if (!Finite(error)) { Reset(); return 0; }
             double dt = lastUpdate == DateTime.MinValue ? 0 : (now - lastUpdate).TotalSeconds;
@@ -50,7 +50,7 @@ namespace Twol
             // Adding correction still observes the hold. Removing an offset that is carrying
             // the tool through the line must not wait for that hold or the retry threshold.
             // Position-derived lateral motion also permits braking without a heading receiver.
-            double approachSpeed = hasHeading && Finite(headingLateralSpeed)
+            double approachSpeed = !pathIsCurved && hasHeading && Finite(headingLateralSpeed)
                 ? Clamp(headingLateralSpeed, -0.5, 0.5) : Clamp(ErrorRate, -0.5, 0.5);
             double releaseRate = 0.20 * Clamp(strength, 50, 200) / 100;
             double returnTime = Math.Abs(Offset) / releaseRate;
@@ -84,8 +84,11 @@ namespace Twol
                 * Clamp((absoluteError - 0.10) / 0.40, 0, 1);
             // Heading provides a lateral velocity term even with optional look-ahead disabled.
             // A tool already approaching the line needs less correction; one moving away needs more.
-            double lateralSpeed = hasHeading && Finite(headingLateralSpeed)
-                ? Clamp(headingLateralSpeed, -0.5, 0.5) : 0;
+            // A heading projected onto one straight segment includes normal curve motion.
+            // On curves use the measured rate of error relative to the changing path instead.
+            double lateralSpeed = pathIsCurved ? Clamp(ErrorRate, -0.5, 0.5)
+                : hasHeading && Finite(headingLateralSpeed)
+                    ? Clamp(headingLateralSpeed, -0.5, 0.5) : 0;
             double headingTerm = lateralSpeed * Clamp(heading, 50, 200) / 100;
             double previewTerm = lateralSpeed * Clamp(Finite(previewSeconds) ? previewSeconds : 0, 0, 2);
             double demand = FilteredError * trackingGain * acquireGain + headingTerm + previewTerm;
