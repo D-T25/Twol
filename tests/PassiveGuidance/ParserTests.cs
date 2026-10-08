@@ -29,7 +29,21 @@ public static class ParserTests
         Send(pn,dual+",1,1,600,270");Check(pn.dualHeadingReceivedUtc==DateTime.MinValue,"stale dual sample rejected");
         Send(pn,"PANDA,120000.0,4900.0000,N,09800.0000,W,4,20,0.7,300,0.5,3,120,0,0");
         Check(true,"truncated PANDA does not index missing yaw-rate field");
-        Console.WriteLine(count+" parser checks passed");
+        CNMEA.latStart = 49; CNMEA.lonStart = -98; CNMEA.mPerDegreeLat = 111200;
+        pn.fixOffset = new vec2(2, -3);
+        pn.PublishSimulatedToolFix(123, 456, 370, 8);
+        pn.ConvertWGS84ToLocal(pn.latitude, pn.longitude, out double simNorth, out double simEast);
+        Check(Math.Abs(simEast-123)<0.0001 && Math.Abs(simNorth-456)<0.0001,
+            "simulated local fix round-trips through receiver coordinates without drift offset");
+        Check(pn.fixQuality==8 && pn.isDualGPSConnected && pn.headingTrueDual==10,
+            "simulated tool publishes valid quality and wrapped dual heading");
+        var resolver = new CToolHeadingResolver();
+        Check(resolver.Resolve(DateTime.UtcNow, simEast, simNorth, true, pn.positionReceivedUtc,
+            pn.vtgSpeed/3.6, false, false, pn.headingTrueDual, pn.dualHeadingReceivedUtc,
+            pn.headingTrue, pn.courseReceivedUtc, pn.imuHeading, pn.imuHeadingReceivedUtc,
+            0, out double simulatedHeading) && simulatedHeading==10 && resolver.Source=="Dual GNSS",
+            "built-in simulator heading passes production freshness checks");
+        Console.WriteLine(count+" parser and simulator checks passed");
     }
 }
 namespace Twol
