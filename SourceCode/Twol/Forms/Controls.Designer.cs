@@ -556,24 +556,16 @@ namespace Twol
             if (ct.isContourBtnOn)
                 ct.SetLockToLine();
 
-            //Passive steering hold till on guidance line
-            if (Settings.Tool.setToolSteer.isPassiveSteering)
-            {
-                if (state && !gyd.isPassiveTriggered)
-                {
-                    gyd.isPassiveTriggered = true;
-                    gyd.isPassiveSteeringFlag = false;
-                }
-                else
-                {
-                    gyd.isPassiveTriggered = false;
-                    gyd.isPassiveSteeringFlag = false;
-                }
-            }
-
             if ((isBtnAutoSteerOn && !isBtnToolSteerOn) || (!isBtnAutoSteerOn && isBtnToolSteerOn))
             {
                 btnToolSteer.PerformClick();
+            }
+
+            // Synchronize the request after the tool button has followed tractor steering.
+            if (Settings.Tool.setToolSteer.isPassiveSteering)
+            {
+                gyd.isPassiveTriggered = isBtnAutoSteerOn && isBtnToolSteerOn;
+                gyd.isPassiveSteeringFlag = false;
             }
         }
 

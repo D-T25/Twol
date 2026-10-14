@@ -372,9 +372,10 @@ namespace Twol
                     // Acquire Sensitivity changes correction strength, not when it may engage.
                     if (Settings.Tool.setToolSteer.isPassiveSteering)
                     {
-                        if (Uturn || mf.sectionOnCounter == 0 || !hasValidToolXte || Math.Abs(mf.pn.avgSpeed) < 2)
+                        // Buttons own the request. Sections and navigation checks only suspend it.
+                        isPassiveTriggered = mf.isBtnToolSteerOn && mf.isBtnAutoSteerOn;
+                        if (!isPassiveTriggered || Uturn || mf.sectionOnCounter == 0 || !hasValidToolXte || Math.Abs(mf.pn.avgSpeed) < 2)
                         {
-                            if (Uturn || mf.sectionOnCounter == 0) isPassiveTriggered = true;
                             isPassiveSteeringFlag = false;
                             passiveController.Reset();
                             passiveAppliedOffset = 0;
@@ -452,7 +453,8 @@ namespace Twol
 
                     mf.vehicle.modeActualHeadingError = glm.toDegrees(steerHeadingError);
 
-                    if (Settings.Tool.setToolSteer.isPassiveSteering && !isPassiveSteeringFlag && isPassiveTriggered)
+                    if (Settings.Tool.setToolSteer.isPassiveSteering && mf.isBtnToolSteerOn
+                        && mf.isBtnAutoSteerOn && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
                         if (!Uturn && mf.sectionOnCounter > 0 && Math.Abs(mf.pn.avgSpeed) >= 2 && hasValidToolXte
                             && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
