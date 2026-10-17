@@ -105,6 +105,17 @@ namespace Twol
             return Offset;
         }
 
+        // Keep feedback from winding up behind a saturated curve feed-forward offset.
+        public double ConstrainWithCurve(double curveOffset, double limit)
+        {
+            limit=Clamp(Finite(limit)?limit:1,0.1,3);
+            curveOffset=Clamp(Finite(curveOffset)?curveOffset:0,-limit,limit);
+            double constrained=Clamp(Offset,-limit-curveOffset,limit-curveOffset);
+            if(Math.Abs(constrained-Offset)>1e-9) CorrectionReason="Offset limit";
+            Offset=constrained;
+            return Offset;
+        }
+
         public static bool Finite(double value) { return !double.IsNaN(value) && !double.IsInfinity(value); }
         public static double Clamp(double value, double low, double high) { return Math.Max(low, Math.Min(high, value)); }
     }

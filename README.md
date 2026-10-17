@@ -17,3 +17,9 @@ AgIO natively supports GPS Out via serial bus, so the GPS_Out application is not
 
 There are other minor differences, but these are the main ones.
  
+
+## Passive guidance geometry and calibration
+
+The experimental passive calibration branch adds profile-based curve compensation, one Curve Response control, separate straight/curve offset limits, and **Passive Guidance Calibration** with Review, temporary Test, Save and Restore. Existing profiles retain legacy curve behaviour until profile geometry is verified and enabled. U-turn planning is unchanged.
+
+See [Passive guidance setup and calibration](docs/passive-guidance.md) for operation, eligibility, compatibility and testing limits.

@@ -40,7 +40,8 @@ namespace Twol
             tabControl1.TabPages.Add(passiveSettingsTab);
             // The interval now lives only in Passive > Limits, with actual tenths of a second.
             hsbarPassiveIntegralGain.Visible = lblPassiveIntegralGain.Visible = label7.Visible = false;
-            label6.Text = "Curve Base Gain";
+            // Curve Response now lives only on Passive. Keep legacy XML values for old profiles.
+            hsbarPassiveCurvature.Visible = lblCurvatureGain.Visible = label6.Visible = false;
         }
 
         private void FormToolSteer_Load(object sender, EventArgs e)

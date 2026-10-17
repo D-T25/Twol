@@ -49,6 +49,7 @@ public static class ParserTests
 namespace Twol
 {
     // Only the parser's form dependencies are stubbed; CNMEA itself is the production source.
+    public struct vec3 { public double easting,northing,heading; public vec3(double e,double n,double h){easting=e;northing=n;heading=h;} }
     public struct vec2 { public double easting,northing;public vec2(double e,double n){easting=e;northing=n;} }
     public class TimerStub { public bool Enabled; }
     public class StepStub { public bool isSet; }

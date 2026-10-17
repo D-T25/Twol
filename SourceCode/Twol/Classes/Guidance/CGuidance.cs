@@ -42,14 +42,33 @@ namespace Twol
         private readonly CPassiveController passiveController = new CPassiveController();
         private readonly CToolHeadingResolver toolHeadingResolver = new CToolHeadingResolver();
         public string PassiveHeadingSource { get { return toolHeadingResolver.Source; } }
-        public double PassiveTractorOffset
+        public readonly CPassiveCalibration PassiveCalibration = new CPassiveCalibration();
+        public double PassiveTractorOffset { get { return passiveAppliedOffset; } }
+        public double PassiveCurveCurvature { get; private set; }
+        public double PassivePreviewCurvature { get; private set; }
+        public double PassiveGeometryOffset { get; private set; }
+        public double PassiveEffectiveLimit { get; private set; } = 1;
+        public bool PassiveOffsetLimited { get; private set; }
+        public CPassiveGeometry PassiveGeometry()
         {
-            get
-            {
-                double configured = Settings.Tool.setToolSteer.passiveMaximumOffset;
-                double limit = CPassiveController.Clamp(CPassiveController.Finite(configured) ? configured : 1, 0.1, 3);
-                return CPassiveController.Clamp(passiveAppliedOffset, -limit, limit);
-            }
+            return new CPassiveGeometry { Trailing=Settings.Tool.isToolTrailing,
+                TowBetween=Settings.Tool.isToolTBT, Front=Settings.Tool.isToolFront,
+                Articulated=mf.vehicle.vehicleType==2,
+                Hitch=Settings.Tool.hitchLength, Drawbar=Settings.Tool.toolTrailingHitchLength,
+                TankDrawbar=Settings.Tool.tankTrailingHitchLength,
+                WorkingBar=Settings.Tool.trailingToolToPivotLength, Width=Settings.Tool.toolWidth };
+        }
+        public string PassiveCalibrationContext()
+        {
+            return RegistrySettings.toolFileName + "|" + RegistrySettings.vehicleFileName
+                + "|" + PassiveGeometry().Signature + "|" + Settings.Vehicle.setVehicle_vehicleType
+                + "|" + mf.vehicle.wheelbase + "|" + mf.timerSim.Enabled
+                + "|" + CPassiveCalibration.SettingsKey(Settings.Tool.setToolSteer);
+        }
+        public CToolSteerSettings PassiveTuning
+        {
+            get { return (PassiveCalibration.Testing || PassiveCalibration.CanSave)
+                && PassiveCalibration.Proposal != null ? PassiveCalibration.Proposal : Settings.Tool.setToolSteer; }
         }
         public string PassiveCorrectionReason { get { return passiveController.CorrectionReason; } }
         public double PassiveFilteredToolError { get { return passiveController.FilteredError; } }
@@ -78,6 +97,9 @@ namespace Twol
             double passiveToolXte = 0, passiveHeadingLateralSpeed = 0;
             bool hasPassiveHeading = false, passiveToolPathIsCurved = false;
             DateTime passiveNow = DateTime.UtcNow;
+            PassiveCalibration.ValidateContext(PassiveCalibrationContext());
+            PassiveCurveCurvature = PassivePreviewCurvature = PassiveGeometryOffset = 0;
+            PassiveOffsetLimited = false;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
 
@@ -116,14 +138,14 @@ namespace Twol
 
                 if (FindClosestSegment(curList, isLoop, toolGuidancePoint, out A, out B))
                 {
-                    // Detect curvature at the tool, which can still be in the bend after the
-                    // tractor has exited it. Segment heading projection is only used on straights.
-                    double toolSegmentLength = glm.Distance(curList[A], curList[B]);
-                    double toolTurn = curList[B].heading - curList[A].heading;
-                    while (toolTurn > Math.PI) toolTurn -= glm.twoPI;
-                    while (toolTurn < -Math.PI) toolTurn += glm.twoPI;
-                    passiveToolPathIsCurved = toolSegmentLength > 0.001
-                        && Math.Abs(2 * Math.Sin(toolTurn / 2) / toolSegmentLength) > 0.001;
+                    double toolDx=curList[B].easting-curList[A].easting;
+                    double toolDy=curList[B].northing-curList[A].northing;
+                    double toolLength=Math.Sqrt(toolDx*toolDx+toolDy*toolDy);
+                    double toolStation=toolLength>0.001 ? ((toolGuidancePoint.easting-curList[A].easting)*toolDx
+                        +(toolGuidancePoint.northing-curList[A].northing)*toolDy)/toolLength : 0;
+                    PassiveCurveCurvature=CPassiveCurve.Curvature(curList,A,isLoop,true,toolStation,2);
+                    passiveToolPathIsCurved=Math.Abs(PassiveCurveCurvature)>0.001;
+                    PassiveGeometryOffset=PassiveGeometry().Offset(PassiveCurveCurvature);
 
                     distanceFromCurrentLineTool = FindDistanceToSegment(toolGuidancePoint, curList[A], curList[B], out _, out _, true, false, false);
 
@@ -384,36 +406,80 @@ namespace Twol
                         }
                         else if (isPassiveSteeringFlag)
                         {
-                            CToolSteerSettings tuning = Settings.Tool.setToolSteer;
+                            CToolSteerSettings tuning = PassiveTuning;
+                            CPassiveGeometry geometry=PassiveGeometry();
+                            double pathDx=curList[B].easting-curList[A].easting;
+                            double pathDy=curList[B].northing-curList[A].northing;
+                            double pathLength=Math.Sqrt(pathDx*pathDx+pathDy*pathDy);
+                            double station=pathLength>0.001 ? ((pivot.easting-curList[A].easting)*pathDx
+                                +(pivot.northing-curList[A].northing)*pathDy)/pathLength : 0;
+                            bool pathForward=mf.trks.isHeadingSameWay != mf.isReverse;
+                            double travelDirection=pathForward ? 1 : -1;
+                            // The vehicle approaches the bend before the trailing tool. Preview also
+                            // accounts for finite target slew; do not wait for the correction hold.
+                            double previewDistance=CPassiveController.Clamp(geometry.Length*0.5
+                                +Math.Abs(mf.pn.avgSpeed)/3.6,2,15);
+                            PassivePreviewCurvature=CPassiveCurve.Curvature(curList,A,isLoop,
+                                pathForward,travelDirection*station+previewDistance,2);
+                            double currentCurvature=CPassiveCurve.Curvature(curList,A,isLoop,true,station,2);
+                            double curveLimit=tuning.passiveCurveMaximumOffset<0 ? tuning.passiveMaximumOffset : tuning.passiveCurveMaximumOffset;
+                            double limitCurvature=Math.Max(Math.Abs(PassiveCurveCurvature),
+                                Math.Max(Math.Abs(currentCurvature),Math.Abs(PassivePreviewCurvature)));
+                            double limit=CPassiveCurve.Limit(tuning.passiveMaximumOffset,curveLimit,limitCurvature);
+                            PassiveEffectiveLimit=limit;
                             double segmentError = passiveToolXte * (mf.trks.isHeadingSameWay ? 1 : -1);
                             double correction = passiveController.Update(passiveNow, segmentError,
                                 passiveHeadingLateralSpeed, hasPassiveHeading, tuning.passiveLookAheadSeconds,
                                 tuning.passiveIntegralGain, tuning.passiveTrackingSensitivity,
                                 tuning.passiveHeadingSensitivity, tuning.passiveAcquireSensitivity,
-                                tuning.passiveCorrectionStrength, tuning.passiveMaximumOffset,
+                                tuning.passiveCorrectionStrength, limit,
                                 tuning.passiveEarlyCorrection, passiveToolPathIsCurved);
-                            double d = glm.Distance(curList[A], curList[B]);
-                            double theta = curList[B].heading - curList[A].heading;
-                            while (theta > Math.PI) theta -= glm.twoPI;
-                            while (theta < -Math.PI) theta += glm.twoPI;
-                            double curve = d > 0.001 ? -2 * Math.Sin(theta / 2) / d
-                                * tuning.curvatureGain * CPassiveController.Clamp(tuning.passiveCurveSensitivity, 50, 200) / 100 : 0;
-                            if (!CPassiveController.Finite(curve)) curve = 0;
-                            double limit = CPassiveController.Clamp(CPassiveController.Finite(tuning.passiveMaximumOffset)
-                                ? tuning.passiveMaximumOffset : 1, 0.1, 3);
-                            curve = CPassiveController.Clamp(curve, -limit, limit);
+                            double response=CPassiveController.Clamp(CPassiveController.Finite(tuning.passiveCurveResponse)
+                                ? tuning.passiveCurveResponse : 100,0,300)/100;
+                            double curve;
+                            if(tuning.passiveGeometryEnabled && geometry.Problem==null)
+                            {
+                                // Blend local and preview curvature so an S bend changes sign smoothly.
+                                double predicted=0.5*currentCurvature+0.5*PassivePreviewCurvature;
+                                curve=geometry.Offset(predicted)*response;
+                            }
+                            else
+                            {
+                                double d=glm.Distance(curList[A],curList[B]);
+                                double theta=curList[B].heading-curList[A].heading;
+                                while(theta>Math.PI) theta-=glm.twoPI;
+                                while(theta<-Math.PI) theta+=glm.twoPI;
+                                curve=d>0.001 ? -2*Math.Sin(theta/2)/d*tuning.curvatureGain
+                                    *CPassiveController.Clamp(tuning.passiveCurveSensitivity,50,200)/100*response : 0;
+                            }
+                            if(!CPassiveController.Finite(curve)) curve=0;
+                            PassiveOffsetLimited=Math.Abs(curve+correction)>limit;
+                            curve=CPassiveController.Clamp(curve,-limit,limit);
                             double curveDt = passiveCurveTime == DateTime.MinValue ? 0 : (passiveNow - passiveCurveTime).TotalSeconds;
                             passiveCurveTime = passiveNow;
                             segAvg += (curve - segAvg) * CPassiveController.Clamp(curveDt, 0, 0.5)
                                 / (0.4 + CPassiveController.Clamp(curveDt, 0, 0.5));
+                            PassiveOffsetLimited |= Math.Abs(correction+segAvg)>limit;
+                            correction=passiveController.ConstrainWithCurve(segAvg,limit);
                             double offset = CPassiveController.Clamp(correction + segAvg, -limit, limit);
                             double targetStep = 0.20 * CPassiveController.Clamp(tuning.passiveCorrectionStrength, 50, 200) / 100
                                 * CPassiveController.Clamp(curveDt, 0, 0.5);
                             passiveAppliedOffset += CPassiveController.Clamp(offset - passiveAppliedOffset, -targetStep, targetStep);
                             passiveAppliedOffset = CPassiveController.Clamp(passiveAppliedOffset, -limit, limit);
                             offset = passiveAppliedOffset;
-                            goalPoint.easting += Math.Sin(curList[B].heading + Math.PI / 2) * offset;
-                            goalPoint.northing += Math.Cos(curList[B].heading + Math.PI / 2) * offset;
+                            double offsetHeading=curList[B].heading;
+                            if(tuning.passiveGeometryEnabled && geometry.Problem==null)
+                            {
+                                // Offset normal to the path at the look-ahead goal, rather than
+                                // at the tractor: those normals differ substantially in tight bends.
+                                int goalA,goalB;
+                                if(FindClosestSegment(curList,isLoop,goalPoint,out goalA,out goalB))
+                                    offsetHeading=Math.Atan2(curList[goalB].easting-curList[goalA].easting,
+                                        curList[goalB].northing-curList[goalA].northing);
+                                else offsetHeading=abHeading;
+                            }
+                            goalPoint.easting += Math.Sin(offsetHeading + Math.PI / 2) * offset;
+                            goalPoint.northing += Math.Cos(offsetHeading + Math.PI / 2) * offset;
                         }
                     }
                     else
@@ -499,6 +565,24 @@ namespace Twol
             }
             if (Uturn && completeUturn)
                 mf.yt.CompleteYouTurn();
+            CToolSteerSettings recordingTuning=PassiveTuning;
+            bool calibrationEligible=isPassiveSteeringFlag && mf.isBtnAutoSteerOn && mf.isBtnToolSteerOn
+                && Settings.Tool.setToolSteer.isPassiveSteering && recordingTuning.passiveGeometryEnabled
+                && !Settings.Vehicle.setVehicle_isStanleyUsed
+                && !Uturn && !mf.isReverse && mf.sectionOnCounter>0 && hasValidToolXte && hasPassiveHeading
+                && PassiveGeometry().Problem==null
+                && CToolHeadingResolver.Fresh(passiveNow,mf.pnTool.positionReceivedUtc,0.3)
+                && (mf.timerSim.Enabled || (mf.pn.fixQuality==4 && mf.pnTool.fixQuality==4
+                    && CToolHeadingResolver.Fresh(passiveNow,mf.pn.positionReceivedUtc,0.3)))
+                && !PassiveOffsetLimited && Math.Abs(passiveAppliedOffset)<PassiveEffectiveLimit*0.95;
+            PassiveCalibration.Observe(new CPassiveCalibrationSample { Time=mf.pnTool.positionReceivedUtc,
+                // Calibration coordinates are relative to forward travel, so left/right
+                // curves are classified correctly when returning on the same reference.
+                Error=passiveToolXte, TractorError=distanceFromCurrentLine,
+                Offset=passiveAppliedOffset*(mf.trks.isHeadingSameWay?1:-1),
+                Curvature=PassiveCurveCurvature*(mf.trks.isHeadingSameWay?1:-1),
+                GeometryOffset=PassiveGeometryOffset*(mf.trks.isHeadingSameWay?1:-1), Speed=Math.Abs(mf.pn.avgSpeed)/3.6 },
+                calibrationEligible,PassiveCalibrationContext());
         }
 
         public bool FindClosestSegment(List<vec3> points, bool loop, vec2 point, out int AA, out int BB, int start = 0, int end = int.MaxValue)
