@@ -16,7 +16,7 @@ public static class Report
         var summary=new {Schema=1,GeneratedUtc=DateTime.UtcNow,ProductionSources=sources,HarnessSources=harnessSources,Input=input,
             Passed=checks.All(c=>c.Passed),CheckCount=checks.Count,FailedCount=checks.Count(c=>!c.Passed),
             Checks=checks,Calibration=calibration,Runs=results.Select(r=>new {r.Name,r.Seed,r.Geometry,r.Rms,r.P95,r.Peak,
-                r.CurveRms,r.InsideP95,r.ExitPeak,r.SteadyRms,r.OppositeOvershoot,r.EngagedPercent,r.LimitedPercent,r.Configuration,r.Failures})};
+                r.CurveRms,r.InsideP95,r.ExitPeak,r.SteadyRms,r.OppositeOvershoot,r.EngagedPercent,r.LimitedPercent,r.Configuration,r.RuntimeTuning,r.Failures})};
         File.WriteAllText(Path.Combine(output,"summary.json"),JsonSerializer.Serialize(summary,json));
         foreach(var r in results)
         {

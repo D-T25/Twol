@@ -17,12 +17,12 @@ public static class CalibrationTests
     {
         double local=t%140,curve=local<80?0:local<110?0.05:-0.05;
         double geom=curve==0?0:-Math.Sign(curve)*0.4;
-        double error=curve==0 ? 0.3*Math.Sin(0.6*t)+0.12*Math.Sin(1.1*t) : 0.1;
+        double error=curve==0 ? 0.3*Math.Sin(0.6*t)+0.12*Math.Sin(1.1*t) : 0.1-geom*0.25;
         double future=t+0.8;
         double tractor=curve==0 ? 0.3*Math.Sin(0.6*future)+0.12*Math.Sin(1.1*future)
             +2*(0.18*Math.Cos(0.6*future)+0.132*Math.Cos(1.1*future)) : error+geom*1.25;
         return new CPassiveCalibrationSample {Time=start.AddSeconds(t),Error=error*(test?0.5:1),
-            TractorError=tractor,Offset=tractor,Curvature=curve,GeometryOffset=geom,Speed=2};
+            TractorError=tractor,Offset=tractor,Curvature=curve,GeometryOffset=geom,TractorCurvature=curve,PreviewCurvature=curve,Speed=2};
     }
     public static void Run()
     {
@@ -61,13 +61,16 @@ public static class CalibrationTests
         Check(settings.passiveIntegralGain==4 && settings.passiveCurveResponse==100,"recording and review never mutate saved settings");
         bool refused=false;try{c.ApplyTo(settings,"profile","geometry");}catch(InvalidOperationException){refused=true;}
         Check(refused,"proposal cannot be saved before a validated test");
+        Check(c.BeginComparison(),"proposal requires a separate comparison pass");
+        for(int i=0;i<1400;i++)c.Observe(Sample(140+i*0.1),true,"profile");
+        Check(c.FinishComparison(),"comparison pass can be finished");
         Check(c.BeginTest(),"proposal can be temporarily tested");
         for(int i=0;i<=1399;i++)c.Observe(Sample(280+i*0.1,true),true,"profile");
         Check(c.FinishTest() && c.CanSave,"matched improved test can be approved");
         Check(settings.passiveIntegralGain==4,"testing remains an override until Save Calibration");
         c.ApplyTo(settings,"profile","geometry");
         Check(settings.passiveCalibrationGeometry=="geometry" && settings.passiveCalibrationUtc!=""
-            && settings.passiveCalibrationSummary.Contains("Matched tool RMS"),"saved calibration retains dimensions signature and measured result");
+            && settings.passiveCalibrationSummary.Contains("Matched stage RMS"),"saved calibration retains dimensions signature and measured result");
         Check(!c.Testing && !c.CanSave && c.Proposal==null,"saved trial leaves no runtime override");
         c.Start(settings,"profile");c.Observe(Sample(1),true,"different profile");
         Check(!c.Collecting && c.Proposal==null,"profile/context change cancels calibration");
@@ -88,7 +91,9 @@ public static class CalibrationTests
         Check(Math.Abs(saturated.Offset+0.2)<1e-9,"curve saturation cannot wind up hidden feedback offset");
         settings=new CToolSteerSettings {passiveGeometryEnabled=true};
         c.Start(settings,"profile");for(int i=0;i<1400;i++)c.Observe(Sample(i*0.1),true,"profile");
-        Check(c.ReviewResults() && c.BeginTest(),"second independent calibration trial starts");
+        Check(c.ReviewResults() && c.BeginComparison(),"second independent calibration comparison starts");
+        for(int i=0;i<1400;i++)c.Observe(Sample(140+i*0.1),true,"profile");
+        Check(c.FinishComparison()&&c.BeginTest(),"second independent calibration trial starts");
         for(int i=0;i<1400;i++){var x=Sample(280+i*0.1);x.Error*=2;c.Observe(x,true,"profile");}
         Check(!c.FinishTest() && !c.CanSave,"worse measured test cannot be saved");
         c.BeginTest();for(int i=0;i<1400;i++){var x=Sample(280+i*0.1,true);x.Speed=4;c.Observe(x,true,"profile");}

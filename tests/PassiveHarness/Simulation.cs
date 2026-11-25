@@ -46,6 +46,9 @@ public sealed class Route
         }
         return this;
     }
+    public static Route Calibration(double radius=45,double angle=2.0943951023931953,double straight=110)
+        =>new Route().Add(straight,0).Add(radius*angle,1/radius).Add(straight,0)
+            .Add(radius*angle,-1/radius).Add(150,0);
     public static Route Straight()=>new Route().Add(400,0);
     public static Route Bend(int sign)=>new Route().Add(70,0).Add(25*Math.PI/2,sign/25.0).Add(130,0);
     public static Route S()=>new Route().Add(100,0).Add(35*Math.PI/3,1/35.0).Add(70,0)
@@ -146,6 +149,7 @@ public sealed class Result
     public int Seed;
     public bool Geometry;
     public HarnessConfig Configuration;
+    public CToolSteerSettings RuntimeTuning;
     public List<Row> Trace=new();
     public List<vec3> ReferencePath=new();
     public List<string> Failures=new();
@@ -179,7 +183,7 @@ public sealed class Runner
     readonly DateTime epoch=new(2026,1,1,0,0,0,DateTimeKind.Utc);
     double epochSeconds;
     readonly HarnessConfig config;
-    public Runner(HarnessConfig c)
+    public Runner(HarnessConfig c, CPassiveCalibration calibration=null)
     {
         config=c;
         Settings.Tool=new ToolSettingsAdapter { hitchLength=c.Hitch,toolTrailingHitchLength=-c.Drawbar,
@@ -188,14 +192,14 @@ public sealed class Runner
         Settings.Vehicle=new VehicleSettingsAdapter();
         Host=new FormGPS();Host.vehicle.wheelbase=c.Wheelbase;Host.vehicle.LookAhead=c.LookAhead;
         Host.pn=new CNMEA(Host);Host.pnTool=new CNMEA(Host);Host.pn.SetLocalMetersPerDegree(49,-98);
-        Host.gyd=new CGuidance(Host,()=>now);Host.isGPSPositionInitialized=true;
+        Host.gyd=new CGuidance(Host,()=>now,calibration);Host.isGPSPositionInitialized=true;
     }
     public Result Run(Scenario scenario,int seed)
     {
         Settings.Tool.setToolSteer.passiveGeometryEnabled=scenario.Geometry;
         if(scenario.CurveLimit.HasValue)Settings.Tool.setToolSteer.passiveCurveMaximumOffset=scenario.CurveLimit.Value;
         var random=new Random(seed);var plant=new Plant(config,scenario.InitialError);
-        var result=new Result {Name=scenario.Name,Seed=seed,Geometry=scenario.Geometry,Configuration=config,ReferencePath=scenario.Route.Points};
+        var result=new Result {Name=scenario.Name,Seed=seed,Geometry=scenario.Geometry,Configuration=config,RuntimeTuning=new CToolSteerSettings(Host.gyd.PassiveTuning),ReferencePath=scenario.Route.Points};
         double dt=1/config.IntegrationHz,untilGps=0,command=0;
         double duration=scenario.Duration>0?scenario.Duration:(scenario.Route.Length-30)/config.Speed;
         vec3 previousAntenna=Antenna(plant);double previousGpsTime=0;

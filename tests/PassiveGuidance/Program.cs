@@ -106,5 +106,6 @@ public static class Tests
         Console.WriteLine(count+" controller/heading/settings checks passed");
         ParserTests.Run();
         CalibrationTests.Run();
+        RefinementTests.Run();
     }
 }

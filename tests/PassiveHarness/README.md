@@ -12,7 +12,7 @@ From a source checkout, double-click `tests/PassiveHarness/RunHarness.cmd` with 
 dotnet run --project tests/PassiveHarness -c Release -- --output harness-output
 ```
 
-Default seeds are 42, 43, 44. The full run writes an interactive report, `summary.json`, per-episode CSV traces, and calibration recording/trial CSVs. Exit **1** means a check failed; the report still opens. Known calibration performance failures are intentionally retained. Do not interpret successful compilation as all guidance checks passing.
+Default seeds are 42, 43, 44. The full run writes an interactive report, `summary.json`, per-episode CSV traces, and calibration recording/trial CSVs. Exit **1** means a check failed; the report still opens. Historical failures are retained in `docs/passive-harness-baseline.json`; refined results and explicit declines are recorded separately. Do not interpret successful compilation as all guidance checks passing.
 
 For a quick regression run that omits calibration, the higher-speed/tow-between cases, and additional fault cases:
 
@@ -62,13 +62,23 @@ The geometry comparisons keep the source profile's legacy curve base at its defa
 
 These are explicit engineering regression targets for the simulated fixture, not guaranteed agricultural accuracy specifications. The limited-offset case is expected to cut inside and must report saturation; its accuracy is not compared with the nominal curve target.
 
-## Calibration validation and current finding
+## Calibration refinement and independent validation
 
-Each seed records a straight/left/right route with modest time-varying soil draft, calls production Review Results, temporarily tests the actual proposal on the same route and noise seed, then calls Finish Test. The harness checks that rejected results cannot save and Restore removes the guidance override. It records the candidate's errors, settings, estimated response, and fit quality.
+The original version produced three proposals that worsened tracking; its captured baseline remains in `docs/passive-harness-baseline.json`. Instrumentation found 194 of 334 old eligible curve-fit rows in the seed-42 recording mixed tool and tractor/preview curve phases. Even rows sharing a bend could still be transient. These observations motivated the filtering change; they do not establish the only cause of all possible calibration errors.
 
-At the initial baseline, all three seeds produced proposals that **worsened curve RMS** (approximately 14–16 cm before, 18 cm after). The existing validation correctly rejected them. The full run therefore has **three performance failures**, even though its gating, bounds, rejection and restore checks pass. Automatic tuning is not established by this harness. The calibration estimator needs further work before relying on its proposals. A plausible cause to investigate is the curve-factor fit using tractor and tool positions at different curve phases, plus soil draft confounding the first-order response fit; this is a hypothesis, not a verified diagnosis.
+The refined harness exercises:
 
-The earlier 91 isolated checks still pass. Those checks demonstrate mathematical identities and controlled input cases; they do not contradict the closed-loop calibration failure.
+- The **original short S-curve recording**: insufficient settled data must be declined, with no unsafe four-setting retune. This is an explicit refusal, not a successful calibration.
+- A **straight-response confidence case** in variable soil: weak estimates must leave timing unchanged. Synthetic regression cases separately verify recovery of known response parameters; they do not establish field tuning performance.
+- Five Curve Response starting points (**50, 75, 100, 125, 150%**) for each of seeds 42, 43, 44. Response tuning is isolated from strength, heading and interval. Ten-percentage-point/noise deadbands may retain moderate settings; this is conservative rather than an optimum claim.
+- Longer calibration bends (45 m radius, 120° arcs). If confidence remains weak, exactly one additional recording pass is allowed with a different noise seed and soil phase. No confidence or accuracy thresholds are relaxed.
+- Proposals are frozen before independent validation using **seed +10000, 5% lower speed, 48 m-radius/110° bends, different straight lengths and a changed soil-draft phase**. Both current and proposed settings run on exactly the same held-out conditions. The training run is not the validation baseline.
+
+The actual production calibration session captures that independent comparison through `BeginComparison`/`FinishComparison`, then captures a temporary trial and calls `FinishTest`. It verifies separate profile state, restoration, stage isolation and both independent ground-truth improvement and production guard approval.
+
+The selected-stage objective requires **at least 5% lower curve RMS** for curve calibration, with no material overall regression. Production still enforces the original per-direction/straight worsening cap (10% plus 1 cm), 70% condition matching and explicit save. The change from a combined straight/curve objective to a curve objective is intentional: timing and curve calibration are now separate stages. Unit tests explicitly verify that improved curves cannot bypass worsened straights.
+
+The report distinguishes **accepted**, **retained**, and **declined** decisions. Passing a refusal/guard check is not evidence that the estimator can tune that data. See `docs/passive-harness-refined.json` for the captured result and the software guide for the operator workflow.
 
 ## Reproducibility and boundaries
 

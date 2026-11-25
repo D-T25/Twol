@@ -42,10 +42,11 @@ namespace Twol
         private readonly CPassiveController passiveController = new CPassiveController();
         private readonly CToolHeadingResolver toolHeadingResolver = new CToolHeadingResolver();
         public string PassiveHeadingSource { get { return toolHeadingResolver.Source; } }
-        public readonly CPassiveCalibration PassiveCalibration = new CPassiveCalibration();
+        public readonly CPassiveCalibration PassiveCalibration;
         public double PassiveTractorOffset { get { return passiveAppliedOffset; } }
         public double PassiveCurveCurvature { get; private set; }
         public double PassivePreviewCurvature { get; private set; }
+        public double PassiveTractorCurvature { get; private set; }
         public double PassiveGeometryOffset { get; private set; }
         public double PassiveEffectiveLimit { get; private set; } = 1;
         public bool PassiveOffsetLimited { get; private set; }
@@ -85,9 +86,10 @@ namespace Twol
         public CGuidance(FormGPS _f) : this(_f, () => DateTime.UtcNow) { }
 
         // Deterministic clock for closed-loop replay; the desktop retains UTC wall time.
-        public CGuidance(FormGPS _f, Func<DateTime> clock)
+        public CGuidance(FormGPS _f, Func<DateTime> clock, CPassiveCalibration calibration = null)
         {
             mf = _f;
+            PassiveCalibration=calibration ?? new CPassiveCalibration();
             utcNow = clock ?? throw new ArgumentNullException(nameof(clock));
         }
 
@@ -101,7 +103,7 @@ namespace Twol
             bool hasPassiveHeading = false, passiveToolPathIsCurved = false;
             DateTime passiveNow = utcNow();
             PassiveCalibration.ValidateContext(PassiveCalibrationContext());
-            PassiveCurveCurvature = PassivePreviewCurvature = PassiveGeometryOffset = 0;
+            PassiveCurveCurvature = PassiveTractorCurvature = PassivePreviewCurvature = PassiveGeometryOffset = 0;
             PassiveOffsetLimited = false;
             bool completeUturn = !Uturn;
             var vec2point = new vec2(Settings.Vehicle.setVehicle_isStanleyUsed ? steer : pivot);
@@ -425,6 +427,7 @@ namespace Twol
                             PassivePreviewCurvature=CPassiveCurve.Curvature(curList,A,isLoop,
                                 pathForward,travelDirection*station+previewDistance,2);
                             double currentCurvature=CPassiveCurve.Curvature(curList,A,isLoop,true,station,2);
+                            PassiveTractorCurvature=currentCurvature;
                             double curveLimit=tuning.passiveCurveMaximumOffset<0 ? tuning.passiveMaximumOffset : tuning.passiveCurveMaximumOffset;
                             double limitCurvature=Math.Max(Math.Abs(PassiveCurveCurvature),
                                 Math.Max(Math.Abs(currentCurvature),Math.Abs(PassivePreviewCurvature)));
@@ -584,6 +587,9 @@ namespace Twol
                 Error=passiveToolXte, TractorError=distanceFromCurrentLine,
                 Offset=passiveAppliedOffset*(mf.trks.isHeadingSameWay?1:-1),
                 Curvature=PassiveCurveCurvature*(mf.trks.isHeadingSameWay?1:-1),
+                TractorCurvature=PassiveTractorCurvature*(mf.trks.isHeadingSameWay?1:-1),
+                PreviewCurvature=PassivePreviewCurvature*(mf.trks.isHeadingSameWay?1:-1),
+                SettlingSeconds=PassiveGeometry().Length/Math.Max(0.56,Math.Abs(mf.pn.avgSpeed)/3.6),
                 GeometryOffset=PassiveGeometryOffset*(mf.trks.isHeadingSameWay?1:-1), Speed=Math.Abs(mf.pn.avgSpeed)/3.6 },
                 calibrationEligible,PassiveCalibrationContext());
         }

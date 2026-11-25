@@ -67,8 +67,14 @@ checks.Add(new("deterministic replay",first.Trace.Count==repeat.Trace.Count&&fir
     "Same source, parameters and noise seed must produce identical full-rate traces."));
 if(!quick)foreach(int seed in seeds)
 {
-    var c=Verification.Calibrate(config,seed,results,checks,output);calibration.Add(c);
-    Console.WriteLine($"CALIBRATION seed={seed} proposal={c.Proposed} accepted={c.Accepted}; curve RMS {c.BeforeCurveRms:F3} → {c.AfterCurveRms:F3}m. {c.Status}");
+    calibration.Add(Verification.DeclineUnreliable(config,seed,results,checks,output,false));
+    calibration.Add(Verification.DeclineUnreliable(config,seed,results,checks,output,true));
+}
+if(!quick)foreach(int seed in seeds)
+foreach(double initialResponse in new[]{50.0,75.0,100.0,125.0,150.0})
+{
+    var c=Verification.Calibrate(config,seed,results,checks,output,initialResponse);calibration.Add(c);
+    Console.WriteLine($"CALIBRATION initial={initialResponse} seed={seed} proposal={c.Proposed} accepted={c.Accepted}; curve RMS {c.ValidationBeforeRms:F3} → {c.ValidationAfterRms:F3}m. {c.Status}");
 }
 Report.Write(output,results,checks,calibration,config);
 Console.WriteLine($"\n{checks.Count(c=>c.Passed)}/{checks.Count} checks passed; {checks.Count(c=>!c.Passed)} failed. Report: {Path.GetFullPath(Path.Combine(output,"index.html"))}");

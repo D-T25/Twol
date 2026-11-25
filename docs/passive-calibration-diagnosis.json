@@ -1,0 +1,23 @@
+{
+  "reference_commit": "6241c87b52d461fe5eae7903ce2fbe95a96d9853",
+  "diagnostic_seed": 42,
+  "old_curve_candidates": 334,
+  "old_candidates_different_curve_phase": 194,
+  "old_candidates_same_curve_phase": 140,
+  "old_origin_fit_same_phase_percent": 78.69021724292047,
+  "old_origin_fit_mixed_phase_percent": 71.93868641277199,
+  "finding": "Phase contamination is demonstrated; phase agreement alone does not establish a settled response or eliminate draft bias.",
+  "normal_tracking_episodes_compared": 60,
+  "maximum_normal_metric_change": 0,
+  "refined_closed_loop_checks": 499,
+  "refined_failed_checks": 0,
+  "refined_source_regressions": 113,
+  "desktop_source_files_compiled": 183,
+  "desktop_source_compile_errors": 0,
+  "desktop_source_compile_warnings": 78,
+  "limitations": [
+    "Simulation, not field validation.",
+    "Native Windows launch and GUI interaction not executed.",
+    "Weak timing fits are declined; synthetic fit recovery is not timing-performance validation."
+  ]
+}

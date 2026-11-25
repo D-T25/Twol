@@ -18,9 +18,10 @@ namespace Twol
             = new System.Collections.Generic.Dictionary<string,HScrollBar>();
         private Label calibrationStatus, calibrationReview, dimensions, savedCalibration;
         private string verifiedGeometry;
-        private Button startButton, reviewButton, testButton, finishButton, saveButton;
+        private Button startButton, continueButton, reviewButton, comparisonButton, testButton, finishButton, saveButton;
         private bool refreshingSliders;
         private CheckBox verified, geometryEnabled;
+        private ComboBox calibrationStage;
         private TabPage responsePage, limitsPage, geometryPage;
 
         public FormPassiveGuidanceSettings(FormGPS mf)
@@ -146,9 +147,10 @@ namespace Twol
                     +(savedSettings.passiveCalibrationGeometry!="" && savedSettings.passiveCalibrationGeometry!=GeometryVerificationKey()
                         ? "Dimensions/profile changed since calibration.\r\n" : "")
                     +savedSettings.passiveCalibrationSummary;
-                bool busy=calibration.Collecting || calibration.Testing || calibration.CanSave;
+                bool busy=calibration.Collecting || calibration.RecordingComparison || calibration.Testing || calibration.CanSave;
                 responsePage.Enabled=limitsPage.Enabled=geometryPage.Enabled=!busy;
                 verified.Enabled=!busy;
+                calibrationStage.Enabled=!busy&&calibration.Proposal==null;
                 startButton.Enabled=!busy;
                 if(!busy && Settings.Tool.setToolSteer.passiveCurveMaximumOffset<0)
                 {
@@ -156,8 +158,11 @@ namespace Twol
                     SetSlider("passiveCurveLimit",(int)Math.Round(CPassiveCurve.SafeLimit(Settings.Tool.setToolSteer.passiveMaximumOffset)*10));
                     refreshingSliders=false;
                 }
+                continueButton.Enabled=calibration.CanContinue && calibration.Stage==(calibrationStage.SelectedIndex==0?CPassiveCalibrationStage.Response:CPassiveCalibrationStage.Curve);
                 reviewButton.Enabled=calibration.Collecting;
-                testButton.Enabled=calibration.Proposal!=null && !calibration.Testing && !calibration.CanSave;
+                comparisonButton.Enabled=calibration.Proposal!=null&&!calibration.Testing&&!calibration.CanSave;
+                comparisonButton.Text=calibration.RecordingComparison?"Finish Comparison Pass":"Record Comparison Pass";
+                testButton.Enabled=calibration.Proposal!=null && calibration.ComparisonReady && !calibration.RecordingComparison && !calibration.Testing && !calibration.CanSave;
                 finishButton.Enabled=calibration.Testing;
                 saveButton.Enabled=calibration.CanSave;
                 calibrationStatus.Text=DateTime.UtcNow<noticeUntil?notice:calibration.Status;
@@ -203,11 +208,16 @@ namespace Twol
             FlowLayoutPanel flow=new FlowLayoutPanel { Dock=DockStyle.Fill, AutoScroll=true,
                 FlowDirection=FlowDirection.TopDown, WrapContents=false, Padding=new Padding(5) };
             page.Controls.Add(flow);
-            Label instruction=new Label { Width=325, AutoSize=true, Text="Passive Guidance Calibration\r\nVerify tractor/tool dimensions and antenna offsets. Enable profile geometry on Geometry. Drive normally in working soil, at working speed: straight and settled curves both ways. U-turns, reverse, sections off and poor GPS are excluded." };
+            Label instruction=new Label { Width=325, AutoSize=true, Text="Passive Guidance Calibration\r\nVerify tractor/tool dimensions and antenna offsets. Enable profile geometry on Geometry. First record straight response; then calibrate curves separately. Use long settled bends in both directions at working speed. U-turns, reverse, sections off and poor GPS are excluded." };
             flow.Controls.Add(instruction);
             verified=new CheckBox { Width=325, AutoSize=true, Text="I have verified the profile dimensions" };
             verified.CheckedChanged+=(sender,args)=>{verifiedGeometry=verified.Checked?GeometryVerificationKey():null;};
             flow.Controls.Add(verified);
+            calibrationStage=new ComboBox { Width=320,DropDownStyle=ComboBoxStyle.DropDownList };
+            calibrationStage.Items.Add("1. Straight response (timing only)");
+            calibrationStage.Items.Add("2. Curve response (settled bends)");
+            calibrationStage.SelectedIndex=0;
+            flow.Controls.Add(calibrationStage);
             calibrationStatus=new Label { Width=325, AutoSize=true, Padding=new Padding(0,5,0,5) };
             flow.Controls.Add(calibrationStatus);
             startButton=CalibrationButton(flow,"Start Calibration",()=>
@@ -217,9 +227,20 @@ namespace Twol
                 {Notice("Passive calibration requires Pure Pursuit steering.");return;}
                 if(!verified.Checked || problem!=null || !Settings.Tool.setToolSteer.passiveGeometryEnabled)
                 { Notice(problem??"Verify dimensions and enable profile geometry first.");return; }
-                host.gyd.PassiveCalibration.Start(Settings.Tool.setToolSteer,host.gyd.PassiveCalibrationContext());
+                host.gyd.PassiveCalibration.Start(Settings.Tool.setToolSteer,host.gyd.PassiveCalibrationContext(),
+                    calibrationStage.SelectedIndex==0?CPassiveCalibrationStage.Response:CPassiveCalibrationStage.Curve);
+            });
+            continueButton=CalibrationButton(flow,"Continue Recording",()=>
+            {
+                host.gyd.PassiveCalibration.ValidateContext(host.gyd.PassiveCalibrationContext());
+                host.gyd.PassiveCalibration.ContinueRecording();
             });
             reviewButton=CalibrationButton(flow,"Review Results",()=>host.gyd.PassiveCalibration.ReviewResults());
+            comparisonButton=CalibrationButton(flow,"Record Comparison Pass",()=>
+            {
+                if(host.gyd.PassiveCalibration.RecordingComparison)host.gyd.PassiveCalibration.FinishComparison();
+                else host.gyd.PassiveCalibration.BeginComparison();
+            });
             testButton=CalibrationButton(flow,"Test Settings",()=>
             {
                 host.gyd.PassiveCalibration.ValidateContext(host.gyd.PassiveCalibrationContext());

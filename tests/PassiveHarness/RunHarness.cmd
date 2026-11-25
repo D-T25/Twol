@@ -18,6 +18,6 @@ set "harnessExit=%errorlevel%"
 if exist "%~dp0harness-output\index.html" start "" "%~dp0harness-output\index.html"
 echo.
 echo Harness exit code: %harnessExit% (0=all checks passed, 1=failed checks, 2=setup error).
-echo The calibration branch currently has known failed improvement checks. Review the report.
+echo Review accepted, retained and declined calibration decisions in the report.
 pause
 exit /b %harnessExit%
