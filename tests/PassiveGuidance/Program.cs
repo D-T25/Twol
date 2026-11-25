@@ -107,5 +107,6 @@ public static class Tests
         ParserTests.Run();
         CalibrationTests.Run();
         RefinementTests.Run();
+        GuideTests.Run();
     }
 }

@@ -49,6 +49,25 @@ namespace Twol
         public int Count { get { return samples.Count; } }
         public int TestCount { get { return trial.Count; } }
         public int ComparisonCount { get { return comparison.Count; } }
+        public string DrivingPrompt
+        {
+            get
+            {
+                if(Status.StartsWith("Paused:") || Status.StartsWith("Settling")) return Status;
+                var d=Durations(Testing?trial:RecordingComparison?comparison:samples);
+                double straight=Collecting?30:20, bend=Collecting?8:5;
+                if(d[0]<straight) return "Follow a straight guidance line at your normal working speed.";
+                if(Stage==CPassiveCalibrationStage.Curve && d[1]<bend) return "Follow a long, steady right bend. Avoid tight headland turns.";
+                if(Stage==CPassiveCalibrationStage.Curve && d[2]<bend) return "Follow a long, steady left bend. Avoid tight headland turns.";
+                return Stage==CPassiveCalibrationStage.Curve
+                    ? "Driving coverage collected. Use the button below to check this pass; more settled bends may still be needed."
+                    : "Straight driving collected. Use the button below to check this pass.";
+            }
+        }
+        public string DrivingCoverage
+        { get { return Progress(Testing?trial:RecordingComparison?comparison:samples); } }
+        public double MatchedBeforeRms { get; private set; }
+        public double MatchedAfterRms { get; private set; }
         public double EstimatedDelay { get; private set; }
         public double EstimatedResponse { get; private set; }
         public double FitQuality { get; private set; }
@@ -70,6 +89,7 @@ namespace Twol
             NoChangeRecommended=false;Outcome="Recording";Review="";
             EstimatedCurveResponse=EstimatedSideDraft=CurveConfidenceHalfWidth=0;
             EstimatedDelay=EstimatedResponse=FitQuality=ValidationFitQuality=0;
+            MatchedBeforeRms=MatchedAfterRms=0;
             CurveTransitionRejected=CurveSamplesUsed=0;
             if(!settings.passiveGeometryEnabled || !CPassiveController.Finite(settings.passiveCurveResponse)
                 || settings.passiveCurveResponse<50 || settings.passiveCurveResponse>200)
@@ -341,7 +361,7 @@ namespace Twol
                 double bRms=Math.Sqrt(baseSum/bn),tRms=Math.Sqrt(testSum/tn);
                 // Do not approve improving one direction at the expense of another.
                 if(tRms>bRms*1.10+0.01)
-                {Status="Test worsened tracking in a direction. Restore previous settings; proposal cannot be saved.";return false;}
+                {Outcome="Test worsened";Status="Test worsened tracking in a direction. Restore previous settings; proposal cannot be saved.";return false;}
                 if(Stage==CPassiveCalibrationStage.Response || kind>0)
                 {baseScore+=baseSum/bn;testScore+=testSum/tn;}
                 matches+=tn;
@@ -349,13 +369,14 @@ namespace Twol
             double categories=Stage==CPassiveCalibrationStage.Response?1:2;
             double before=Math.Sqrt(baseScore/categories),after=Math.Sqrt(testScore/categories);
             if(after>before*0.95)
-            {Status="No clear improvement (need at least 5% lower matched RMS for the selected stage). Restore or continue testing.";return false;}
+            {Outcome="No improvement";Status="No clear improvement (need at least 5% lower matched RMS for the selected stage). Restore or continue testing.";return false;}
             Testing=false;CanSave=true;Outcome="Validated";
+            MatchedBeforeRms=before;MatchedAfterRms=after;
             Review+=string.Format(CultureInfo.InvariantCulture,"\r\nMatched stage RMS: {0:F3} → {1:F3} m ({2} matched samples).",before,after,matches);
             Status="Test improved tracking. Save Calibration or Restore Previous.";
             return true;
         }
-        public void ApplyTo(CToolSteerSettings settings, string key, string geometrySignature, bool simulated = false)
+        public void ApplyTo(CToolSteerSettings settings, string key, string geometrySignature, bool simulated = false, bool keepTrial = false)
         {
             if(!CanSave || Proposal==null || key!=context) throw new InvalidOperationException("No validated calibration for this profile.");
             settings.passiveIntegralGain=Proposal.passiveIntegralGain;
@@ -366,7 +387,7 @@ namespace Twol
             settings.passiveCalibrationGeometry=geometrySignature;
             settings.passiveCalibrationSummary=Review;
             settings.passiveCalibrationSimulated=simulated;
-            Restore(); Status="Calibration applied; save the implement profile.";
+            if(!keepTrial) {Restore(); Status="Calibration applied; save the implement profile.";}
         }
         public string Csv()
         {
@@ -378,5 +399,135 @@ namespace Twol
             foreach(var s in list) text.AppendFormat(CultureInfo.InvariantCulture,"{0},{1:o},{2},{3:F5},{4:F5},{5:F5},{6:F6},{7:F5},{8:F3},{9:F6},{10:F6},{11:F2},{12}\r\n",
                 phase,s.Time,s.Run,s.Error,s.TractorError,s.Offset,s.Curvature,s.GeometryOffset,s.Speed,s.TractorCurvature,s.PreviewCurvature,s.SettlingSeconds,s.CurveFitUse);
         }
+    }
+}
+
+namespace Twol
+{
+    public enum CPassiveCalibrationStep { Setup, Record, Comparison, ReadyToTest, Test, Results, Complete }
+
+    // One operator action per step. Fit/trial checks stay in the production calibration session.
+    public sealed class CPassiveCalibrationGuide
+    {
+        private readonly CPassiveCalibration session;
+        public CPassiveCalibrationStep Step { get; private set; }
+        public string ResultTitle { get; private set; } = "";
+        public string ResultDetail { get; private set; } = "";
+        public CPassiveCalibrationGuide(CPassiveCalibration calibration) { session=calibration; }
+        public string ActionText
+        {
+            get
+            {
+                switch(Step)
+                {
+                    case CPassiveCalibrationStep.Record:return "Check Recording";
+                    case CPassiveCalibrationStep.Comparison:return "Finish Baseline Pass";
+                    case CPassiveCalibrationStep.ReadyToTest:return "Start Test";
+                    case CPassiveCalibrationStep.Test:return "Finish Test";
+                    case CPassiveCalibrationStep.Results:return session.CanSave?"Save Calibration":session.CanContinue&&!session.NoChangeRecommended?"Record More":"Keep Current Settings";
+                    case CPassiveCalibrationStep.Complete:return "New Calibration";
+                    default:return "Start Recording";
+                }
+            }
+        }
+        public string Title
+        {
+            get
+            {
+                switch(Step)
+                {
+                    case CPassiveCalibrationStep.Record:return "2. Drive with current settings";
+                    case CPassiveCalibrationStep.Comparison:return "3. Record a separate baseline pass";
+                    case CPassiveCalibrationStep.ReadyToTest:return "4. Ready to test the adjustment";
+                    case CPassiveCalibrationStep.Test:return "4. Test the adjustment";
+                    case CPassiveCalibrationStep.Results:return ResultTitle;
+                    case CPassiveCalibrationStep.Complete:return ResultTitle;
+                    default:return "1. Check your setup";
+                }
+            }
+        }
+        public string SettingsInUse
+        { get { return session.Testing||session.CanSave?"PROPOSED SETTINGS ACTIVE — temporary until saved":"CURRENT PROFILE SETTINGS ACTIVE"; } }
+        public string Prompt
+        {
+            get
+            {
+                if(Step==CPassiveCalibrationStep.Record || Step==CPassiveCalibrationStep.Comparison || Step==CPassiveCalibrationStep.Test)
+                    return (Step==CPassiveCalibrationStep.Comparison?"New pass with current settings. You will repeat this route during the test.\r\n\r\n":"")+session.DrivingPrompt;
+                if(Step==CPassiveCalibrationStep.ReadyToTest)
+                    return "Repeat the baseline route at the same speed and in similar working conditions. Start Test applies the adjustment temporarily.";
+                return Step==CPassiveCalibrationStep.Setup
+                    ? "Check the measurements below and antenna offsets in Tool Setup. Select what to calibrate, then confirm the setup."
+                    : ResultDetail;
+            }
+        }
+        public bool Begin(CToolSteerSettings settings,string key,CPassiveCalibrationStage stage)
+        {
+            if(Step!=CPassiveCalibrationStep.Setup)return false;
+            session.Start(settings,key,stage);
+            if(!session.Collecting)return false;
+            Step=CPassiveCalibrationStep.Record;ResultTitle=ResultDetail="";return true;
+        }
+        public void ValidateContext(string key)
+        {
+            if(Step==CPassiveCalibrationStep.Setup||Step==CPassiveCalibrationStep.Complete)return;
+            session.ValidateContext(key);
+            if(session.Status.StartsWith("Calibration stopped:"))
+            { ResultTitle="Calibration stopped";ResultDetail=session.Status;Step=CPassiveCalibrationStep.Complete; }
+        }
+        public void Next(string key)
+        {
+            var previousStep=Step;
+            ValidateContext(key);
+            if(Step==CPassiveCalibrationStep.Complete && previousStep!=Step)return;
+            switch(Step)
+            {
+                case CPassiveCalibrationStep.Record:
+                    if(session.ReviewResults() && session.BeginComparison()) Step=CPassiveCalibrationStep.Comparison;
+                    else
+                    {
+                        ResultTitle=session.NoChangeRecommended?"Keep current settings":"More driving or setup checks needed";
+                        ResultDetail=session.Outcome=="Weak response fit"
+                            ? "The straight pass did not show a consistent response. Timing is unchanged. Record more, or exit and choose Curve tracking."
+                            : session.Outcome=="Insufficient settled curves"
+                            ? "Need longer, steady bends in both directions. The tractor and implement must both settle into each bend before it counts."
+                            : session.Outcome=="Uncertain curve fit"
+                            ? "The bends did not support a reliable adjustment. Check measurements and record steadier bends."
+                            : session.Status;
+                        Step=CPassiveCalibrationStep.Results;
+                    }
+                    break;
+                case CPassiveCalibrationStep.Comparison:
+                    if(session.FinishComparison())Step=CPassiveCalibrationStep.ReadyToTest;
+                    break;
+                case CPassiveCalibrationStep.ReadyToTest:
+                    if(session.BeginTest())Step=CPassiveCalibrationStep.Test;
+                    break;
+                case CPassiveCalibrationStep.Test:
+                    if(session.FinishTest())
+                    {
+                        ResultTitle="Tracking improved";
+                        ResultDetail=string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                            "Matched tracking error: {0:F1} → {1:F1} cm. Save the calibration or discard the adjustment.",session.MatchedBeforeRms*100,session.MatchedAfterRms*100);
+                        Step=CPassiveCalibrationStep.Results;
+                    }
+                    else if(session.Outcome=="Test worsened"||session.Outcome=="No improvement")
+                    {
+                        ResultTitle="Keep current settings";ResultDetail=session.Status+" Current settings have been restored.";
+                        session.Restore();Step=CPassiveCalibrationStep.Complete;
+                    }
+                    break;
+                case CPassiveCalibrationStep.Results:
+                    if(session.CanSave)return; // Profile persistence belongs to the UI; never skip its checks.
+                    if(session.CanContinue&&!session.NoChangeRecommended&&session.ContinueRecording())Step=CPassiveCalibrationStep.Record;
+                    else {session.Restore();ResultTitle="Current settings kept";Step=CPassiveCalibrationStep.Complete;}
+                    break;
+                case CPassiveCalibrationStep.Complete:Reset();break;
+            }
+        }
+        public void Saved()
+        {ResultTitle="Calibration saved";ResultDetail="The named tool profile now contains the tested settings.";Step=CPassiveCalibrationStep.Complete;}
+        public void Reset()
+        {session.Restore();Step=CPassiveCalibrationStep.Setup;ResultTitle=ResultDetail="";}
     }
 }

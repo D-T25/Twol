@@ -18,7 +18,10 @@ namespace Twol
             = new System.Collections.Generic.Dictionary<string,HScrollBar>();
         private Label calibrationStatus, calibrationReview, dimensions, savedCalibration;
         private string verifiedGeometry;
-        private Button startButton, continueButton, reviewButton, comparisonButton, testButton, finishButton, saveButton;
+        private Button calibrationNext, calibrationCancel;
+        private Label calibrationTitle, calibrationPrompt, calibrationMode, calibrationCoverage, calibrationDimensions;
+        private FlowLayoutPanel calibrationSetup;
+        private CPassiveCalibrationGuide calibrationGuide;
         private bool refreshingSliders;
         private CheckBox verified, geometryEnabled;
         private ComboBox calibrationStage;
@@ -146,27 +149,21 @@ namespace Twol
                     +"Last saved: "+savedSettings.passiveCalibrationUtc+"\r\n"
                     +(savedSettings.passiveCalibrationGeometry!="" && savedSettings.passiveCalibrationGeometry!=GeometryVerificationKey()
                         ? "Dimensions/profile changed since calibration.\r\n" : "")
-                    +savedSettings.passiveCalibrationSummary;
-                bool busy=calibration.Collecting || calibration.RecordingComparison || calibration.Testing || calibration.CanSave;
+                    +(savedSettings.passiveCalibrationUtc==""?"Not calibrated yet.":"Saved in this tool profile.");
+                calibrationGuide.ValidateContext(host.gyd.PassiveCalibrationContext());
+                bool setup=calibrationGuide.Step==CPassiveCalibrationStep.Setup;
+                bool busy=!setup && calibrationGuide.Step!=CPassiveCalibrationStep.Complete;
                 responsePage.Enabled=limitsPage.Enabled=geometryPage.Enabled=!busy;
-                verified.Enabled=!busy;
-                calibrationStage.Enabled=!busy&&calibration.Proposal==null;
-                startButton.Enabled=!busy;
+                calibrationSetup.Visible=setup;
+                verified.Enabled=setup;
+                calibrationStage.Enabled=setup;
                 if(!busy && Settings.Tool.setToolSteer.passiveCurveMaximumOffset<0)
                 {
                     refreshingSliders=true;
                     SetSlider("passiveCurveLimit",(int)Math.Round(CPassiveCurve.SafeLimit(Settings.Tool.setToolSteer.passiveMaximumOffset)*10));
                     refreshingSliders=false;
                 }
-                continueButton.Enabled=calibration.CanContinue && calibration.Stage==(calibrationStage.SelectedIndex==0?CPassiveCalibrationStage.Response:CPassiveCalibrationStage.Curve);
-                reviewButton.Enabled=calibration.Collecting;
-                comparisonButton.Enabled=calibration.Proposal!=null&&!calibration.Testing&&!calibration.CanSave;
-                comparisonButton.Text=calibration.RecordingComparison?"Finish Comparison Pass":"Record Comparison Pass";
-                testButton.Enabled=calibration.Proposal!=null && calibration.ComparisonReady && !calibration.RecordingComparison && !calibration.Testing && !calibration.CanSave;
-                finishButton.Enabled=calibration.Testing;
-                saveButton.Enabled=calibration.CanSave;
-                calibrationStatus.Text=DateTime.UtcNow<noticeUntil?notice:calibration.Status;
-                calibrationReview.Text=calibration.Review;
+                RefreshCalibrationGuide();
                 var g=mf.gyd.PassiveGeometry();
                 dimensions.Text=string.Format("Profile dimensions (m)\r\nHitch: {0:0.00}  Drawbar: {1:0.00}\r\nWorking bar from pivot: {2:0.00}\r\nTank drawbar: {3:0.00}  Width: {4:0.00}\r\n{5}\r\n{6}",
                     g.Hitch,g.Drawbar,g.WorkingBar,g.TankDrawbar,g.Width,
@@ -208,87 +205,137 @@ namespace Twol
             FlowLayoutPanel flow=new FlowLayoutPanel { Dock=DockStyle.Fill, AutoScroll=true,
                 FlowDirection=FlowDirection.TopDown, WrapContents=false, Padding=new Padding(5) };
             page.Controls.Add(flow);
-            Label instruction=new Label { Width=325, AutoSize=true, Text="Passive Guidance Calibration\r\nVerify tractor/tool dimensions and antenna offsets. Enable profile geometry on Geometry. First record straight response; then calibrate curves separately. Use long settled bends in both directions at working speed. U-turns, reverse, sections off and poor GPS are excluded." };
-            flow.Controls.Add(instruction);
-            verified=new CheckBox { Width=325, AutoSize=true, Text="I have verified the profile dimensions" };
-            verified.CheckedChanged+=(sender,args)=>{verifiedGeometry=verified.Checked?GeometryVerificationKey():null;};
-            flow.Controls.Add(verified);
-            calibrationStage=new ComboBox { Width=320,DropDownStyle=ComboBoxStyle.DropDownList };
-            calibrationStage.Items.Add("1. Straight response (timing only)");
-            calibrationStage.Items.Add("2. Curve response (settled bends)");
+            FlowLayoutPanel actions=new FlowLayoutPanel { Dock=DockStyle.Bottom, Height=108,
+                FlowDirection=FlowDirection.TopDown, WrapContents=false, Padding=new Padding(5), BackColor=Color.PaleTurquoise };
+            page.Controls.Add(actions);
+            calibrationGuide=new CPassiveCalibrationGuide(host.gyd.PassiveCalibration);
+            calibrationTitle=new Label { Width=320, AutoSize=true, Font=new System.Drawing.Font("Tahoma",14F,FontStyle.Bold), Padding=new Padding(0,4,0,6) };
+            flow.Controls.Add(calibrationTitle);
+            calibrationMode=new Label { Width=320, AutoSize=true, Font=new System.Drawing.Font("Tahoma",10F,FontStyle.Bold), Padding=new Padding(0,0,0,6) };
+            flow.Controls.Add(calibrationMode);
+            calibrationPrompt=new Label { Width=320, AutoSize=true, Font=new System.Drawing.Font("Tahoma",11F), Padding=new Padding(0,0,0,8) };
+            flow.Controls.Add(calibrationPrompt);
+            calibrationSetup=new FlowLayoutPanel { Width=325, AutoSize=true, FlowDirection=FlowDirection.TopDown, WrapContents=false, Margin=Padding.Empty };
+            flow.Controls.Add(calibrationSetup);
+            calibrationDimensions=new Label { Width=315,AutoSize=true,Padding=new Padding(0,3,0,6) };
+            calibrationSetup.Controls.Add(calibrationDimensions);
+            calibrationStage=new ComboBox { Width=315,DropDownStyle=ComboBoxStyle.DropDownList };
+            calibrationStage.Items.Add("Straight tracking — correction timing");
+            calibrationStage.Items.Add("Curve tracking — corner compensation");
             calibrationStage.SelectedIndex=0;
-            flow.Controls.Add(calibrationStage);
-            calibrationStatus=new Label { Width=325, AutoSize=true, Padding=new Padding(0,5,0,5) };
+            calibrationSetup.Controls.Add(calibrationStage);
+            verified=new CheckBox { Width=315, AutoSize=true, Text="Dimensions and antenna offsets checked. Use profile geometry for calibration." };
+            verified.CheckedChanged+=(sender,args)=>{verifiedGeometry=verified.Checked?GeometryVerificationKey():null;RefreshCalibrationGuide();};
+            calibrationSetup.Controls.Add(verified);
+            calibrationCoverage=new Label { Width=320, AutoSize=true, Padding=new Padding(0,4,0,4) };
+            flow.Controls.Add(calibrationCoverage);
+            calibrationStatus=new Label { Width=320, AutoSize=true, Padding=new Padding(0,0,0,6) };
             flow.Controls.Add(calibrationStatus);
-            startButton=CalibrationButton(flow,"Start Calibration",()=>
-            {
-                string problem=host.gyd.PassiveGeometry().Problem;
-                if(Settings.Vehicle.setVehicle_isStanleyUsed)
-                {Notice("Passive calibration requires Pure Pursuit steering.");return;}
-                if(!verified.Checked || problem!=null || !Settings.Tool.setToolSteer.passiveGeometryEnabled)
-                { Notice(problem??"Verify dimensions and enable profile geometry first.");return; }
-                host.gyd.PassiveCalibration.Start(Settings.Tool.setToolSteer,host.gyd.PassiveCalibrationContext(),
-                    calibrationStage.SelectedIndex==0?CPassiveCalibrationStage.Response:CPassiveCalibrationStage.Curve);
-            });
-            continueButton=CalibrationButton(flow,"Continue Recording",()=>
-            {
-                host.gyd.PassiveCalibration.ValidateContext(host.gyd.PassiveCalibrationContext());
-                host.gyd.PassiveCalibration.ContinueRecording();
-            });
-            reviewButton=CalibrationButton(flow,"Review Results",()=>host.gyd.PassiveCalibration.ReviewResults());
-            comparisonButton=CalibrationButton(flow,"Record Comparison Pass",()=>
-            {
-                if(host.gyd.PassiveCalibration.RecordingComparison)host.gyd.PassiveCalibration.FinishComparison();
-                else host.gyd.PassiveCalibration.BeginComparison();
-            });
-            testButton=CalibrationButton(flow,"Test Settings",()=>
-            {
-                host.gyd.PassiveCalibration.ValidateContext(host.gyd.PassiveCalibrationContext());
-                host.gyd.PassiveCalibration.BeginTest();
-            });
-            finishButton=CalibrationButton(flow,"Finish Test",()=>host.gyd.PassiveCalibration.FinishTest());
-            saveButton=CalibrationButton(flow,"Save Calibration",()=>
-            {
-                if(string.IsNullOrEmpty(RegistrySettings.toolFileName) || RegistrySettings.toolFileName=="Default")
-                {Notice("Save a named tool profile first; Default cannot be saved.");return;}
-                try
-                {
-                    var previous=Settings.Tool.setToolSteer;
-                    var calibrated=new CToolSteerSettings(previous);
-                    host.gyd.PassiveCalibration.ApplyTo(calibrated,
-                        host.gyd.PassiveCalibrationContext(),GeometryVerificationKey(),host.timerSim.Enabled);
-                    Settings.Tool.setToolSteer=calibrated;
-                    try
-                    {
-                        Settings.Tool.Save();
-                        // Settings.Save logs failures internally. Verify the saved calibration stamp.
-                        string path=Path.Combine(RegistrySettings.toolsDirectory,RegistrySettings.toolFileName+".XML");
-                        var xml=new System.Xml.XmlDocument();xml.Load(path);
-                        var stamps=xml.GetElementsByTagName("passiveCalibrationUtc");
-                        if(stamps.Count==0 || stamps[0].InnerText!=calibrated.passiveCalibrationUtc)
-                            throw new IOException("Profile save could not be verified.");
-                        RefreshSliders();Notice("Calibration saved to "+RegistrySettings.toolFileName+".");
-                    }
-                    catch { Settings.Tool.setToolSteer=previous; throw; }
-                }
-                catch(Exception ex) {Notice("Calibration was not saved: "+ex.Message);}
-            });
-            CalibrationButton(flow,"Restore Previous",()=>host.gyd.PassiveCalibration.Restore());
+            calibrationNext=CalibrationButton(actions,"Start Recording",AdvanceCalibration);
+            calibrationNext.Height=52;calibrationNext.Font=new System.Drawing.Font("Tahoma",12F,FontStyle.Bold);
+            calibrationCancel=CalibrationButton(actions,"Discard & exit calibration",()=>
+            { calibrationGuide.Reset();verified.Checked=false;RefreshCalibrationGuide(); });
+            actions.SizeChanged+=(sender,args)=>
+            { calibrationNext.Width=calibrationCancel.Width=Math.Max(120,actions.ClientSize.Width-16); };
+            calibrationReview=new Label { Width=320, AutoSize=true, Padding=new Padding(0,4,0,4) };
+            flow.Controls.Add(calibrationReview);
+            var details=new Panel { Width=325,Height=160,Visible=false,AutoScroll=true };
+            var technicalDetails=new Label {Width=300,AutoSize=true};details.Controls.Add(technicalDetails);
+            var showDetails=new CheckBox { Width=320,AutoSize=true,Text="Show technical details" };
+            showDetails.CheckedChanged+=(sender,args)=>details.Visible=showDetails.Checked;
+            flow.Controls.Add(showDetails);flow.Controls.Add(details);
+            statusTimer.Tick+=(sender,args)=>technicalDetails.Text=host.gyd.PassiveCalibration.Review;
             CalibrationButton(flow,"Export Calibration Log",()=>
             {
                 try
                 {
                     Directory.CreateDirectory(RegistrySettings.logsDirectory);
                     string path=Path.Combine(RegistrySettings.logsDirectory,"PassiveCalibration_"+DateTime.Now.ToString("yyyyMMdd_HHmmss_fff")+".csv");
-                    File.WriteAllText(path,host.gyd.PassiveCalibration.Csv());
-                    Notice("Log saved: "+path);
+                    File.WriteAllText(path,host.gyd.PassiveCalibration.Csv());Notice("Log saved: "+path);
                 }
                 catch(Exception ex) {Notice("Log failed: "+ex.Message);}
             });
-            calibrationReview=new Label { Width=325, AutoSize=true, Padding=new Padding(0,5,0,5) };
-            flow.Controls.Add(calibrationReview);
-            savedCalibration=new Label { Width=325, AutoSize=true };
+            savedCalibration=new Label { Width=320, AutoSize=true };
             flow.Controls.Add(savedCalibration);
+        }
+        private void RefreshCalibrationGuide()
+        {
+            if(calibrationNext==null)return;
+            var c=host.gyd.PassiveCalibration;var g=host.gyd.PassiveGeometry();
+            bool setup=calibrationGuide.Step==CPassiveCalibrationStep.Setup;
+            calibrationSetup.Visible=setup;
+            bool busy=!setup&&calibrationGuide.Step!=CPassiveCalibrationStep.Complete;
+            responsePage.Enabled=limitsPage.Enabled=geometryPage.Enabled=!busy;
+            calibrationTitle.Text=calibrationGuide.Title;
+            calibrationPrompt.Text=calibrationGuide.Prompt;
+            calibrationMode.Text=calibrationGuide.SettingsInUse;
+            calibrationMode.ForeColor=c.Testing||c.CanSave?Color.DarkRed:Color.DarkGreen;
+            calibrationCoverage.Visible=c.Collecting||c.RecordingComparison||c.Testing;
+            calibrationCoverage.Text="Driving coverage: "+c.DrivingCoverage;
+            calibrationDimensions.Text=string.Format("From your tool profile (m):\r\nHitch {0:0.00}   Drawbar {1:0.00}\r\nWorking bar from pivot {2:0.00}\r\nTank drawbar {3:0.00}   Width {4:0.00}\r\n{5}",
+                g.Hitch,g.Drawbar,g.WorkingBar,g.TankDrawbar,g.Width,
+                g.Problem??"Check antenna offsets in Tool Setup too.");
+            if(setup && (string.IsNullOrEmpty(RegistrySettings.toolFileName)||RegistrySettings.toolFileName=="Default"))
+                calibrationDimensions.Text+="\r\nDefault profile: test only. Save a named tool profile before calibration to keep results.";
+            calibrationNext.Text=calibrationGuide.ActionText;
+            calibrationNext.Enabled=!setup || (verified.Checked&&g.Problem==null&&!Settings.Vehicle.setVehicle_isStanleyUsed);
+            calibrationCancel.Visible=!setup&&calibrationGuide.Step!=CPassiveCalibrationStep.Complete;
+            calibrationReview.Text=ProposalSummary();
+            calibrationReview.Visible=c.Proposal!=null;
+            calibrationStatus.Text=DateTime.UtcNow<noticeUntil?notice:setup
+                ? (Settings.Vehicle.setVehicle_isStanleyUsed?"Select Pure Pursuit steering before calibration.":g.Problem??"Your profile settings stay unchanged while recording.")
+                : calibrationGuide.Step==CPassiveCalibrationStep.Complete?"":c.Status;
+        }
+        private string ProposalSummary()
+        {
+            var c=host.gyd.PassiveCalibration;var current=Settings.Tool.setToolSteer;
+            if(c.Proposal==null)return "";
+            return c.Stage==CPassiveCalibrationStage.Curve
+                ? string.Format("Proposed Curve Response: {0:0}% → {1:0}%",current.passiveCurveResponse,c.Proposal.passiveCurveResponse)
+                : string.Format("Proposed Correction Interval: {0:0.0}s → {1:0.0}s",current.passiveIntegralGain,c.Proposal.passiveIntegralGain);
+        }
+        private void AdvanceCalibration()
+        {
+            var c=host.gyd.PassiveCalibration;
+            calibrationGuide.ValidateContext(host.gyd.PassiveCalibrationContext());
+            if(calibrationGuide.Step==CPassiveCalibrationStep.Setup)
+            {
+                string problem=host.gyd.PassiveGeometry().Problem;
+                if(Settings.Vehicle.setVehicle_isStanleyUsed || !verified.Checked || verifiedGeometry!=GeometryVerificationKey() || problem!=null)
+                {Notice(problem??"Check your profile measurements and select Pure Pursuit steering first.");return;}
+                // The setup checkbox explicitly authorizes the geometry model used by calibration.
+                geometryEnabled.Checked=true;
+                if(!calibrationGuide.Begin(Settings.Tool.setToolSteer,host.gyd.PassiveCalibrationContext(),
+                    calibrationStage.SelectedIndex==0?CPassiveCalibrationStage.Response:CPassiveCalibrationStage.Curve)) Notice(c.Status);
+            }
+            else if(c.CanSave)
+            { if(SaveCalibration())calibrationGuide.Saved(); }
+            else calibrationGuide.Next(host.gyd.PassiveCalibrationContext());
+            RefreshCalibrationGuide();
+        }
+        private bool SaveCalibration()
+        {
+            if(string.IsNullOrEmpty(RegistrySettings.toolFileName) || RegistrySettings.toolFileName=="Default")
+            {Notice("Save a named tool profile first; Default cannot be saved.");return false;}
+            try
+            {
+                var previous=Settings.Tool.setToolSteer;var calibrated=new CToolSteerSettings(previous);
+                host.gyd.PassiveCalibration.ApplyTo(calibrated,host.gyd.PassiveCalibrationContext(),GeometryVerificationKey(),host.timerSim.Enabled,true);
+                Settings.Tool.setToolSteer=calibrated;
+                try
+                {
+                    Settings.Tool.Save();
+                    string path=Path.Combine(RegistrySettings.toolsDirectory,RegistrySettings.toolFileName+".XML");
+                    var xml=new System.Xml.XmlDocument();xml.Load(path);
+                    var stamps=xml.GetElementsByTagName("passiveCalibrationUtc");
+                    if(stamps.Count==0 || stamps[0].InnerText!=calibrated.passiveCalibrationUtc)
+                        throw new IOException("Profile save could not be verified.");
+                    host.gyd.PassiveCalibration.Restore();
+                    RefreshSliders();Notice("Calibration saved to "+RegistrySettings.toolFileName+".");return true;
+                }
+                catch { Settings.Tool.setToolSteer=previous; throw; }
+            }
+            catch(Exception ex) {Notice("Calibration was not saved: "+ex.Message);return false;}
         }
         private string GeometryVerificationKey()
         {
