@@ -23,3 +23,7 @@ There are other minor differences, but these are the main ones.
 The experimental passive calibration branch adds profile-based curve compensation, one Curve Response control, separate straight/curve offset limits, and **Passive Guidance Calibration** with Review, temporary Test, Save and Restore. Existing profiles retain legacy curve behaviour until profile geometry is verified and enabled. U-turn planning is unchanged.
 
 See [Passive guidance setup and calibration](docs/passive-guidance.md) for operation, eligibility, compatibility and testing limits.
+
+## Closed-loop passive test harness
+
+[Run the passive guidance harness](tests/PassiveHarness/README.md) for deterministic tractor/trailer simulation, button and GPS fault checks, curve comparisons, and full calibration recording/trial/restore. It produces an interactive HTML replay and CSV traces. The initial full suite deliberately reports three calibration performance failures: proposed settings worsened simulated tracking and were correctly rejected. See the [captured baseline results](docs/passive-harness-baseline.json).

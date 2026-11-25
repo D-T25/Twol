@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Configuration;
 
 namespace Twol
 {
     public class CGuidance
     {
         private readonly FormGPS mf;
+        private readonly Func<DateTime> utcNow;
 
         public int A, B;
 
@@ -82,10 +82,13 @@ namespace Twol
         //passive tool steer trigger
         public bool isPassiveTriggered = false, isPassiveSteeringFlag = false;
 
-        public CGuidance(FormGPS _f)
+        public CGuidance(FormGPS _f) : this(_f, () => DateTime.UtcNow) { }
+
+        // Deterministic clock for closed-loop replay; the desktop retains UTC wall time.
+        public CGuidance(FormGPS _f, Func<DateTime> clock)
         {
-            //constructor
             mf = _f;
+            utcNow = clock ?? throw new ArgumentNullException(nameof(clock));
         }
 
         public void Guidance(vec3 pivot, vec3 steer, bool isLoop, bool Uturn, List<vec3> curList)
@@ -96,7 +99,7 @@ namespace Twol
             bool hasValidToolXte = false;
             double passiveToolXte = 0, passiveHeadingLateralSpeed = 0;
             bool hasPassiveHeading = false, passiveToolPathIsCurved = false;
-            DateTime passiveNow = DateTime.UtcNow;
+            DateTime passiveNow = utcNow();
             PassiveCalibration.ValidateContext(PassiveCalibrationContext());
             PassiveCurveCurvature = PassivePreviewCurvature = PassiveGeometryOffset = 0;
             PassiveOffsetLimited = false;

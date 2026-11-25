@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../SourceCode/Twol/Classes/Guidance/CGuidance.cs" Link="Production/CGuidance.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveController.cs" Link="Production/CPassiveController.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveGeometry.cs" Link="Production/CPassiveGeometry.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveCalibration.cs" Link="Production/CPassiveCalibration.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/CNMEA.cs" Link="Production/CNMEA.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/CSettings.cs" Link="Production/CSettings.cs" />
+    <Compile Include="../../SourceCode/Twol/Classes/vec3.cs" Link="Production/vec3.cs" />
+    <EmbeddedResource Include="../../SourceCode/Twol/Classes/Guidance/CGuidance.cs;../../SourceCode/Twol/Classes/Guidance/CPassiveController.cs;../../SourceCode/Twol/Classes/Guidance/CPassiveGeometry.cs;../../SourceCode/Twol/Classes/Guidance/CPassiveCalibration.cs;../../SourceCode/Twol/Classes/CNMEA.cs;../../SourceCode/Twol/Classes/CSettings.cs;../../SourceCode/Twol/Classes/vec3.cs">
+      <LogicalName>Production.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTemplate.html" LogicalName="ReportTemplate.html" />
+    <EmbeddedResource Include="DesktopAdapter.cs;Simulation.cs;Program.cs;Verification.cs;Report.cs">
+      <LogicalName>Harness.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

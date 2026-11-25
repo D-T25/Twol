@@ -360,3 +360,7 @@ TwoL_Pgm/
 Installer/
 Program/
 *.zip
+
+# Passive guidance harness generated reports
+harness-output/
+harness-quick/
