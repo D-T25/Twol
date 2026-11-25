@@ -120,10 +120,6 @@ namespace Twol
         public bool passiveGeometryEnabled = false; // Verify dimensions before changing an existing profile's model.
         public double passiveCurveResponse = 100;
         public double passiveCurveMaximumOffset = -1; // Missing/old profile inherits the straight limit.
-        public string passiveCalibrationUtc = "";
-        public string passiveCalibrationGeometry = "";
-        public string passiveCalibrationSummary = "";
-        public bool passiveCalibrationSimulated = false;
         // Reuse passiveIntegralGain for profile compatibility; it is now actual seconds.
         // Old profiles keep their selected hold value. No second interval field can disagree.
 
@@ -176,10 +172,6 @@ namespace Twol
             passiveGeometryEnabled = _setting.passiveGeometryEnabled;
             passiveCurveResponse = _setting.passiveCurveResponse;
             passiveCurveMaximumOffset = _setting.passiveCurveMaximumOffset;
-            passiveCalibrationUtc = _setting.passiveCalibrationUtc;
-            passiveCalibrationGeometry = _setting.passiveCalibrationGeometry;
-            passiveCalibrationSummary = _setting.passiveCalibrationSummary;
-            passiveCalibrationSimulated = _setting.passiveCalibrationSimulated;
             deadzoneWidth = _setting.deadzoneWidth;
 
             manualSteerPWM = _setting.manualSteerPWM;

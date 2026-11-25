@@ -1,5 +1,5 @@
 // Headless adapter for WinForms/device dependencies. Guidance, receiver conversion,
-// heading resolution, passive controller, geometry and calibration are production files.
+// heading resolution, passive controller, and geometry are production files.
 // The vehicle look-ahead is a declared experiment input (not the desktop CVehicle model).
 namespace Twol;
 public sealed class FormGPS

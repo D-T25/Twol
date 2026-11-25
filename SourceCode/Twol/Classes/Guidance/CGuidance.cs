@@ -42,7 +42,6 @@ namespace Twol
         private readonly CPassiveController passiveController = new CPassiveController();
         private readonly CToolHeadingResolver toolHeadingResolver = new CToolHeadingResolver();
         public string PassiveHeadingSource { get { return toolHeadingResolver.Source; } }
-        public readonly CPassiveCalibration PassiveCalibration;
         public double PassiveTractorOffset { get { return passiveAppliedOffset; } }
         public double PassiveCurveCurvature { get; private set; }
         public double PassivePreviewCurvature { get; private set; }
@@ -59,18 +58,7 @@ namespace Twol
                 TankDrawbar=Settings.Tool.tankTrailingHitchLength,
                 WorkingBar=Settings.Tool.trailingToolToPivotLength, Width=Settings.Tool.toolWidth };
         }
-        public string PassiveCalibrationContext()
-        {
-            return RegistrySettings.toolFileName + "|" + RegistrySettings.vehicleFileName
-                + "|" + PassiveGeometry().Signature + "|" + Settings.Vehicle.setVehicle_vehicleType
-                + "|" + mf.vehicle.wheelbase + "|" + mf.timerSim.Enabled
-                + "|" + CPassiveCalibration.SettingsKey(Settings.Tool.setToolSteer);
-        }
-        public CToolSteerSettings PassiveTuning
-        {
-            get { return (PassiveCalibration.Testing || PassiveCalibration.CanSave)
-                && PassiveCalibration.Proposal != null ? PassiveCalibration.Proposal : Settings.Tool.setToolSteer; }
-        }
+        public CToolSteerSettings PassiveTuning { get { return Settings.Tool.setToolSteer; } }
         public string PassiveCorrectionReason { get { return passiveController.CorrectionReason; } }
         public double PassiveFilteredToolError { get { return passiveController.FilteredError; } }
         public double PassiveToolErrorRate { get { return passiveController.ErrorRate; } }
@@ -86,10 +74,9 @@ namespace Twol
         public CGuidance(FormGPS _f) : this(_f, () => DateTime.UtcNow) { }
 
         // Deterministic clock for closed-loop replay; the desktop retains UTC wall time.
-        public CGuidance(FormGPS _f, Func<DateTime> clock, CPassiveCalibration calibration = null)
+        public CGuidance(FormGPS _f, Func<DateTime> clock)
         {
             mf = _f;
-            PassiveCalibration=calibration ?? new CPassiveCalibration();
             utcNow = clock ?? throw new ArgumentNullException(nameof(clock));
         }
 
@@ -102,7 +89,6 @@ namespace Twol
             double passiveToolXte = 0, passiveHeadingLateralSpeed = 0;
             bool hasPassiveHeading = false, passiveToolPathIsCurved = false;
             DateTime passiveNow = utcNow();
-            PassiveCalibration.ValidateContext(PassiveCalibrationContext());
             PassiveCurveCurvature = PassiveTractorCurvature = PassivePreviewCurvature = PassiveGeometryOffset = 0;
             PassiveOffsetLimited = false;
             bool completeUturn = !Uturn;
@@ -399,9 +385,9 @@ namespace Twol
                     // Acquire Sensitivity changes correction strength, not when it may engage.
                     if (Settings.Tool.setToolSteer.isPassiveSteering)
                     {
-                        // Buttons own the request. Sections and navigation checks only suspend it.
+                        // Steering buttons own the request. Section painting does not affect passive guidance.
                         isPassiveTriggered = mf.isBtnToolSteerOn && mf.isBtnAutoSteerOn;
-                        if (!isPassiveTriggered || Uturn || mf.sectionOnCounter == 0 || !hasValidToolXte || Math.Abs(mf.pn.avgSpeed) < 2)
+                        if (!isPassiveTriggered || Uturn || !hasValidToolXte || Math.Abs(mf.pn.avgSpeed) < 2)
                         {
                             isPassiveSteeringFlag = false;
                             passiveController.Reset();
@@ -528,7 +514,7 @@ namespace Twol
                     if (Settings.Tool.setToolSteer.isPassiveSteering && mf.isBtnToolSteerOn
                         && mf.isBtnAutoSteerOn && !isPassiveSteeringFlag && isPassiveTriggered)
                     {
-                        if (!Uturn && mf.sectionOnCounter > 0 && Math.Abs(mf.pn.avgSpeed) >= 2 && hasValidToolXte
+                        if (!Uturn && Math.Abs(mf.pn.avgSpeed) >= 2 && hasValidToolXte
                             && Math.Abs(mf.vehicle.modeActualHeadingError) < 1.5
                             && Math.Abs(distanceFromCurrentLine) < 0.10)
                             isPassiveSteeringFlag = true;
@@ -571,27 +557,7 @@ namespace Twol
             }
             if (Uturn && completeUturn)
                 mf.yt.CompleteYouTurn();
-            CToolSteerSettings recordingTuning=PassiveTuning;
-            bool calibrationEligible=isPassiveSteeringFlag && mf.isBtnAutoSteerOn && mf.isBtnToolSteerOn
-                && Settings.Tool.setToolSteer.isPassiveSteering && recordingTuning.passiveGeometryEnabled
-                && !Settings.Vehicle.setVehicle_isStanleyUsed
-                && !Uturn && !mf.isReverse && mf.sectionOnCounter>0 && hasValidToolXte && hasPassiveHeading
-                && PassiveGeometry().Problem==null
-                && CToolHeadingResolver.Fresh(passiveNow,mf.pnTool.positionReceivedUtc,0.3)
-                && (mf.timerSim.Enabled || (mf.pn.fixQuality==4 && mf.pnTool.fixQuality==4
-                    && CToolHeadingResolver.Fresh(passiveNow,mf.pn.positionReceivedUtc,0.3)))
-                && !PassiveOffsetLimited && Math.Abs(passiveAppliedOffset)<PassiveEffectiveLimit*0.95;
-            PassiveCalibration.Observe(new CPassiveCalibrationSample { Time=mf.pnTool.positionReceivedUtc,
-                // Calibration coordinates are relative to forward travel, so left/right
-                // curves are classified correctly when returning on the same reference.
-                Error=passiveToolXte, TractorError=distanceFromCurrentLine,
-                Offset=passiveAppliedOffset*(mf.trks.isHeadingSameWay?1:-1),
-                Curvature=PassiveCurveCurvature*(mf.trks.isHeadingSameWay?1:-1),
-                TractorCurvature=PassiveTractorCurvature*(mf.trks.isHeadingSameWay?1:-1),
-                PreviewCurvature=PassivePreviewCurvature*(mf.trks.isHeadingSameWay?1:-1),
-                SettlingSeconds=PassiveGeometry().Length/Math.Max(0.56,Math.Abs(mf.pn.avgSpeed)/3.6),
-                GeometryOffset=PassiveGeometryOffset*(mf.trks.isHeadingSameWay?1:-1), Speed=Math.Abs(mf.pn.avgSpeed)/3.6 },
-                calibrationEligible,PassiveCalibrationContext());
+
         }
 
         public bool FindClosestSegment(List<vec3> points, bool loop, vec2 point, out int AA, out int BB, int start = 0, int end = int.MaxValue)

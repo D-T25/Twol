@@ -46,9 +46,7 @@ public sealed class Route
         }
         return this;
     }
-    public static Route Calibration(double radius=45,double angle=2.0943951023931953,double straight=110)
-        =>new Route().Add(straight,0).Add(radius*angle,1/radius).Add(straight,0)
-            .Add(radius*angle,-1/radius).Add(150,0);
+
     public static Route Straight()=>new Route().Add(400,0);
     public static Route Bend(int sign)=>new Route().Add(70,0).Add(25*Math.PI/2,sign/25.0).Add(130,0);
     public static Route S()=>new Route().Add(100,0).Add(35*Math.PI/3,1/35.0).Add(70,0)
@@ -183,7 +181,7 @@ public sealed class Runner
     readonly DateTime epoch=new(2026,1,1,0,0,0,DateTimeKind.Utc);
     double epochSeconds;
     readonly HarnessConfig config;
-    public Runner(HarnessConfig c, CPassiveCalibration calibration=null)
+    public Runner(HarnessConfig c)
     {
         config=c;
         Settings.Tool=new ToolSettingsAdapter { hitchLength=c.Hitch,toolTrailingHitchLength=-c.Drawbar,
@@ -192,7 +190,7 @@ public sealed class Runner
         Settings.Vehicle=new VehicleSettingsAdapter();
         Host=new FormGPS();Host.vehicle.wheelbase=c.Wheelbase;Host.vehicle.LookAhead=c.LookAhead;
         Host.pn=new CNMEA(Host);Host.pnTool=new CNMEA(Host);Host.pn.SetLocalMetersPerDegree(49,-98);
-        Host.gyd=new CGuidance(Host,()=>now,calibration);Host.isGPSPositionInitialized=true;
+        Host.gyd=new CGuidance(Host,()=>now);Host.isGPSPositionInitialized=true;
     }
     public Result Run(Scenario scenario,int seed)
     {

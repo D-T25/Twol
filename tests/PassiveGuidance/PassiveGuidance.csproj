@@ -3,7 +3,6 @@
   <ItemGroup>
     <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveController.cs" Link="CPassiveController.cs" />
     <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveGeometry.cs" Link="CPassiveGeometry.cs" />
-    <Compile Include="../../SourceCode/Twol/Classes/Guidance/CPassiveCalibration.cs" Link="CPassiveCalibration.cs" />
     <Compile Include="../../SourceCode/Twol/Classes/CNMEA.cs" Link="CNMEA.cs" />
     <Compile Include="../../SourceCode/Twol/Classes/CSettings.cs" Link="CSettings.cs" />
   </ItemGroup>

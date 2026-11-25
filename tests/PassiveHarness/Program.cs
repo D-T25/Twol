@@ -36,12 +36,13 @@ var scenarios=new List<Scenario> {
     new(){Name="buttons-sections",Route=Route.Straight(),Duration=65,Slip=_=>0.04,
         ToolButton=t=>t<25||t>=50,Sections=t=>t<30||t>=40},
     new(){Name="autosteer-button",Route=Route.Straight(),Duration=65,Slip=_=>0.04,AutoSteer=t=>t<25||t>=35},
-    new(){Name="sections-pause",Route=Route.Straight(),Duration=65,Slip=_=>0.04,Sections=t=>t<25||t>=35},
+    new(){Name="sections-independent",Route=Route.Straight(),Duration=65,Slip=_=>0.04,Sections=t=>t<25||t>=35},
+    new(){Name="sections-off-start",Route=Route.Straight(),Duration=65,Slip=_=>0.04,Sections=_=>false},
     new(){Name="gps-dropout",Route=Route.Straight(),Duration=65,Slip=_=>0.04,ToolGps=t=>t<25||t>=32},
     new(){Name="uturn-inhibit",Route=Route.Straight(),Duration=65,Slip=_=>0.04,Uturn=t=>t>=25&&t<35}
 };
 if(quick)scenarios=scenarios.Where(s=>s.Name is "straight-engage" or "right-bend" or "buttons-sections" or "gps-dropout").ToList();
-var results=new List<Result>();var checks=new List<Check>();var calibration=new List<CalibrationResult>();
+var results=new List<Result>();var checks=new List<Check>();
 foreach(int seed in seeds)
 foreach(var scenario in scenarios)
 {
@@ -51,6 +52,16 @@ foreach(var scenario in scenarios)
     if(scenario.Name=="tow-between")experiment.TowBetween=true;
     var result=new Runner(experiment).Run(scenario,seed);results.Add(result);Verification.CheckRun(result,checks);
     Console.WriteLine($"{(result.Passed?"PASS":"FAIL")} {result.Name,-27} seed={seed} rms={result.Rms:F3}m curve={result.CurveRms:F3}m inside95={result.InsideP95:F3}m");
+    if(scenario.Name=="sections-independent" || scenario.Name=="sections-off-start")
+    {
+        var referenceScenario=new Scenario {Name="sections-on-reference",Route=scenario.Route,Duration=scenario.Duration,Slip=scenario.Slip};
+        var reference=new Runner(experiment).Run(referenceScenario,seed);
+        bool identical=result.Trace.Count==reference.Trace.Count&&result.Trace.Zip(reference.Trace).All(p=>
+            p.First.ToolError==p.Second.ToolError&&p.First.Offset==p.Second.Offset&&p.First.Steer==p.Second.Steer&&p.First.Engaged==p.Second.Engaged);
+        checks.Add(new($"{scenario.Name} / seed {seed} / sections do not change guidance",identical,
+            "Full-rate tool error, steering, offset and engagement match the sections-on reference exactly."));
+        if(!identical)result.Failures.Add("Sections changed passive guidance behaviour.");
+    }
     if(scenario.Name is "right-bend" or "left-bend" or "s-bends")
     {
         var baseline=new Scenario {Name=scenario.Name+"-legacy",Route=scenario.Route,Geometry=false};
@@ -65,17 +76,6 @@ var repeat=new Runner(config).Run(scenarios.First(s=>s.Name=="straight-engage"),
 checks.Add(new("deterministic replay",first.Trace.Count==repeat.Trace.Count&&first.Trace.Zip(repeat.Trace).All(p=>
     p.First.ToolError==p.Second.ToolError&&p.First.Offset==p.Second.Offset&&p.First.Steer==p.Second.Steer),
     "Same source, parameters and noise seed must produce identical full-rate traces."));
-if(!quick)foreach(int seed in seeds)
-{
-    calibration.Add(Verification.DeclineUnreliable(config,seed,results,checks,output,false));
-    calibration.Add(Verification.DeclineUnreliable(config,seed,results,checks,output,true));
-}
-if(!quick)foreach(int seed in seeds)
-foreach(double initialResponse in new[]{50.0,75.0,100.0,125.0,150.0})
-{
-    var c=Verification.Calibrate(config,seed,results,checks,output,initialResponse);calibration.Add(c);
-    Console.WriteLine($"CALIBRATION initial={initialResponse} seed={seed} proposal={c.Proposed} accepted={c.Accepted}; curve RMS {c.ValidationBeforeRms:F3} → {c.ValidationAfterRms:F3}m. {c.Status}");
-}
-Report.Write(output,results,checks,calibration,config);
+Report.Write(output,results,checks,config);
 Console.WriteLine($"\n{checks.Count(c=>c.Passed)}/{checks.Count} checks passed; {checks.Count(c=>!c.Passed)} failed. Report: {Path.GetFullPath(Path.Combine(output,"index.html"))}");
 return checks.All(c=>c.Passed)?0:1;

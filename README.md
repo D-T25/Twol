@@ -18,12 +18,12 @@ AgIO natively supports GPS Out via serial bus, so the GPS_Out application is not
 There are other minor differences, but these are the main ones.
  
 
-## Passive guidance geometry and calibration
+## Passive guidance geometry and manual tuning
 
-The experimental passive calibration branch adds profile-based curve compensation, one Curve Response control, separate straight/curve offset limits, and **Passive Guidance Calibration** with Review, temporary Test, Save and Restore. Existing profiles retain legacy curve behaviour until profile geometry is verified and enabled. U-turn planning is unchanged.
+Passive guidance supports profile-based curve compensation, one Curve Response control and separate straight/curve offset limits. Adjust these manually in the compact left Passive tab. Existing profiles retain their numeric tuning values. Automatic passive calibration has been removed. Passive engagement follows the steering buttons independently of section state. U-turn planning is unchanged.
 
-See [Passive guidance setup and calibration](docs/passive-guidance.md) for operation, eligibility, compatibility and testing limits.
+See [Passive guidance setup](docs/passive-guidance.md) for tuning, geometry and heading information.
 
 ## Closed-loop passive test harness
 
-[Run the passive guidance harness](tests/PassiveHarness/README.md) for deterministic tractor/trailer simulation, button and GPS fault checks, curve comparisons, and full calibration recording/trial/restore. It produces an interactive HTML replay and CSV traces. The original failures remain in the [historical baseline](docs/passive-harness-baseline.json). The refined calibration separates timing and curves, rejects transient curve samples, separates constant side draft, supports continued recording, and requires an independent current-settings comparison before trial. See [refined results](docs/passive-harness-refined.json) and the [calibration guide](docs/passive-guidance.md). Retained/declined cases do not imply successful automatic tuning.
+[Run the passive guidance harness](tests/PassiveHarness/README.md) for deterministic tractor/trailer simulation, button and GPS fault checks, curve comparisons, interactive HTML replay and CSV traces. The harness exercises manual settings; it does not propose or save calibration. The [historical baseline](docs/passive-harness-baseline.json) records an earlier version and is not the current result.

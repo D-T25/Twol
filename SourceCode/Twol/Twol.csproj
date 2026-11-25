@@ -164,7 +164,6 @@
     <Compile Include="Classes\Guidance\CGuidance.cs" />
     <Compile Include="Classes\Guidance\CPassiveController.cs" />
     <Compile Include="Classes\Guidance\CPassiveGeometry.cs" />
-    <Compile Include="Classes\Guidance\CPassiveCalibration.cs" />
     <Compile Include="Classes\CHeadLine.cs" />
     <Compile Include="Classes\CHello.cs" />
     <Compile Include="Classes\Guidance\CTrackMethods.cs" />

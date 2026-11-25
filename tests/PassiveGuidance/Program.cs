@@ -105,8 +105,6 @@ public static class Tests
         Check(reload.passiveCorrectionStrength==125 && reload.passiveMaximumOffset==0.7 && !reload.passiveEarlyCorrection,"XML round-trip preserves new settings");
         Console.WriteLine(count+" controller/heading/settings checks passed");
         ParserTests.Run();
-        CalibrationTests.Run();
-        RefinementTests.Run();
-        GuideTests.Run();
+        GeometryTests.Run();
     }
 }
